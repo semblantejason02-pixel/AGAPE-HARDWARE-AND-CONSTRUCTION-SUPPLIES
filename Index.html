@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Hardware Store</title>
 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin-bottom: 15px;
+        }
+
+        .search {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .category {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .category button {
+            padding: 10px 15px;
+            border: none;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .product-image {
+            height: 130px;
+            background: #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .product h3 {
+            margin-bottom: 8px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stock {
+            color: green;
+            margin-bottom: 12px;
+        }
+
+        .add-cart {
+            width: 100%;
+            padding: 10px;
+            background: #f59e0b;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #111827;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏗️ My Hardware Store</h1>
+    <input
+        type="text"
+        class="search"
+        placeholder="Search hardware products..."
+    >
+</header>
+
+<div class="container">
+
+    <div class="category">
+        <button>All</button>
+        <button>Cement</button>
+        <button>Steel</button>
+        <button>Electrical</button>
+        <button>Plumbing</button>
+        <button>Tools</button>
+    </div>
+
+    <div class="products">
+
+        <div class="product">
+            <div class="product-image">
+                Product Image
+            </div>
+
+            <h3>Portland Cement</h3>
+
+            <div class="price">₱280.00</div>
+
+            <div class="stock">
+                🟢 50 available
+            </div>
+
+            <button class="add-cart">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="product">
+            <div class="product-image">
+                Product Image
+            </div>
+
+            <h3>Steel Bar 10mm</h3>
+
+            <div class="price">₱380.00</div>
+
+            <div class="stock">
+                🟢 80 available
+            </div>
+
+            <button class="add-cart">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="product">
+            <div class="product-image">
+                Product Image
+            </div>
+
+            <h3>PVC Pipe 1/2"</h3>
+
+            <div class="price">₱180.00</div>
+
+            <div class="stock">
+                🟢 42 available
+            </div>
+
+            <button class="add-cart">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="cart">
+    🛒 Cart (0)
+</div>
+
+</body>
+</html>

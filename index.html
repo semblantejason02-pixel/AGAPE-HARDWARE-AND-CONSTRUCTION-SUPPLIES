@@ -200,8 +200,38 @@
 
 </div>
 
-<div class="cart">
+<div class="cart" id="cartButton">
     🛒 Cart (0)
+</div>
+
+<div id="cartPanel" style="
+    display:none;
+    position:fixed;
+    right:20px;
+    bottom:80px;
+    width:320px;
+    max-width:90%;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+    z-index:1000;
+">
+    <h2>🛒 Your Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <hr>
+
+    <h3>Total: ₱<span id="cartTotal">0.00</span></h3>
+
+    <button onclick="closeCart()" style="
+        margin-top:15px;
+        padding:10px;
+        width:100%;
+    ">
+        Close
+    </button>
 </div>
 
 <script>

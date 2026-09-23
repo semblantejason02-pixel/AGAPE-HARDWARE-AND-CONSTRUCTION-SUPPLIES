@@ -203,18 +203,24 @@
 <div class="cart">
     🛒 Cart (0)
 </div>
+
 <script>
-let cartCount = 0;
+document.addEventListener("DOMContentLoaded", function () {
 
-const cartButton = document.querySelector(".cart");
-const addButtons = document.querySelectorAll(".add-cart");
+    let cartCount = 0;
 
-addButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        cartCount++;
-        cartButton.textContent = `🛒 Cart (${cartCount})`;
+    const cartButton = document.querySelector(".cart");
+    const addButtons = document.querySelectorAll(".add-cart");
+
+    addButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            cartCount++;
+            cartButton.textContent = "🛒 Cart (" + cartCount + ")";
+        });
     });
+
 });
 </script>
+
 </body>
 </html>

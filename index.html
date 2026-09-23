@@ -281,7 +281,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateCart() {
 
-        cartItems.innerHTML = "";
+        cartItems.innerHTML += `
+    <div style="margin:10px 0; padding:10px; border-bottom:1px solid #ddd;">
+        <strong>${item.name}</strong><br>
+        ₱${item.price.toFixed(2)}
+
+        <div style="margin-top:8px;">
+            <button onclick="changeQuantity('${item.name}', -1)">−</button>
+
+            <span style="margin:0 10px;">
+                ${item.quantity}
+            </span>
+
+            <button onclick="changeQuantity('${item.name}', 1)">+</button>
+
+            <button onclick="removeItem('${item.name}')"
+                style="margin-left:10px;">
+                🗑️
+            </button>
+        </div>
+
+        <div style="margin-top:5px;">
+            Subtotal: ₱${subtotal.toFixed(2)}
+        </div>
+    </div>
+`;
 
         let total = 0;
         let itemCount = 0;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Hardware Store</title>
+    <title>AGAPE HARDWARE AND SUPPLIES</title>
 
     <style>
         * {
@@ -203,6 +203,18 @@
 <div class="cart">
     🛒 Cart (0)
 </div>
+<script>
+let cartCount = 0;
 
+const cartButton = document.querySelector(".cart");
+const addButtons = document.querySelectorAll(".add-cart");
+
+addButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        cartCount++;
+        cartButton.textContent = `🛒 Cart (${cartCount})`;
+    });
+});
+</script>
 </body>
 </html>

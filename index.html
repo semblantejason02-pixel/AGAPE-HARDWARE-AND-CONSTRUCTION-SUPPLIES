@@ -237,17 +237,76 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    let cartCount = 0;
+    let cart = [];
 
-    const cartButton = document.querySelector(".cart");
+    const cartButton = document.querySelector("#cartButton");
+    const cartPanel = document.querySelector("#cartPanel");
+    const cartItems = document.querySelector("#cartItems");
+    const cartTotal = document.querySelector("#cartTotal");
     const addButtons = document.querySelectorAll(".add-cart");
 
     addButtons.forEach(function(button) {
+
         button.addEventListener("click", function() {
-            cartCount++;
-            cartButton.textContent = "🛒 Cart (" + cartCount + ")";
+
+            const product = button.closest(".product");
+            const name = product.querySelector("h3").textContent;
+            const priceText = product.querySelector(".price").textContent;
+            const price = parseFloat(priceText.replace("₱", "").replace(",", ""));
+
+            const existing = cart.find(item => item.name === name);
+
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+
+            updateCart();
         });
+
     });
+
+    cartButton.addEventListener("click", function() {
+        cartPanel.style.display = "block";
+    });
+
+    window.closeCart = function() {
+        cartPanel.style.display = "none";
+    };
+
+    function updateCart() {
+
+        cartItems.innerHTML = "";
+
+        let total = 0;
+        let itemCount = 0;
+
+        cart.forEach(function(item) {
+
+            const subtotal = item.price * item.quantity;
+
+            total += subtotal;
+            itemCount += item.quantity;
+
+            cartItems.innerHTML += `
+                <div style="margin:10px 0;">
+                    <strong>${item.name}</strong><br>
+                    ₱${item.price.toFixed(2)}
+                    × ${item.quantity}
+                    = ₱${subtotal.toFixed(2)}
+                </div>
+            `;
+        });
+
+        cartTotal.textContent = total.toFixed(2);
+
+        cartButton.textContent = "🛒 Cart (" + itemCount + ")";
+    }
 
 });
 </script>

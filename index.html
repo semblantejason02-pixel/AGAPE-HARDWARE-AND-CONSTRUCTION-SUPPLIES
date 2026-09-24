@@ -1,8 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AGAPE HARDWARE AND SUPPLIES</title>
 
     <style>
@@ -114,6 +116,46 @@
             padding: 15px 20px;
             border-radius: 30px;
             cursor: pointer;
+            z-index: 1000;
+        }
+
+        .cart-panel {
+            display: none;
+            position: fixed;
+            right: 20px;
+            bottom: 80px;
+            width: 350px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        .cart-item {
+            margin: 10px 0;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .quantity button {
+            padding: 5px 10px;
+            margin: 5px 3px;
+            cursor: pointer;
+        }
+
+        .remove {
+            margin-left: 8px;
+        }
+
+        .close-cart {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -121,7 +163,8 @@
 <body>
 
 <header>
-    <h1>🏗️ My Hardware Store</h1>
+    <h1>🏗️ AGAPE HARDWARE AND SUPPLIES</h1>
+
     <input
         type="text"
         class="search"
@@ -142,7 +185,9 @@
 
     <div class="products">
 
+        <!-- PRODUCT 1 -->
         <div class="product">
+
             <div class="product-image">
                 Product Image
             </div>
@@ -158,9 +203,13 @@
             <button class="add-cart">
                 Add to Cart
             </button>
+
         </div>
 
+
+        <!-- PRODUCT 2 -->
         <div class="product">
+
             <div class="product-image">
                 Product Image
             </div>
@@ -176,9 +225,13 @@
             <button class="add-cart">
                 Add to Cart
             </button>
+
         </div>
 
+
+        <!-- PRODUCT 3 -->
         <div class="product">
+
             <div class="product-image">
                 Product Image
             </div>
@@ -194,146 +247,267 @@
             <button class="add-cart">
                 Add to Cart
             </button>
+
         </div>
 
     </div>
 
 </div>
 
+
+<!-- CART BUTTON -->
+
 <div class="cart" id="cartButton">
     🛒 Cart (0)
 </div>
 
-<div id="cartPanel" style="
-    display:none;
-    position:fixed;
-    right:20px;
-    bottom:80px;
-    width:320px;
-    max-width:90%;
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.2);
-    z-index:1000;
-">
+
+<!-- CART PANEL -->
+
+<div class="cart-panel" id="cartPanel">
+
     <h2>🛒 Your Cart</h2>
 
     <div id="cartItems"></div>
 
     <hr>
 
-    <h3>Total: ₱<span id="cartTotal">0.00</span></h3>
+    <h3>
+        Total: ₱<span id="cartTotal">0.00</span>
+    </h3>
 
-    <button onclick="closeCart()" style="
-        margin-top:15px;
-        padding:10px;
-        width:100%;
-    ">
+    <button class="close-cart" onclick="closeCart()">
         Close
     </button>
+
 </div>
 
+
 <script>
+
 document.addEventListener("DOMContentLoaded", function () {
 
     let cart = [];
 
-    const cartButton = document.querySelector("#cartButton");
-    const cartPanel = document.querySelector("#cartPanel");
-    const cartItems = document.querySelector("#cartItems");
-    const cartTotal = document.querySelector("#cartTotal");
+    const cartButton = document.getElementById("cartButton");
+    const cartPanel = document.getElementById("cartPanel");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
     const addButtons = document.querySelectorAll(".add-cart");
+
+
+    /* ADD PRODUCT TO CART */
 
     addButtons.forEach(function(button) {
 
         button.addEventListener("click", function() {
 
             const product = button.closest(".product");
-            const name = product.querySelector("h3").textContent;
-            const priceText = product.querySelector(".price").textContent;
-            const price = parseFloat(priceText.replace("₱", "").replace(",", ""));
 
-            const existing = cart.find(item => item.name === name);
+            const name =
+                product.querySelector("h3").textContent.trim();
+
+            const priceText =
+                product.querySelector(".price").textContent;
+
+            const price =
+                parseFloat(
+                    priceText
+                        .replace("₱", "")
+                        .replace(",", "")
+                );
+
+
+            const existing =
+                cart.find(function(item) {
+
+                    return item.name === name;
+
+                });
+
 
             if (existing) {
+
                 existing.quantity++;
+
             } else {
+
                 cart.push({
+
                     name: name,
+
                     price: price,
+
                     quantity: 1
+
                 });
+
             }
 
+
             updateCart();
+
         });
 
     });
 
+
+    /* OPEN CART */
+
     cartButton.addEventListener("click", function() {
+
         cartPanel.style.display = "block";
+
     });
 
+
+    /* CLOSE CART */
+
     window.closeCart = function() {
+
         cartPanel.style.display = "none";
+
     };
+
+
+    /* CHANGE QUANTITY */
+
+    window.changeQuantity = function(name, amount) {
+
+        const item =
+            cart.find(function(item) {
+
+                return item.name === name;
+
+            });
+
+
+        if (!item) return;
+
+
+        item.quantity += amount;
+
+
+        if (item.quantity <= 0) {
+
+            cart =
+                cart.filter(function(item) {
+
+                    return item.name !== name;
+
+                });
+
+        }
+
+
+        updateCart();
+
+    };
+
+
+    /* REMOVE PRODUCT */
+
+    window.removeItem = function(name) {
+
+        cart =
+            cart.filter(function(item) {
+
+                return item.name !== name;
+
+            });
+
+
+        updateCart();
+
+    };
+
+
+    /* UPDATE CART */
 
     function updateCart() {
 
-        cartItems.innerHTML += `
-    <div style="margin:10px 0; padding:10px; border-bottom:1px solid #ddd;">
-        <strong>${item.name}</strong><br>
-        ₱${item.price.toFixed(2)}
-
-        <div style="margin-top:8px;">
-            <button onclick="changeQuantity('${item.name}', -1)">−</button>
-
-            <span style="margin:0 10px;">
-                ${item.quantity}
-            </span>
-
-            <button onclick="changeQuantity('${item.name}', 1)">+</button>
-
-            <button onclick="removeItem('${item.name}')"
-                style="margin-left:10px;">
-                🗑️
-            </button>
-        </div>
-
-        <div style="margin-top:5px;">
-            Subtotal: ₱${subtotal.toFixed(2)}
-        </div>
-    </div>
-`;
+        cartItems.innerHTML = "";
 
         let total = 0;
+
         let itemCount = 0;
+
 
         cart.forEach(function(item) {
 
-            const subtotal = item.price * item.quantity;
+            const subtotal =
+                item.price * item.quantity;
+
 
             total += subtotal;
+
             itemCount += item.quantity;
 
+
             cartItems.innerHTML += `
-                <div style="margin:10px 0;">
-                    <strong>${item.name}</strong><br>
+
+                <div class="cart-item">
+
+                    <strong>
+                        ${item.name}
+                    </strong>
+
+                    <br>
+
                     ₱${item.price.toFixed(2)}
-                    × ${item.quantity}
-                    = ₱${subtotal.toFixed(2)}
+
+                    <div class="quantity">
+
+                        <button
+                            onclick="changeQuantity('${item.name}', -1)">
+                            −
+                        </button>
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+                        <button
+                            onclick="changeQuantity('${item.name}', 1)">
+                            +
+                        </button>
+
+                        <button
+                            class="remove"
+                            onclick="removeItem('${item.name}')">
+                            🗑️
+                        </button>
+
+                    </div>
+
+                    <div>
+
+                        Subtotal:
+                        ₱${subtotal.toFixed(2)}
+
+                    </div>
+
                 </div>
+
             `;
+
         });
 
-        cartTotal.textContent = total.toFixed(2);
 
-        cartButton.textContent = "🛒 Cart (" + itemCount + ")";
+        cartTotal.textContent =
+            total.toFixed(2);
+
+
+        cartButton.textContent =
+            "🛒 Cart (" + itemCount + ")";
+
     }
 
 });
+
 </script>
 
 </body>
 </html>
+```

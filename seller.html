@@ -726,7 +726,7 @@ async function loginSeller() {
     message.textContent = "⏳ Logging in...";
 
     try {
-
+message.textContent = "🔄 Connecting to Supabase...";
         const { data, error } =
             await supabase.auth.signInWithPassword({
                 email: email,

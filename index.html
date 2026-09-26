@@ -162,31 +162,39 @@
 <body>
 
 <header>
+
     <h1>🏗️ AGAPE HARDWARE AND SUPPLIES</h1>
 
     <input
-    type="text"
-    class="search"
-    id="searchInput"
-    placeholder="Search hardware products..."
->
+        type="text"
+        class="search"
+        id="searchInput"
+        placeholder="Search hardware products..."
+    >
+
 </header>
+
 
 <div class="container">
 
     <div class="category">
+
         <button>All</button>
         <button>Cement</button>
         <button>Steel</button>
         <button>Electrical</button>
         <button>Plumbing</button>
         <button>Tools</button>
+
     </div>
+
 
     <div class="products" id="productList">
     </div>
 
 </div>
+
+
 <!-- CART BUTTON -->
 
 <div class="cart" id="cartButton">
@@ -208,7 +216,10 @@
         Total: ₱<span id="cartTotal">0.00</span>
     </h3>
 
-    <button class="close-cart" onclick="closeCart()">
+    <button
+        class="close-cart"
+        onclick="closeCart()"
+    >
         Close
     </button>
 
@@ -220,213 +231,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     let cart = [];
-    const productList =
-    document.getElementById("productList");
 
-const products =
-    JSON.parse(localStorage.getItem("agapeProducts")) || [];
-
-productList.innerHTML = "";
-
-products.forEach(function(product) {
-
-    productList.innerHTML += `
-
-        <div class="product">
-
-            ${
-                product.image
-                ? `
-                    <img
-                        src="${product.image}"
-                        style="
-                            width:100%;
-                            height:180px;
-                            object-fit:cover;
-                            border-radius:8px;
-                            margin-bottom:12px;
-                        "
-                    >
-                `
-                : `
-                    <div class="product-image">
-                        Product Image
-                    </div>
-                `
-            }
-
-            <strong>${product.brand}</strong>
-
-            <h3>${product.name}</h3>
-
-            <p>${product.description || ""}</p>
-
-            <div class="price">
-                ₱${Number(product.price).toFixed(2)}
-                / ${product.unit}
-            </div>
-
-            <div class="stock">
-                🟢 ${product.stock} available
-            </div>
-
-            <button class="add-cart">
-                Add to Cart
-            </button>
-
-        </div>
-
-    `;
-
-});
-
-    const cartButton = document.getElementById("cartButton");
-    const cartPanel = document.getElementById("cartPanel");
-    const cartItems = document.getElementById("cartItems");
-    const cartTotal = document.getElementById("cartTotal");
-
-    const addButtons = document.querySelectorAll(".add-cart");
-
-
-    /* ADD PRODUCT TO CART */
-
-    addButtons.forEach(function(button) {
-
-        button.addEventListener("click", function() {
-
-            const product = button.closest(".product");
-
-            const name =
-                product.querySelector("h3").textContent.trim();
-
-            const priceText =
-                product.querySelector(".price").textContent;
-
-            const price =
-                parseFloat(
-                    priceText
-                        .replace("₱", "")
-                        .replace(",", "")
-                );
-
-
-            const existing =
-                cart.find(function(item) {
-
-                    return item.name === name;
-
-                });
-
-
-            if (existing) {
-
-                existing.quantity++;
-
-            } else {
-
-                cart.push({
-
-                    name: name,
-
-                    price: price,
-
-                    quantity: 1
-
-                });
-
-            }
-
-
-            updateCart();
-
-        });
-
-    });
-
-
-    /* OPEN CART */
-
-    cartButton.addEventListener("click", function() {
-
-        cartPanel.style.display = "block";
-
-    });
-
-
-    /* CLOSE CART */
-
-    window.closeCart = function() {
-
-        cartPanel.style.display = "none";
-
-    };
-
-
-    /* CHANGE QUANTITY */
-
-    window.changeQuantity = function(name, amount) {
-
-        const item =
-            cart.find(function(item) {
-
-                return item.name === name;
-
-            });
-
-
-        if (!item) return;
-
-
-        item.quantity += amount;
-
-
-        if (item.quantity <= 0) {
-
-            cart =
-                cart.filter(function(item) {
-
-                    return item.name !== name;
-
-                });
-
-        }
-
-
-        updateCart();
-
-    };
-
-
-    /* REMOVE PRODUCT */
-
-    window.removeItem = function(name) {
-
-        cart =
-            cart.filter(function(item) {
-
-                return item.name !== name;
-
-            });
-
-
-        updateCart();
-
-    };
-
-
-    /* UPDATE CART */
-
-    function updateCart() const searchInput =
-    document.getElementById("searchInput");
-
-searchInput.addEventListener("input", function() {
-
-    const searchText =
-<script>
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    let cart = [];
 
     const productList =
         document.getElementById("productList");
@@ -447,12 +252,15 @@ document.addEventListener("DOMContentLoaded", function () {
     /* LOAD PRODUCTS FROM SELLER */
 
     const products =
-        JSON.parse(localStorage.getItem("agapeProducts")) || [];
-
-    productList.innerHTML = "";
+        JSON.parse(
+            localStorage.getItem("agapeProducts")
+        ) || [];
 
 
     /* DISPLAY PRODUCTS */
+
+    productList.innerHTML = "";
+
 
     products.forEach(function(product) {
 
@@ -481,23 +289,42 @@ document.addEventListener("DOMContentLoaded", function () {
                     `
                 }
 
-                <strong>${product.brand || ""}</strong>
 
-                <h3>${product.name || ""}</h3>
+                <strong>
+                    ${product.brand || ""}
+                </strong>
 
-                <p>${product.description || ""}</p>
+
+                <h3>
+                    ${product.name || ""}
+                </h3>
+
+
+                <p>
+                    ${product.description || ""}
+                </p>
+
 
                 <div class="price">
+
                     ₱${Number(product.price || 0).toFixed(2)}
+
                     / ${product.unit || "Piece"}
+
                 </div>
+
 
                 <div class="stock">
+
                     🟢 ${product.stock || 0} available
+
                 </div>
 
+
                 <button class="add-cart">
+
                     Add to Cart
+
                 </button>
 
             </div>
@@ -512,162 +339,206 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput =
         document.getElementById("searchInput");
 
-    searchInput.addEventListener("input", function() {
 
-        const searchText =
-            searchInput.value.toLowerCase().trim();
+    searchInput.addEventListener(
+        "input",
+        function() {
 
-        const productCards =
-            document.querySelectorAll(".product");
-
-        productCards.forEach(function(card) {
-
-            const productText =
-                card.textContent.toLowerCase();
-
-            if (productText.includes(searchText)) {
-
-                card.style.display = "";
-
-            } else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
-    });
+            const searchText =
+                searchInput.value
+                .toLowerCase()
+                .trim();
 
 
-    /* ADD PRODUCT TO CART */
+            const productCards =
+                document.querySelectorAll(".product");
+
+
+            productCards.forEach(
+                function(card) {
+
+                    const productText =
+                        card.textContent
+                        .toLowerCase();
+
+
+                    if (
+                        productText.includes(searchText)
+                    ) {
+
+                        card.style.display = "";
+
+                    } else {
+
+                        card.style.display = "none";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    /* ADD TO CART */
 
     const addButtons =
         document.querySelectorAll(".add-cart");
 
-    addButtons.forEach(function(button) {
 
-        button.addEventListener("click", function() {
+    addButtons.forEach(
+        function(button) {
 
-            const product =
-                button.closest(".product");
+            button.addEventListener(
+                "click",
+                function() {
 
-            const name =
-                product.querySelector("h3").textContent.trim();
+                    const product =
+                        button.closest(".product");
 
-            const priceText =
-                product.querySelector(".price").textContent;
 
-            const price =
-                parseFloat(
-                    priceText
-                        .replace("₱", "")
-                        .replace(",", "")
+                    const name =
+                        product
+                        .querySelector("h3")
+                        .textContent
+                        .trim();
+
+
+                    const priceText =
+                        product
+                        .querySelector(".price")
+                        .textContent;
+
+
+                    const price =
+                        parseFloat(
+                            priceText
+                            .replace("₱", "")
+                            .replace(",", "")
+                        );
+
+
+                    const existing =
+                        cart.find(
+                            function(item) {
+
+                                return item.name === name;
+
+                            }
+                        );
+
+
+                    if (existing) {
+
+                        existing.quantity++;
+
+                    } else {
+
+                        cart.push({
+
+                            name: name,
+
+                            price: price,
+
+                            quantity: 1
+
+                        });
+
+                    }
+
+
+                    updateCart();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* OPEN CART */
+
+    cartButton.addEventListener(
+        "click",
+        function() {
+
+            cartPanel.style.display =
+                "block";
+
+        }
+    );
+
+
+    /* CLOSE CART */
+
+    window.closeCart =
+        function() {
+
+            cartPanel.style.display =
+                "none";
+
+        };
+
+
+    /* CHANGE QUANTITY */
+
+    window.changeQuantity =
+        function(name, amount) {
+
+            const item =
+                cart.find(
+                    function(item) {
+
+                        return item.name === name;
+
+                    }
                 );
 
 
-            const existing =
-                cart.find(function(item) {
-
-                    return item.name === name;
-
-                });
+            if (!item) return;
 
 
-            if (existing) {
+            item.quantity += amount;
 
-                existing.quantity++;
 
-            } else {
+            if (item.quantity <= 0) {
 
-                cart.push({
+                cart =
+                    cart.filter(
+                        function(item) {
 
-                    name: name,
+                            return item.name !== name;
 
-                    price: price,
-
-                    quantity: 1
-
-                });
+                        }
+                    );
 
             }
 
 
             updateCart();
 
-        });
-
-    });
-
-
-    /* OPEN CART */
-
-    cartButton.addEventListener("click", function() {
-
-        cartPanel.style.display = "block";
-
-    });
-
-
-    /* CLOSE CART */
-
-    window.closeCart = function() {
-
-        cartPanel.style.display = "none";
-
-    };
-
-
-    /* CHANGE QUANTITY */
-
-    window.changeQuantity = function(name, amount) {
-
-        const item =
-            cart.find(function(item) {
-
-                return item.name === name;
-
-            });
-
-
-        if (!item) return;
-
-
-        item.quantity += amount;
-
-
-        if (item.quantity <= 0) {
-
-            cart =
-                cart.filter(function(item) {
-
-                    return item.name !== name;
-
-                });
-
-        }
-
-
-        updateCart();
-
-    };
+        };
 
 
     /* REMOVE PRODUCT */
 
-    window.removeItem = function(name) {
+    window.removeItem =
+        function(name) {
 
-        cart =
-            cart.filter(function(item) {
+            cart =
+                cart.filter(
+                    function(item) {
 
-                return item.name !== name;
+                        return item.name !== name;
 
-            });
+                    }
+                );
 
 
-        updateCart();
+            updateCart();
 
-    };
+        };
 
 
     /* UPDATE CART */
@@ -676,70 +547,96 @@ document.addEventListener("DOMContentLoaded", function () {
 
         cartItems.innerHTML = "";
 
+
         let total = 0;
 
         let itemCount = 0;
 
 
-        cart.forEach(function(item) {
+        cart.forEach(
+            function(item) {
 
-            const subtotal =
-                item.price * item.quantity;
-
-
-            total += subtotal;
-
-            itemCount += item.quantity;
+                const subtotal =
+                    item.price *
+                    item.quantity;
 
 
-            cartItems.innerHTML += `
+                total += subtotal;
 
-                <div class="cart-item">
+                itemCount += item.quantity;
 
-                    <strong>
-                        ${item.name}
-                    </strong>
 
-                    <br>
+                cartItems.innerHTML += `
 
-                    ₱${item.price.toFixed(2)}
+                    <div class="cart-item">
 
-                    <div class="quantity">
+                        <strong>
+                            ${item.name}
+                        </strong>
 
-                        <button
-                            onclick="changeQuantity('${item.name}', -1)">
-                            −
-                        </button>
+                        <br>
 
-                        <span>
-                            ${item.quantity}
-                        </span>
+                        ₱${item.price.toFixed(2)}
 
-                        <button
-                            onclick="changeQuantity('${item.name}', 1)">
-                            +
-                        </button>
 
-                        <button
-                            class="remove"
-                            onclick="removeItem('${item.name}')">
-                            🗑️
-                        </button>
+                        <div class="quantity">
+
+                            <button
+                                onclick="
+                                    changeQuantity(
+                                        '${item.name}',
+                                        -1
+                                    )
+                                "
+                            >
+                                −
+                            </button>
+
+
+                            <span>
+                                ${item.quantity}
+                            </span>
+
+
+                            <button
+                                onclick="
+                                    changeQuantity(
+                                        '${item.name}',
+                                        1
+                                    )
+                                "
+                            >
+                                +
+                            </button>
+
+
+                            <button
+                                class="remove"
+                                onclick="
+                                    removeItem(
+                                        '${item.name}'
+                                    )
+                                "
+                            >
+                                🗑️
+                            </button>
+
+                        </div>
+
+
+                        <div>
+
+                            Subtotal:
+                            ₱${subtotal.toFixed(2)}
+
+                        </div>
 
                     </div>
 
-                    <div>
+                `;
 
-                        Subtotal:
-                        ₱${subtotal.toFixed(2)}
-
-                    </div>
-
-                </div>
-
-            `;
-
-        });
+            }
+        );
 
 
         cartTotal.textContent =
@@ -747,7 +644,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         cartButton.textContent =
-            "🛒 Cart (" + itemCount + ")";
+            "🛒 Cart (" +
+            itemCount +
+            ")";
 
     }
 
@@ -755,21 +654,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 
-    <footer style="
+
+<footer style="
     text-align:center;
     padding:30px 20px;
     margin-top:30px;
     background:#1f2937;
     color:white;
 ">
-    <a href="seller.html" style="
-        color:white;
-        text-decoration:none;
-        font-size:14px;
-    ">
+
+    <a
+        href="seller.html"
+        style="
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+        "
+    >
         🔐 Seller / Admin
     </a>
-    </footer>
-    
+
+</footer>
+
+
 </body>
 </html>

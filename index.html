@@ -226,10 +226,19 @@
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-document.addEventListener("DOMContentLoaded", function () {
+const SUPABASE_URL = "https://djeqfrifhqcpfxccotdl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
 
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+document.addEventListener("DOMContentLoaded", async function () {
     let cart = [];
 
 
@@ -251,10 +260,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* LOAD PRODUCTS FROM SELLER */
 
-    const products =
-        JSON.parse(
-            localStorage.getItem("agapeProducts")
-        ) || [];
+    const { data: products, error } = await supabase
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+if (error) {
+    console.error("Error loading products:", error);
+    productList.innerHTML = "<p>Unable to load products.</p>";
+    return;
+}
 
 
     /* DISPLAY PRODUCTS */

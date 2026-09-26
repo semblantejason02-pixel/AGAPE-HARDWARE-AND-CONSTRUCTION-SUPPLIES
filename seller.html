@@ -224,6 +224,7 @@
     type="file"
     id="productImage"
     accept="image/*"
+    onchange="previewImage(event)"
 >
 
         <label>Description / Specification</label>
@@ -329,9 +330,26 @@ let products =
     JSON.parse(localStorage.getItem("agapeProducts")) || [];
 
 let editingIndex = -1;
+let selectedImage = "";
 
 
 /* DISPLAY PRODUCTS */
+function previewImage(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        selectedImage = e.target.result;
+
+    };
+
+    reader.readAsDataURL(file);
+}
 
 function displayProducts() {
 
@@ -359,6 +377,18 @@ function displayProducts() {
         productList.innerHTML += `
 
             <div class="product">
+            ${product.image ? `
+    <img
+        src="${product.image}"
+        style="
+            width:100%;
+            height:180px;
+            object-fit:cover;
+            border-radius:8px;
+            margin-bottom:10px;
+        "
+    >
+` : ""}
 
                 <strong>
                     ${product.brand}
@@ -459,21 +489,21 @@ function saveProduct() {
 
     const product = {
 
-        brand: brand,
+    brand: brand,
+    name: name,
+    category: category,
+    description: description,
+    price: price,
+    stock: stock,
+    unit: unit,
 
-        name: name,
+    image:
+        selectedImage ||
+        (editingIndex !== -1
+            ? products[editingIndex].image || ""
+            : "")
 
-        category: category,
-
-        description: description,
-
-        price: price,
-
-        stock: stock,
-
-        unit: unit
-
-    };
+};
 
 
     /* ADD */
@@ -623,7 +653,9 @@ function clearForm() {
 
 
     editingIndex = -1;
+    selectedImage = "";
 
+document.getElementById("productImage").value = "";
 
     document.getElementById("formTitle").textContent =
         "➕ Add Product";
@@ -633,7 +665,6 @@ function clearForm() {
 
     document.getElementById("cancelButton").style.display =
         "none";
-
 }
 
 

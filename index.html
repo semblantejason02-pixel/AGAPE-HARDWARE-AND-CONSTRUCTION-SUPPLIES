@@ -165,10 +165,11 @@
     <h1>🏗️ AGAPE HARDWARE AND SUPPLIES</h1>
 
     <input
-        type="text"
-        class="search"
-        placeholder="Search hardware products..."
-    >
+    type="text"
+    class="search"
+    id="searchInput"
+    placeholder="Search hardware products..."
+>
 </header>
 
 <div class="container">
@@ -415,7 +416,35 @@ products.forEach(function(product) {
 
     /* UPDATE CART */
 
-    function updateCart() {
+    function updateCart() const searchInput =
+    document.getElementById("searchInput");
+
+searchInput.addEventListener("input", function() {
+
+    const searchText =
+        searchInput.value.toLowerCase().trim();
+
+    const productCards =
+        document.querySelectorAll(".product");
+
+    productCards.forEach(function(card) {
+
+        const productText =
+            card.textContent.toLowerCase();
+
+        if (productText.includes(searchText)) {
+
+            card.style.display = "";
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}); {
 
         cartItems.innerHTML = "";
 

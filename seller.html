@@ -324,10 +324,19 @@
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-let products =
-    JSON.parse(localStorage.getItem("agapeProducts")) || [];
+const SUPABASE_URL = "https://djeqfrifhqcpfxccotdl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
+
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+let products = [];
 
 let editingIndex = -1;
 let selectedImage = "";

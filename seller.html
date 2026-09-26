@@ -81,6 +81,18 @@
             cursor: pointer;
         }
 
+        .cancel-edit {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            background: #ddd;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+        }
+
         .product {
             border-bottom: 1px solid #ddd;
             padding: 15px 0;
@@ -93,12 +105,37 @@
         .price {
             font-size: 18px;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 8px;
         }
 
         .stock {
             color: green;
             margin-top: 5px;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .edit-button,
+        .delete-button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .edit-button {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .delete-button {
+            background: #ef4444;
+            color: white;
         }
 
         .empty {
@@ -119,11 +156,11 @@
 
 <div class="container">
 
-    <!-- ADD PRODUCT -->
+    <!-- ADD / EDIT PRODUCT -->
 
     <div class="card">
 
-        <h2>➕ Add Product</h2>
+        <h2 id="formTitle">➕ Add Product</h2>
 
         <label>Brand</label>
 
@@ -248,9 +285,19 @@
 
         <button
             class="add-product"
-            onclick="addProduct()"
+            id="saveButton"
+            onclick="saveProduct()"
         >
             ➕ Add Product
+        </button>
+
+
+        <button
+            class="cancel-edit"
+            id="cancelButton"
+            onclick="cancelEdit()"
+        >
+            Cancel Edit
         </button>
 
     </div>
@@ -262,13 +309,7 @@
 
         <h2>📦 Products</h2>
 
-        <div id="productList">
-
-            <div class="empty">
-                No products added yet.
-            </div>
-
-        </div>
+        <div id="productList"></div>
 
     </div>
 
@@ -277,153 +318,321 @@
 
 <script>
 
-    let products = [];
+let products =
+    JSON.parse(localStorage.getItem("agapeProducts")) || [];
+
+let editingIndex = -1;
 
 
-    function addProduct() {
+/* DISPLAY PRODUCTS */
 
-        const brand =
-            document.getElementById("brand").value.trim();
+function displayProducts() {
 
-        const name =
-            document.getElementById("productName").value.trim();
-
-        const category =
-            document.getElementById("category").value;
-
-        const description =
-            document.getElementById("description").value.trim();
-
-        const price =
-            parseFloat(
-                document.getElementById("price").value
-            );
-
-        const stock =
-            parseInt(
-                document.getElementById("stock").value
-            );
-
-        const unit =
-            document.getElementById("unit").value;
+    const productList =
+        document.getElementById("productList");
 
 
-        if (
-            !brand ||
-            !name ||
-            !category ||
-            isNaN(price) ||
-            isNaN(stock)
-        ) {
+    if (products.length === 0) {
 
-            alert("Please complete the required fields.");
+        productList.innerHTML = `
+            <div class="empty">
+                No products added yet.
+            </div>
+        `;
 
-            return;
-        }
+        return;
+    }
 
 
-        const product = {
+    productList.innerHTML = "";
 
-            brand: brand,
 
-            name: name,
+    products.forEach(function(product, index) {
 
-            category: category,
+        productList.innerHTML += `
 
-            description: description,
+            <div class="product">
 
-            price: price,
+                <strong>
+                    ${product.brand}
+                </strong>
 
-            stock: stock,
+                <h3>
+                    ${product.name}
+                </h3>
 
-            unit: unit
+                <p>
+                    ${product.category}
+                </p>
 
-        };
+                <p>
+                    ${product.description}
+                </p>
 
+                <div class="price">
+                    ₱${product.price.toFixed(2)}
+                    / ${product.unit}
+                </div>
+
+                <div class="stock">
+                    🟢 ${product.stock}
+                    available
+                </div>
+
+                <div class="product-buttons">
+
+                    <button
+                        class="edit-button"
+                        onclick="editProduct(${index})"
+                    >
+                        ✏️ Edit
+                    </button>
+
+                    <button
+                        class="delete-button"
+                        onclick="deleteProduct(${index})"
+                    >
+                        🗑️ Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* SAVE PRODUCT */
+
+function saveProduct() {
+
+    const brand =
+        document.getElementById("brand").value.trim();
+
+    const name =
+        document.getElementById("productName").value.trim();
+
+    const category =
+        document.getElementById("category").value;
+
+    const description =
+        document.getElementById("description").value.trim();
+
+    const price =
+        parseFloat(
+            document.getElementById("price").value
+        );
+
+    const stock =
+        parseInt(
+            document.getElementById("stock").value
+        );
+
+    const unit =
+        document.getElementById("unit").value;
+
+
+    if (
+        !brand ||
+        !name ||
+        !category ||
+        isNaN(price) ||
+        isNaN(stock)
+    ) {
+
+        alert("Please complete the required fields.");
+
+        return;
+    }
+
+
+    const product = {
+
+        brand: brand,
+
+        name: name,
+
+        category: category,
+
+        description: description,
+
+        price: price,
+
+        stock: stock,
+
+        unit: unit
+
+    };
+
+
+    /* ADD */
+
+    if (editingIndex === -1) {
 
         products.push(product);
 
+        alert("Product added successfully.");
 
-        displayProducts();
+    }
 
+    /* EDIT */
 
-        document.getElementById("brand").value = "";
+    else {
 
-        document.getElementById("productName").value = "";
+        products[editingIndex] = product;
 
-        document.getElementById("category").value = "";
-
-        document.getElementById("description").value = "";
-
-        document.getElementById("price").value = "";
-
-        document.getElementById("stock").value = "";
-
-        document.getElementById("unit").value = "Piece";
+        alert("Product updated successfully.");
 
     }
 
 
-    function displayProducts() {
-
-        const productList =
-            document.getElementById("productList");
-
-
-        if (products.length === 0) {
-
-            productList.innerHTML = `
-                <div class="empty">
-                    No products added yet.
-                </div>
-            `;
-
-            return;
-        }
+    localStorage.setItem(
+        "agapeProducts",
+        JSON.stringify(products)
+    );
 
 
-        productList.innerHTML = "";
+    clearForm();
+
+    displayProducts();
+
+}
 
 
-        products.forEach(function(product) {
+/* EDIT PRODUCT */
 
-            productList.innerHTML += `
+function editProduct(index) {
 
-                <div class="product">
+    const product =
+        products[index];
 
-                    <strong>
-                        ${product.brand}
-                    </strong>
 
-                    <h3>
-                        ${product.name}
-                    </h3>
+    document.getElementById("brand").value =
+        product.brand;
 
-                    <p>
-                        ${product.category}
-                    </p>
+    document.getElementById("productName").value =
+        product.name;
 
-                    <p>
-                        ${product.description}
-                    </p>
+    document.getElementById("category").value =
+        product.category;
 
-                    <div class="price">
-                        ₱${product.price.toFixed(2)}
-                        / ${product.unit}
-                    </div>
+    document.getElementById("description").value =
+        product.description;
 
-                    <div class="stock">
-                        🟢 ${product.stock}
-                        available
-                    </div>
+    document.getElementById("price").value =
+        product.price;
 
-                </div>
+    document.getElementById("stock").value =
+        product.stock;
 
-            `;
+    document.getElementById("unit").value =
+        product.unit;
 
-        });
 
+    editingIndex = index;
+
+
+    document.getElementById("formTitle").textContent =
+        "✏️ Edit Product";
+
+    document.getElementById("saveButton").textContent =
+        "💾 Update Product";
+
+    document.getElementById("cancelButton").style.display =
+        "block";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* DELETE PRODUCT */
+
+function deleteProduct(index) {
+
+    const product =
+        products[index];
+
+
+    const confirmDelete =
+        confirm(
+            "Delete " + product.name + "?"
+        );
+
+
+    if (!confirmDelete) {
+        return;
     }
+
+
+    products.splice(index, 1);
+
+
+    localStorage.setItem(
+        "agapeProducts",
+        JSON.stringify(products)
+    );
+
+
+    displayProducts();
+
+}
+
+
+/* CANCEL EDIT */
+
+function cancelEdit() {
+
+    clearForm();
+
+}
+
+
+/* CLEAR FORM */
+
+function clearForm() {
+
+    document.getElementById("brand").value = "";
+
+    document.getElementById("productName").value = "";
+
+    document.getElementById("category").value = "";
+
+    document.getElementById("description").value = "";
+
+    document.getElementById("price").value = "";
+
+    document.getElementById("stock").value = "";
+
+    document.getElementById("unit").value = "Piece";
+
+
+    editingIndex = -1;
+
+
+    document.getElementById("formTitle").textContent =
+        "➕ Add Product";
+
+    document.getElementById("saveButton").textContent =
+        "➕ Add Product";
+
+    document.getElementById("cancelButton").style.display =
+        "none";
+
+}
+
+
+/* LOAD PRODUCTS */
+
+displayProducts();
 
 </script>
 

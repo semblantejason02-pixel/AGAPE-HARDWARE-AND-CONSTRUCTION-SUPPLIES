@@ -712,6 +712,51 @@ async function loginSeller() {
     const message =
         document.getElementById("loginMessage");
 
+    if (!email || !password) {
+        message.textContent = "⚠️ Please enter email and password.";
+        return;
+    }
+
+    message.textContent = "⏳ Logging in...";
+
+    try {
+
+        const { data, error } =
+            await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+        if (error) {
+            message.textContent =
+                "❌ " + error.message;
+            return;
+        }
+
+        message.textContent = "✅ Login successful!";
+
+        document.getElementById("loginBox").style.display = "none";
+
+        document.getElementById("adminContent").style.display = "block";
+
+    } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+            "❌ Connection error: " + error.message;
+    }
+}
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
     const { error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password

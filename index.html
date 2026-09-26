@@ -1,26 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AGAPE HARDWARE AND SUPPLIES</title>
 
-
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
 
         body {
             font-family: Arial, sans-serif;
@@ -28,18 +19,15 @@
             color: #222;
         }
 
-
         header {
             background: #1f2937;
             color: white;
             padding: 20px;
         }
 
-
         header h1 {
             margin-bottom: 15px;
         }
-
 
         .search {
             width: 100%;
@@ -49,13 +37,11 @@
             font-size: 16px;
         }
 
-
         .container {
             max-width: 1100px;
             margin: auto;
             padding: 20px;
         }
-
 
         .category {
             display: flex;
@@ -64,79 +50,40 @@
             margin-bottom: 20px;
         }
 
-
         .category button {
             padding: 10px 15px;
             border: none;
             background: white;
             border-radius: 6px;
             cursor: pointer;
-            white-space: nowrap;
         }
-
-
-        .category button:hover {
-            background: #f59e0b;
-            color: white;
-        }
-
 
         .products {
             display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
         }
-
 
         .product {
             background: white;
             padding: 15px;
             border-radius: 10px;
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-
         .product-image {
-            height: 150px;
+            height: 130px;
             background: #ddd;
             border-radius: 8px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             margin-bottom: 12px;
-            overflow: hidden;
         }
-
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
 
         .product h3 {
             margin-bottom: 8px;
         }
-
-
-        .brand {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-
-        .description {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 10px;
-        }
-
 
         .price {
             font-size: 20px;
@@ -144,17 +91,10 @@
             margin-bottom: 5px;
         }
 
-
         .stock {
             color: green;
             margin-bottom: 12px;
         }
-
-
-        .out-of-stock {
-            color: red;
-        }
-
 
         .add-cart {
             width: 100%;
@@ -166,58 +106,33 @@
             font-weight: bold;
         }
 
-
-        .add-cart:disabled {
-            background: #aaa;
-            cursor: not-allowed;
-        }
-
-
         .cart {
             position: fixed;
             right: 20px;
             bottom: 20px;
-
             background: #111827;
             color: white;
-
             padding: 15px 20px;
-
             border-radius: 30px;
-
             cursor: pointer;
-
             z-index: 1000;
         }
 
-
         .cart-panel {
             display: none;
-
             position: fixed;
-
             right: 20px;
             bottom: 80px;
-
             width: 350px;
             max-width: 90%;
-
             max-height: 80vh;
-
             overflow-y: auto;
-
             background: white;
-
             padding: 20px;
-
             border-radius: 12px;
-
-            box-shadow:
-                0 5px 20px rgba(0,0,0,0.2);
-
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
             z-index: 999;
         }
-
 
         .cart-item {
             margin: 10px 0;
@@ -225,18 +140,15 @@
             border-bottom: 1px solid #ddd;
         }
 
-
         .quantity button {
             padding: 5px 10px;
             margin: 5px 3px;
             cursor: pointer;
         }
 
-
         .remove {
             margin-left: 8px;
         }
-
 
         .close-cart {
             margin-top: 15px;
@@ -244,147 +156,58 @@
             width: 100%;
             cursor: pointer;
         }
-
-
-        .empty-products {
-            text-align: center;
-            padding: 30px;
-            grid-column: 1 / -1;
-            color: #777;
-        }
-
-
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 30px;
-            background: #1f2937;
-            color: white;
-        }
-
-
-        footer a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
     </style>
-
 </head>
-
 
 <body>
 
-
 <header>
-
-    <h1>
-        🏗️ AGAPE HARDWARE AND SUPPLIES
-    </h1>
-
+    <h1>🏗️ AGAPE HARDWARE AND SUPPLIES</h1>
 
     <input
         type="text"
-        id="searchInput"
         class="search"
         placeholder="Search hardware products..."
     >
-
 </header>
-
 
 <div class="container">
 
-
-    <!-- CATEGORY -->
-
     <div class="category">
-
-        <button onclick="filterCategory('All')">
-            All
-        </button>
-
-        <button onclick="filterCategory('Cement')">
-            Cement
-        </button>
-
-        <button onclick="filterCategory('Steel')">
-            Steel
-        </button>
-
-        <button onclick="filterCategory('Electrical')">
-            Electrical
-        </button>
-
-        <button onclick="filterCategory('Plumbing')">
-            Plumbing
-        </button>
-
-        <button onclick="filterCategory('Paint')">
-            Paint
-        </button>
-
-        <button onclick="filterCategory('Tools')">
-            Tools
-        </button>
-
+        <button>All</button>
+        <button>Cement</button>
+        <button>Steel</button>
+        <button>Electrical</button>
+        <button>Plumbing</button>
+        <button>Tools</button>
     </div>
 
-
-    <!-- PRODUCTS -->
-
-    <div
-        class="products"
-        id="productList"
-    >
+    <div class="products" id="productList">
     </div>
-
 
 </div>
-
-
 <!-- CART BUTTON -->
 
-<div
-    class="cart"
-    id="cartButton"
->
+<div class="cart" id="cartButton">
     🛒 Cart (0)
 </div>
 
 
 <!-- CART PANEL -->
 
-<div
-    class="cart-panel"
-    id="cartPanel"
->
+<div class="cart-panel" id="cartPanel">
 
-    <h2>
-        🛒 Your Cart
-    </h2>
+    <h2>🛒 Your Cart</h2>
 
-
-    <div id="cartItems">
-    </div>
-
+    <div id="cartItems"></div>
 
     <hr>
 
-
-    <h3 style="margin-top:15px;">
-
-        Total:
-        ₱<span id="cartTotal">0.00</span>
-
+    <h3>
+        Total: ₱<span id="cartTotal">0.00</span>
     </h3>
 
-
-    <button
-        class="close-cart"
-        onclick="closeCart()"
-    >
+    <button class="close-cart" onclick="closeCart()">
         Close
     </button>
 
@@ -393,725 +216,244 @@
 
 <script>
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+document.addEventListener("DOMContentLoaded", function () {
+
+    let cart = [];
+
+    const cartButton = document.getElementById("cartButton");
+    const cartPanel = document.getElementById("cartPanel");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    const addButtons = document.querySelectorAll(".add-cart");
 
 
-        /* =========================
-           LOAD PRODUCTS
-        ========================= */
+    /* ADD PRODUCT TO CART */
 
-        let products =
-            JSON.parse(
-                localStorage.getItem(
-                    "agapeProducts"
-                )
-            ) || [];
+    addButtons.forEach(function(button) {
 
+        button.addEventListener("click", function() {
 
-        /* =========================
-           CART
-        ========================= */
+            const product = button.closest(".product");
 
-        let cart = [];
+            const name =
+                product.querySelector("h3").textContent.trim();
 
+            const priceText =
+                product.querySelector(".price").textContent;
 
-        const productList =
-            document.getElementById(
-                "productList"
-            );
-
-
-        const cartButton =
-            document.getElementById(
-                "cartButton"
-            );
-
-
-        const cartPanel =
-            document.getElementById(
-                "cartPanel"
-            );
-
-
-        const cartItems =
-            document.getElementById(
-                "cartItems"
-            );
-
-
-        const cartTotal =
-            document.getElementById(
-                "cartTotal"
-            );
-
-
-        const searchInput =
-            document.getElementById(
-                "searchInput"
-            );
-
-
-        let selectedCategory = "All";
-
-
-        /* =========================
-           DISPLAY PRODUCTS
-        ========================= */
-
-        function displayProducts() {
-
-            productList.innerHTML = "";
-
-
-            const searchText =
-                searchInput.value
-                    .toLowerCase()
-                    .trim();
-
-
-            const filteredProducts =
-                products.filter(
-                    function(product) {
-
-
-                        const fullName =
-                            (
-                                product.brand +
-                                " " +
-                                product.name +
-                                " " +
-                                product.description
-                            )
-                            .toLowerCase();
-
-
-                        const categoryMatch =
-                            selectedCategory ===
-                            "All" ||
-                            product.category ===
-                            selectedCategory;
-
-
-                        const searchMatch =
-                            fullName.includes(
-                                searchText
-                            );
-
-
-                        return (
-                            categoryMatch &&
-                            searchMatch
-                        );
-
-                    }
+            const price =
+                parseFloat(
+                    priceText
+                        .replace("₱", "")
+                        .replace(",", "")
                 );
 
 
-            if (
-                filteredProducts.length ===
-                0
-            ) {
+            const existing =
+                cart.find(function(item) {
 
-                productList.innerHTML = `
+                    return item.name === name;
 
-                    <div class="empty-products">
+                });
 
-                        No products available.
+
+            if (existing) {
+
+                existing.quantity++;
+
+            } else {
+
+                cart.push({
+
+                    name: name,
+
+                    price: price,
+
+                    quantity: 1
+
+                });
+
+            }
+
+
+            updateCart();
+
+        });
+
+    });
+
+
+    /* OPEN CART */
+
+    cartButton.addEventListener("click", function() {
+
+        cartPanel.style.display = "block";
+
+    });
+
+
+    /* CLOSE CART */
+
+    window.closeCart = function() {
+
+        cartPanel.style.display = "none";
+
+    };
+
+
+    /* CHANGE QUANTITY */
+
+    window.changeQuantity = function(name, amount) {
+
+        const item =
+            cart.find(function(item) {
+
+                return item.name === name;
+
+            });
+
+
+        if (!item) return;
+
+
+        item.quantity += amount;
+
+
+        if (item.quantity <= 0) {
+
+            cart =
+                cart.filter(function(item) {
+
+                    return item.name !== name;
+
+                });
+
+        }
+
+
+        updateCart();
+
+    };
+
+
+    /* REMOVE PRODUCT */
+
+    window.removeItem = function(name) {
+
+        cart =
+            cart.filter(function(item) {
+
+                return item.name !== name;
+
+            });
+
+
+        updateCart();
+
+    };
+
+
+    /* UPDATE CART */
+
+    function updateCart() {
+
+        cartItems.innerHTML = "";
+
+        let total = 0;
+
+        let itemCount = 0;
+
+
+        cart.forEach(function(item) {
+
+            const subtotal =
+                item.price * item.quantity;
+
+
+            total += subtotal;
+
+            itemCount += item.quantity;
+
+
+            cartItems.innerHTML += `
+
+                <div class="cart-item">
+
+                    <strong>
+                        ${item.name}
+                    </strong>
+
+                    <br>
+
+                    ₱${item.price.toFixed(2)}
+
+                    <div class="quantity">
+
+                        <button
+                            onclick="changeQuantity('${item.name}', -1)">
+                            −
+                        </button>
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+                        <button
+                            onclick="changeQuantity('${item.name}', 1)">
+                            +
+                        </button>
+
+                        <button
+                            class="remove"
+                            onclick="removeItem('${item.name}')">
+                            🗑️
+                        </button>
 
                     </div>
 
-                `;
+                    <div>
 
-                return;
-            }
+                        Subtotal:
+                        ₱${subtotal.toFixed(2)}
 
+                    </div>
 
-            filteredProducts.forEach(
-                function(product) {
+                </div>
 
+            `;
 
-                    const originalIndex =
-                        products.indexOf(
-                            product
-                        );
+        });
 
 
-                    const stock =
-                        Number(
-                            product.stock
-                        );
+        cartTotal.textContent =
+            total.toFixed(2);
 
 
-                    let imageHTML = `
-
-                        Product Image
-
-                    `;
-
-
-                    if (product.image) {
-
-                        imageHTML = `
-
-                            <img
-                                src="${product.image}"
-                                alt="${product.name}"
-                            >
-
-                        `;
-
-                    }
-
-
-                    let stockHTML;
-
-
-                    if (stock <= 0) {
-
-                        stockHTML = `
-
-                            <div
-                                class="stock out-of-stock"
-                            >
-                                🔴 Out of stock
-                            </div>
-
-                        `;
-
-                    } else {
-
-                        stockHTML = `
-
-                            <div class="stock">
-
-                                🟢
-                                ${stock}
-                                available
-
-                            </div>
-
-                        `;
-
-                    }
-
-
-                    productList.innerHTML += `
-
-                        <div class="product">
-
-
-                            <div class="product-image">
-
-                                ${imageHTML}
-
-                            </div>
-
-
-                            <div class="brand">
-
-                                ${product.brand}
-
-                            </div>
-
-
-                            <h3>
-
-                                ${product.name}
-
-                            </h3>
-
-
-                            <div class="description">
-
-                                ${product.description || ""}
-
-                            </div>
-
-
-                            <div class="price">
-
-                                ₱${Number(
-                                    product.price
-                                ).toFixed(2)}
-
-                                / ${product.unit}
-
-                            </div>
-
-
-                            ${stockHTML}
-
-
-                            <button
-
-                                class="add-cart"
-
-                                onclick="
-                                    addToCart(
-                                        ${originalIndex}
-                                    )
-                                "
-
-                                ${
-                                    stock <= 0
-                                    ? "disabled"
-                                    : ""
-                                }
-
-                            >
-
-                                ${
-                                    stock <= 0
-                                    ? "Out of Stock"
-                                    : "Add to Cart"
-                                }
-
-                            </button>
-
-
-                        </div>
-
-                    `;
-
-                }
-            );
-
-        }
-
-
-        /* =========================
-           CATEGORY FILTER
-        ========================= */
-
-        window.filterCategory =
-            function(category) {
-
-                selectedCategory =
-                    category;
-
-                displayProducts();
-
-            };
-
-
-        /* =========================
-           ADD TO CART
-        ========================= */
-
-        window.addToCart =
-            function(index) {
-
-
-                const product =
-                    products[index];
-
-
-                if (!product) {
-                    return;
-                }
-
-
-                const stock =
-                    Number(
-                        product.stock
-                    );
-
-
-                if (stock <= 0) {
-
-                    alert(
-                        "This product is out of stock."
-                    );
-
-                    return;
-
-                }
-
-
-                const existing =
-                    cart.find(
-                        function(item) {
-
-                            return (
-                                item.index ===
-                                index
-                            );
-
-                        }
-                    );
-
-
-                if (existing) {
-
-
-                    if (
-                        existing.quantity >=
-                        stock
-                    ) {
-
-                        alert(
-                            "No more stock available."
-                        );
-
-                        return;
-
-                    }
-
-
-                    existing.quantity++;
-
-
-                } else {
-
-
-                    cart.push({
-
-                        index: index,
-
-                        name:
-                            product.brand +
-                            " " +
-                            product.name,
-
-                        price:
-                            Number(
-                                product.price
-                            ),
-
-                        unit:
-                            product.unit,
-
-                        quantity: 1
-
-                    });
-
-                }
-
-
-                updateCart();
-
-            };
-
-
-        /* =========================
-           OPEN CART
-        ========================= */
-
-        cartButton.addEventListener(
-            "click",
-            function() {
-
-                cartPanel.style.display =
-                    "block";
-
-            }
-        );
-
-
-        /* =========================
-           CLOSE CART
-        ========================= */
-
-        window.closeCart =
-            function() {
-
-                cartPanel.style.display =
-                    "none";
-
-            };
-
-
-        /* =========================
-           CHANGE QUANTITY
-        ========================= */
-
-        window.changeQuantity =
-            function(
-                index,
-                amount
-            ) {
-
-
-                const item =
-                    cart.find(
-                        function(item) {
-
-                            return (
-                                item.index ===
-                                index
-                            );
-
-                        }
-                    );
-
-
-                if (!item) {
-                    return;
-                }
-
-
-                const product =
-                    products[index];
-
-
-                if (!product) {
-                    return;
-                }
-
-
-                item.quantity += amount;
-
-
-                if (
-                    item.quantity >
-                    Number(product.stock)
-                ) {
-
-                    item.quantity =
-                        Number(
-                            product.stock
-                        );
-
-                }
-
-
-                if (
-                    item.quantity <= 0
-                ) {
-
-                    cart =
-                        cart.filter(
-                            function(item) {
-
-                                return (
-                                    item.index !==
-                                    index
-                                );
-
-                            }
-                        );
-
-                }
-
-
-                updateCart();
-
-            };
-
-
-        /* =========================
-           REMOVE FROM CART
-        ========================= */
-
-        window.removeItem =
-            function(index) {
-
-
-                cart =
-                    cart.filter(
-                        function(item) {
-
-                            return (
-                                item.index !==
-                                index
-                            );
-
-                        }
-                    );
-
-
-                updateCart();
-
-            };
-
-
-        /* =========================
-           UPDATE CART
-        ========================= */
-
-        function updateCart() {
-
-
-            cartItems.innerHTML =
-                "";
-
-
-            let total = 0;
-
-            let itemCount = 0;
-
-
-            cart.forEach(
-                function(item) {
-
-
-                    const subtotal =
-                        item.price *
-                        item.quantity;
-
-
-                    total += subtotal;
-
-
-                    itemCount +=
-                        item.quantity;
-
-
-                    cartItems.innerHTML += `
-
-                        <div
-                            class="cart-item"
-                        >
-
-
-                            <strong>
-
-                                ${item.name}
-
-                            </strong>
-
-
-                            <br>
-
-
-                            ₱${item.price.toFixed(2)}
-
-                            / ${item.unit}
-
-
-                            <div
-                                class="quantity"
-                            >
-
-
-                                <button
-
-                                    onclick="
-                                        changeQuantity(
-                                            ${item.index},
-                                            -1
-                                        )
-                                    "
-
-                                >
-
-                                    −
-
-                                </button>
-
-
-                                <span>
-
-                                    ${item.quantity}
-
-                                </span>
-
-
-                                <button
-
-                                    onclick="
-                                        changeQuantity(
-                                            ${item.index},
-                                            1
-                                        )
-                                    "
-
-                                >
-
-                                    +
-
-                                </button>
-
-
-                                <button
-
-                                    class="remove"
-
-                                    onclick="
-                                        removeItem(
-                                            ${item.index}
-                                        )
-                                    "
-
-                                >
-
-                                    🗑️
-
-                                </button>
-
-
-                            </div>
-
-
-                            <div>
-
-                                Subtotal:
-
-                                ₱${subtotal.toFixed(2)}
-
-                            </div>
-
-
-                        </div>
-
-                    `;
-
-                }
-            );
-
-
-            cartTotal.textContent =
-                total.toFixed(2);
-
-
-            cartButton.textContent =
-                "🛒 Cart (" +
-                itemCount +
-                ")";
-
-        }
-
-
-        /* =========================
-           SEARCH
-        ========================= */
-
-        searchInput.addEventListener(
-            "input",
-            function() {
-
-                displayProducts();
-
-            }
-        );
-
-
-        /* =========================
-           INITIAL LOAD
-        ========================= */
-
-        displayProducts();
-
+        cartButton.textContent =
+            "🛒 Cart (" + itemCount + ")";
 
     }
-);
+
+});
 
 </script>
 
-
-<footer>
-
-    <a href="seller.html">
-
+    <footer style="
+    text-align:center;
+    padding:30px 20px;
+    margin-top:30px;
+    background:#1f2937;
+    color:white;
+">
+    <a href="seller.html" style="
+        color:white;
+        text-decoration:none;
+        font-size:14px;
+    ">
         🔐 Seller / Admin
-
     </a>
-
-</footer>
-
-
+    </footer>
+    
 </body>
-
 </html>

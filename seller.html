@@ -677,9 +677,27 @@ document.getElementById("productImage").value = "";
 }
 
 
-/* LOAD PRODUCTS */
+/* LOAD PRODUCTS FROM SUPABASE */
 
-displayProducts();
+async function loadProducts() {
+
+    const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Error loading products:", error);
+        alert("Unable to load products from Supabase.");
+        return;
+    }
+
+    products = data || [];
+
+    displayProducts();
+}
+
+loadProducts();
 
 </script>
 

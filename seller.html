@@ -20,6 +20,10 @@ body {
     color: #222;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 header {
     background: #111;
     color: white;
@@ -32,6 +36,16 @@ header h1 {
     font-size: 22px;
 }
 
+header p {
+    margin: 6px 0 0;
+    color: #bbb;
+    font-size: 13px;
+}
+
+/* =========================
+   GENERAL
+========================= */
+
 .container {
     max-width: 1100px;
     margin: auto;
@@ -41,20 +55,28 @@ header h1 {
 .card {
     background: white;
     padding: 18px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.hidden {
+    display: none !important;
 }
 
 input,
 textarea,
 select {
     width: 100%;
-    padding: 11px;
+    padding: 12px;
     margin-top: 5px;
     margin-bottom: 12px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 7px;
     font-size: 15px;
 }
 
@@ -64,9 +86,10 @@ textarea {
 
 button {
     border: none;
-    border-radius: 6px;
+    border-radius: 7px;
     padding: 10px 14px;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .primary {
@@ -89,51 +112,197 @@ button {
     color: #222;
 }
 
-.hidden {
-    display: none !important;
+button:active {
+    transform: scale(.98);
 }
+
+/* =========================
+   LOGIN
+========================= */
 
 .login-box {
     max-width: 420px;
     margin: 50px auto;
 }
 
+.login-box h2 {
+    text-align: center;
+}
+
 .message {
     padding: 10px;
     margin-bottom: 12px;
-    border-radius: 6px;
+    border-radius: 7px;
     background: #eee;
 }
 
-.product-list,
-.order-list {
-    display: grid;
-    gap: 15px;
+/* =========================
+   ADMIN TOP BAR
+========================= */
+
+.admin-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.product-card,
-.order-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    background: #fff;
+.admin-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.admin-nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding-bottom: 3px;
+}
+
+.admin-nav button {
+    white-space: nowrap;
+    background: white;
+    border: 1px solid #ccc;
+    color: #222;
+}
+
+.admin-nav button.active {
+    background: #111;
+    color: white;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.dashboard-box {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 7px rgba(0,0,0,.06);
+}
+
+.dashboard-label {
+    color: #777;
+    font-size: 13px;
+}
+
+.dashboard-number {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.admin-section {
+    display: none;
+}
+
+.admin-section.active {
+    display: block;
+}
+
+/* =========================
+   PRODUCT FORM
+========================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 15px;
+}
+
+.form-full {
+    grid-column: 1 / -1;
+}
+
+.form-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.current-image {
+    margin-bottom: 12px;
+}
+
+.current-image img {
+    width: 120px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+/* =========================
+   PRODUCT LIST
+========================= */
+
+.product-list {
+    display: grid;
+    gap: 12px;
 }
 
 .product-card {
     display: flex;
     gap: 15px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    padding: 14px;
+    background: white;
 }
 
 .product-card img {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 7px;
     background: #eee;
 }
 
 .product-info {
     flex: 1;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.product-meta {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.stock-good {
+    color: #16803c;
+    font-weight: bold;
+}
+
+.stock-low {
+    color: #d97706;
+    font-weight: bold;
+}
+
+.stock-out {
+    color: #d32f2f;
+    font-weight: bold;
 }
 
 .actions {
@@ -143,49 +312,120 @@ button {
     margin-top: 10px;
 }
 
+/* =========================
+   ORDERS
+========================= */
+
+.order-list {
+    display: grid;
+    gap: 15px;
+}
+
+.order-card {
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    padding: 15px;
+    background: white;
+}
+
 .order-header {
     display: flex;
     justify-content: space-between;
     gap: 10px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .order-number {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: bold;
 }
 
 .status {
-    padding: 6px 10px;
+    padding: 6px 11px;
     border-radius: 15px;
     background: #eee;
     font-size: 13px;
+    font-weight: bold;
 }
 
 .order-details {
     margin-top: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .order-items {
     margin-top: 12px;
     background: #f5f5f5;
-    padding: 10px;
-    border-radius: 6px;
+    padding: 12px;
+    border-radius: 7px;
+}
+
+.order-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-item:last-child {
+    border-bottom: none;
 }
 
 .order-total {
     text-align: right;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
-.logout {
-    float: right;
+.order-actions {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-top: 12px;
 }
 
-@media (max-width: 600px) {
+/* =========================
+   EMPTY / STATUS
+========================= */
+
+.empty {
+    text-align: center;
+    padding: 25px;
+    color: #777;
+    background: #fafafa;
+    border-radius: 8px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.section-header h2 {
+    margin: 0;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .dashboard-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-full {
+        grid-column: auto;
+    }
 
     .product-card {
         flex-direction: column;
@@ -196,9 +436,25 @@ button {
         height: 180px;
     }
 
-    .logout {
-        float: none;
-        margin-top: 10px;
+    .admin-top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dashboard-number {
+        font-size: 23px;
     }
 }
 </style>
@@ -208,11 +464,13 @@ button {
 
 <header>
     <h1>AGAPE HARDWARE AND SUPPLIES</h1>
-    <div>Seller / Admin Panel</div>
+    <p>Seller / Admin Panel</p>
 </header>
 
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN
+========================= -->
 
 <div id="loginSection" class="container">
 
@@ -251,183 +509,434 @@ button {
 </div>
 
 
-<!-- ADMIN -->
+<!-- =========================
+     ADMIN
+========================= -->
 
 <div id="adminSection" class="container hidden">
 
-    <button
-        class="red logout"
-        onclick="logoutSeller()"
-    >
-        Logout
-    </button>
+    <div class="admin-top">
 
-    <div style="clear:both;"></div>
-
-    <!-- ORDERS -->
-
-    <div class="card">
-
-        <h2>📦 Customer Orders</h2>
+        <div class="admin-title">
+            Seller Dashboard
+        </div>
 
         <button
-            class="primary"
-            onclick="loadOrders()"
+            class="red"
+            onclick="logoutSeller()"
         >
-            Refresh Orders
+            Logout
         </button>
-
-        <div
-            id="ordersMessage"
-            style="margin-top:12px;"
-        ></div>
-
-        <div
-            id="ordersList"
-            class="order-list"
-        ></div>
 
     </div>
 
 
-    <!-- ADD / EDIT PRODUCT -->
+    <!-- NAVIGATION -->
 
-    <div class="card">
+    <div class="admin-nav">
 
-        <h2 id="productFormTitle">
-            Add Product
-        </h2>
-
-        <input
-            type="hidden"
-            id="editProductId"
+        <button
+            class="active"
+            onclick="showSection('dashboardSection', this)"
         >
+            📊 Dashboard
+        </button>
 
-        <label>Product Image</label>
-
-        <input
-            type="file"
-            id="productImage"
-            accept="image/*"
+        <button
+            onclick="showSection('ordersSection', this)"
         >
+            📦 Orders
+        </button>
 
-        <div id="currentImage"></div>
-
-        <label>Brand</label>
-
-        <input
-            type="text"
-            id="brand"
-            placeholder="Example: Boysen"
+        <button
+            onclick="showSection('productsSection', this)"
         >
+            🛠 Products
+        </button>
 
-        <label>Product Name</label>
-
-        <input
-            type="text"
-            id="name"
-            placeholder="Example: Boysen Paint"
+        <button
+            onclick="showSection('addProductSection', this)"
         >
+            ➕ Add Product
+        </button>
 
-        <label>Category</label>
+    </div>
 
-        <select id="category">
 
-            <option value="Cement">Cement</option>
-            <option value="Steel">Steel</option>
-            <option value="Electrical">Electrical</option>
-            <option value="Plumbing">Plumbing</option>
-            <option value="Paint">Paint</option>
-            <option value="Tools">Tools</option>
-            <option value="Others">Others</option>
+    <!-- =========================
+         DASHBOARD
+    ========================= -->
 
-        </select>
+    <div
+        id="dashboardSection"
+        class="admin-section active"
+    >
 
-        <label>Description</label>
+        <div class="dashboard-grid">
 
-        <textarea
-            id="description"
-            placeholder="Product description"
-        ></textarea>
+            <div class="dashboard-box">
 
-        <label>Price</label>
+                <div class="dashboard-label">
+                    Products
+                </div>
 
-        <input
-            type="number"
-            id="price"
-            min="0"
-            step="0.01"
-            placeholder="0.00"
-        >
+                <div
+                    id="dashboardProducts"
+                    class="dashboard-number"
+                >
+                    0
+                </div>
 
-        <label>Unit</label>
+            </div>
 
-        <input
-            type="text"
-            id="unit"
-            value="Piece"
-            placeholder="Piece / Box / Gallon / Bag"
-        >
+            <div class="dashboard-box">
 
-        <label>Stock</label>
+                <div class="dashboard-label">
+                    Low Stock
+                </div>
 
-        <input
-            type="number"
-            id="stock"
-            min="0"
-            step="1"
-            placeholder="0"
-        >
+                <div
+                    id="dashboardLowStock"
+                    class="dashboard-number"
+                >
+                    0
+                </div>
 
-        <div class="actions">
+            </div>
 
-            <button
-                class="green"
-                onclick="saveProduct()"
-            >
-                SAVE PRODUCT
-            </button>
+            <div class="dashboard-box">
 
-            <button
-                id="cancelEditButton"
-                class="gray hidden"
-                onclick="cancelEdit()"
-            >
-                CANCEL EDIT
-            </button>
+                <div class="dashboard-label">
+                    Total Orders
+                </div>
+
+                <div
+                    id="dashboardOrders"
+                    class="dashboard-number"
+                >
+                    0
+                </div>
+
+            </div>
+
+            <div class="dashboard-box">
+
+                <div class="dashboard-label">
+                    Pending
+                </div>
+
+                <div
+                    id="dashboardPending"
+                    class="dashboard-number"
+                >
+                    0
+                </div>
+
+            </div>
 
         </div>
 
-        <div
-            id="productMessage"
-            style="margin-top:12px;"
-        ></div>
+
+        <div class="card">
+
+            <h2>Quick Actions</h2>
+
+            <div class="actions">
+
+                <button
+                    class="green"
+                    onclick="openAddProduct()"
+                >
+                    ➕ Add Product
+                </button>
+
+                <button
+                    class="primary"
+                    onclick="openOrders()"
+                >
+                    📦 View Orders
+                </button>
+
+                <button
+                    class="primary"
+                    onclick="openProducts()"
+                >
+                    🛠 Manage Products
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <!-- PRODUCTS -->
+    <!-- =========================
+         ORDERS
+    ========================= -->
 
-    <div class="card">
+    <div
+        id="ordersSection"
+        class="admin-section"
+    >
 
-        <h2>🛠 Products</h2>
+        <div class="card">
 
-        <button
-            class="primary"
-            onclick="loadProducts()"
-        >
-            Refresh Products
-        </button>
+            <div class="section-header">
 
-        <div
-            id="productsMessage"
-            style="margin-top:12px;"
-        ></div>
+                <h2>📦 Customer Orders</h2>
 
-        <div
-            id="productList"
-            class="product-list"
-        ></div>
+                <button
+                    class="primary"
+                    onclick="loadOrders()"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+            <div id="ordersMessage"></div>
+
+            <div
+                id="ordersList"
+                class="order-list"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PRODUCTS
+    ========================= -->
+
+    <div
+        id="productsSection"
+        class="admin-section"
+    >
+
+        <div class="card">
+
+            <div class="section-header">
+
+                <h2>🛠 Products</h2>
+
+                <button
+                    class="primary"
+                    onclick="loadProducts()"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+            <div id="productsMessage"></div>
+
+            <div
+                id="productList"
+                class="product-list"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ADD / EDIT PRODUCT
+    ========================= -->
+
+    <div
+        id="addProductSection"
+        class="admin-section"
+    >
+
+        <div class="card">
+
+            <div class="section-header">
+
+                <h2 id="productFormTitle">
+                    Add Product
+                </h2>
+
+            </div>
+
+            <input
+                type="hidden"
+                id="editProductId"
+            >
+
+            <div class="form-grid">
+
+                <div class="form-full">
+
+                    <label>
+                        Product Image
+                    </label>
+
+                    <input
+                        type="file"
+                        id="productImage"
+                        accept="image/*"
+                    >
+
+                    <div
+                        id="currentImage"
+                        class="current-image"
+                    ></div>
+
+                </div>
+
+
+                <div>
+
+                    <label>Brand</label>
+
+                    <input
+                        type="text"
+                        id="brand"
+                        placeholder="Example: Boysen"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Product Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Example: Boysen Paint"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Category</label>
+
+                    <select id="category">
+
+                        <option value="Cement">
+                            Cement
+                        </option>
+
+                        <option value="Steel">
+                            Steel
+                        </option>
+
+                        <option value="Electrical">
+                            Electrical
+                        </option>
+
+                        <option value="Plumbing">
+                            Plumbing
+                        </option>
+
+                        <option value="Paint">
+                            Paint
+                        </option>
+
+                        <option value="Tools">
+                            Tools
+                        </option>
+
+                        <option value="Others">
+                            Others
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>Unit</label>
+
+                    <input
+                        type="text"
+                        id="unit"
+                        value="Piece"
+                        placeholder="Piece / Box / Gallon / Bag"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Price</label>
+
+                    <input
+                        type="number"
+                        id="price"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Stock</label>
+
+                    <input
+                        type="number"
+                        id="stock"
+                        min="0"
+                        step="1"
+                        placeholder="0"
+                    >
+
+                </div>
+
+
+                <div class="form-full">
+
+                    <label>Description</label>
+
+                    <textarea
+                        id="description"
+                        placeholder="Product description"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    class="green"
+                    onclick="saveProduct()"
+                >
+                    SAVE PRODUCT
+                </button>
+
+                <button
+                    id="cancelEditButton"
+                    class="gray hidden"
+                    onclick="cancelEdit()"
+                >
+                    CANCEL EDIT
+                </button>
+
+            </div>
+
+            <div
+                id="productMessage"
+                style="margin-top:12px;"
+            ></div>
+
+        </div>
 
     </div>
 
@@ -462,6 +971,84 @@ let supabaseClient = null;
         );
 
 })();
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showSection(sectionId, button) {
+
+    document
+        .querySelectorAll(".admin-section")
+        .forEach(section => {
+            section.classList.remove("active");
+        });
+
+    document
+        .getElementById(sectionId)
+        .classList.add("active");
+
+    document
+        .querySelectorAll(".admin-nav button")
+        .forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function openAddProduct() {
+
+    const buttons =
+        document.querySelectorAll(
+            ".admin-nav button"
+        );
+
+    showSection(
+        "addProductSection",
+        buttons[3]
+    );
+
+}
+
+
+function openOrders() {
+
+    const buttons =
+        document.querySelectorAll(
+            ".admin-nav button"
+        );
+
+    showSection(
+        "ordersSection",
+        buttons[1]
+    );
+
+}
+
+
+function openProducts() {
+
+    const buttons =
+        document.querySelectorAll(
+            ".admin-nav button"
+        );
+
+    showSection(
+        "productsSection",
+        buttons[2]
+    );
+
+}
 
 
 /* =========================
@@ -517,7 +1104,8 @@ window.loginSeller = async function () {
 
         message.innerHTML =
             `<div class="message">
-                Login failed: ${escapeHtml(error.message)}
+                Login failed:
+                ${escapeHtml(error.message)}
             </div>`;
 
         return;
@@ -534,7 +1122,6 @@ window.loginSeller = async function () {
 
 
     await loadProducts();
-
     await loadOrders();
 
 };
@@ -554,7 +1141,7 @@ window.logoutSeller = async function () {
 
 
 /* =========================
-   CHECK SESSION
+   SESSION
 ========================= */
 
 async function checkSession() {
@@ -576,7 +1163,6 @@ async function checkSession() {
             .classList.remove("hidden");
 
         await loadProducts();
-
         await loadOrders();
 
     }
@@ -602,6 +1188,7 @@ async function loadProducts() {
 
     message.innerHTML =
         "Loading products...";
+
 
     const {
         data,
@@ -632,10 +1219,36 @@ async function loadProducts() {
     message.innerHTML = "";
 
 
+    /* Dashboard numbers */
+
+    const totalProducts =
+        data ? data.length : 0;
+
+    const lowStock =
+        data
+        ? data.filter(
+            product =>
+                Number(product.stock || 0) <= 5
+        ).length
+        : 0;
+
+
+    document.getElementById(
+        "dashboardProducts"
+    ).textContent =
+        totalProducts;
+
+
+    document.getElementById(
+        "dashboardLowStock"
+    ).textContent =
+        lowStock;
+
+
     if (!data || data.length === 0) {
 
         list.innerHTML =
-            `<div class="message">
+            `<div class="empty">
                 No products yet.
             </div>`;
 
@@ -661,6 +1274,16 @@ async function loadProducts() {
                 "https://via.placeholder.com/200x150?text=No+Image";
 
 
+            let stockClass =
+                "stock-good";
+
+            if (stock <= 0) {
+                stockClass = "stock-out";
+            } else if (stock <= 5) {
+                stockClass = "stock-low";
+            }
+
+
             return `
 
                 <div class="product-card">
@@ -674,44 +1297,58 @@ async function loadProducts() {
 
                         <div>
                             <strong>
-                                ${escapeHtml(product.brand || "")}
-                            </strong>
-                        </div>
-
-                        <h3>
-                            ${escapeHtml(product.name || "")}
-                        </h3>
-
-                        <div>
-                            Category:
-                            ${escapeHtml(product.category || "Others")}
-                        </div>
-
-                        <div>
-                            Price:
-                            <strong>
-                                ₱${price.toLocaleString(
-                                    "en-PH",
-                                    {
-                                        minimumFractionDigits: 2
-                                    }
+                                ${escapeHtml(
+                                    product.brand || ""
                                 )}
                             </strong>
-                            / ${escapeHtml(product.unit || "Piece")}
                         </div>
 
-                        <div>
-                            Stock:
-                            <strong>
-                                ${stock}
-                            </strong>
-                        </div>
-
-                        <div>
+                        <div class="product-name">
                             ${escapeHtml(
-                                product.description || ""
+                                product.name || ""
                             )}
                         </div>
+
+                        <div class="product-meta">
+
+                            <div>
+                                Category:
+                                ${escapeHtml(
+                                    product.category || "Others"
+                                )}
+                            </div>
+
+                            <div>
+                                Price:
+                                <strong>
+                                    ₱${price.toLocaleString(
+                                        "en-PH",
+                                        {
+                                            minimumFractionDigits: 2
+                                        }
+                                    )}
+                                </strong>
+                                /
+                                ${escapeHtml(
+                                    product.unit || "Piece"
+                                )}
+                            </div>
+
+                            <div>
+                                Stock:
+                                <span class="${stockClass}">
+                                    ${stock}
+                                </span>
+                            </div>
+
+                            <div>
+                                ${escapeHtml(
+                                    product.description || ""
+                                )}
+                            </div>
+
+                        </div>
+
 
                         <div class="actions">
 
@@ -817,8 +1454,6 @@ async function saveProduct() {
     let image = null;
 
 
-    /* Existing image during edit */
-
     if (editId) {
 
         image =
@@ -828,8 +1463,6 @@ async function saveProduct() {
 
     }
 
-
-    /* New image */
 
     const file =
         document.getElementById(
@@ -1000,14 +1633,9 @@ window.editProduct = function (product) {
         currentImage.innerHTML =
             `
             <p>Current image:</p>
+
             <img
                 src="${escapeHtml(product.image)}"
-                style="
-                    width:120px;
-                    height:100px;
-                    object-fit:cover;
-                    border-radius:6px;
-                "
             >
             `;
 
@@ -1024,13 +1652,7 @@ window.editProduct = function (product) {
     ).classList.remove("hidden");
 
 
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
+    openAddProduct();
 
 };
 
@@ -1201,10 +1823,35 @@ async function loadOrders() {
     message.innerHTML = "";
 
 
+    const totalOrders =
+        data ? data.length : 0;
+
+    const pendingOrders =
+        data
+        ? data.filter(
+            order =>
+                (order.status || "Pending")
+                === "Pending"
+        ).length
+        : 0;
+
+
+    document.getElementById(
+        "dashboardOrders"
+    ).textContent =
+        totalOrders;
+
+
+    document.getElementById(
+        "dashboardPending"
+    ).textContent =
+        pendingOrders;
+
+
     if (!data || data.length === 0) {
 
         list.innerHTML =
-            `<div class="message">
+            `<div class="empty">
                 No customer orders yet.
             </div>`;
 
@@ -1265,6 +1912,7 @@ async function loadOrders() {
                         </div>
 
                     </div>
+
 
                     <div class="order-details">
 
@@ -1338,6 +1986,11 @@ async function loadOrders() {
                             items.length > 0
                             ? items.map(item => {
 
+                                const quantity =
+                                    Number(
+                                        item.quantity || 0
+                                    );
+
                                 const subtotal =
                                     Number(
                                         item.subtotal ||
@@ -1345,27 +1998,20 @@ async function loadOrders() {
                                             Number(
                                                 item.price || 0
                                             ) *
-                                            Number(
-                                                item.quantity || 0
-                                            )
+                                            quantity
                                         )
                                     );
 
                                 return `
 
-                                    <div style="
-                                        padding:7px 0;
-                                        border-bottom:1px solid #ddd;
-                                    ">
+                                    <div class="order-item">
 
                                         ${escapeHtml(
                                             item.name || ""
                                         )}
 
                                         ×
-                                        ${Number(
-                                            item.quantity || 0
-                                        )}
+                                        ${quantity}
 
                                         <span style="
                                             float:right;
@@ -1405,32 +2051,44 @@ async function loadOrders() {
                     </div>
 
 
-                    <div class="actions">
+                    <div class="order-actions">
 
                         <button
                             class="primary"
-                            onclick="updateOrderStatus(${order.id}, 'Pending')"
+                            onclick="updateOrderStatus(
+                                ${order.id},
+                                'Pending'
+                            )"
                         >
                             Pending
                         </button>
 
                         <button
                             class="green"
-                            onclick="updateOrderStatus(${order.id}, 'Confirmed')"
+                            onclick="updateOrderStatus(
+                                ${order.id},
+                                'Confirmed'
+                            )"
                         >
                             Confirmed
                         </button>
 
                         <button
                             class="primary"
-                            onclick="updateOrderStatus(${order.id}, 'Completed')"
+                            onclick="updateOrderStatus(
+                                ${order.id},
+                                'Completed'
+                            )"
                         >
                             Completed
                         </button>
 
                         <button
                             class="red"
-                            onclick="updateOrderStatus(${order.id}, 'Cancelled')"
+                            onclick="updateOrderStatus(
+                                ${order.id},
+                                'Cancelled'
+                            )"
                         >
                             Cancelled
                         </button>
@@ -1481,7 +2139,7 @@ async function (id, status) {
 
 
 /* =========================
-   IMAGE TO DATA URL
+   IMAGE
 ========================= */
 
 function fileToDataURL(file) {
@@ -1509,7 +2167,7 @@ function fileToDataURL(file) {
 
 
 /* =========================
-   ESCAPE HTML
+   SECURITY
 ========================= */
 
 function escapeHtml(value) {

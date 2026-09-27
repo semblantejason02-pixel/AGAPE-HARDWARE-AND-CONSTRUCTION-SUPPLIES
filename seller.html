@@ -256,6 +256,44 @@ button {
     gap: 18px;
 }
 
+/* CATEGORY GROUPING */
+
+.product-category-section {
+    margin-bottom: 35px;
+}
+
+.product-category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #d97706;
+}
+
+.product-category-header h3 {
+    margin: 0;
+    font-size: 22px;
+    color: #111827;
+}
+
+.product-category-count {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.category-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
 .product-card {
     background: white;
     border-radius: 12px;
@@ -529,6 +567,10 @@ button {
         grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 
+    .category-products-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
     .orders-grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
@@ -545,7 +587,8 @@ button {
     }
 
     .products-grid,
-    .orders-grid {
+    .orders-grid,
+    .category-products-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
@@ -574,7 +617,8 @@ button {
 
     .dashboard-grid,
     .products-grid,
-    .orders-grid {
+    .orders-grid,
+    .category-products-grid {
         grid-template-columns: 1fr;
     }
 
@@ -597,6 +641,14 @@ button {
 
     .order-tab {
         white-space: nowrap;
+    }
+
+    .product-category-header {
+        align-items: center;
+    }
+
+    .product-category-header h3 {
+        font-size: 19px;
     }
 }
 </style>
@@ -906,10 +958,9 @@ button {
             </div>
 
 
-            <div
-                id="productsGrid"
-                class="products-grid"
-            ></div>
+            <!-- PRODUCTS GROUPED BY CATEGORY -->
+
+            <div id="productsCategories"></div>
 
         </section>
 
@@ -1366,14 +1417,15 @@ function showOrderTab(tab) {
 
 /* =========================
    LOAD PRODUCTS
+   GROUPED BY CATEGORY
 ========================= */
 
 async function loadProducts() {
 
-    const grid =
-        document.getElementById("productsGrid");
+    const container =
+        document.getElementById("productsCategories");
 
-    grid.innerHTML =
+    container.innerHTML =
         '<div class="empty">Loading products...</div>';
 
 
@@ -1391,7 +1443,7 @@ async function loadProducts() {
 
     if (error) {
 
-        grid.innerHTML =
+        container.innerHTML =
             `<div class="empty">
                 Error loading products:<br>
                 ${escapeHtml(error.message)}
@@ -1403,6 +1455,8 @@ async function loadProducts() {
 
     const products = data || [];
 
+
+    /* DASHBOARD COUNTS */
 
     document.getElementById("dashboardProducts")
         .textContent = products.length;
@@ -1421,95 +1475,274 @@ async function loadProducts() {
 
     if (products.length === 0) {
 
-        grid.innerHTML =
+        container.innerHTML =
             '<div class="empty">No products yet.</div>';
 
         return;
     }
 
 
-    grid.innerHTML =
-        products.map(product => {
+    /* =========================
+       CATEGORY ORDER
+    ========================= */
 
-            const stock =
-                Number(product.stock || 0);
+    const categoryOrder = [
+        "Cement",
+        "Steel",
+        "Electrical",
+        "Plumbing",
+        "Paint",
+        "Tools",
+        "Others"
+    ];
 
-            const stockClass =
-                stock <= 5
-                    ? "low-stock"
-                    : "normal-stock";
+
+    /* =========================
+       GROUP PRODUCTS
+    ========================= */
+
+    const grouped = {};
 
 
-            const imageHTML =
-                product.image
-                    ? `<img
-                        class="product-image"
-                        src="${escapeHtml(product.image)}"
-                        alt="${escapeHtml(product.name)}"
-                       >`
-                    : `<div class="product-no-image">
-                        No Image
-                       </div>`;
+    products.forEach(product => {
+
+        let category =
+            product.category
+                ? String(product.category).trim()
+                : "";
+
+
+        /*
+         * If category is blank,
+         * put the product under Others.
+         */
+
+        if (!category) {
+            category = "Others";
+        }
+
+
+        if (!grouped[category]) {
+            grouped[category] = [];
+        }
+
+
+        grouped[category].push(product);
+
+    });
+
+
+    /* =========================
+       SORT CATEGORIES
+    ========================= */
+
+    const categories =
+        Object.keys(grouped).sort((a, b) => {
+
+            const indexA =
+                categoryOrder.indexOf(a);
+
+            const indexB =
+                categoryOrder.indexOf(b);
+
+
+            /*
+             * Known categories follow:
+             * Cement
+             * Steel
+             * Electrical
+             * Plumbing
+             * Paint
+             * Tools
+             * Others
+             */
+
+            if (indexA !== -1 && indexB !== -1) {
+                return indexA - indexB;
+            }
+
+
+            /*
+             * Unknown categories go after
+             * the standard categories.
+             */
+
+            if (indexA !== -1) {
+                return -1;
+            }
+
+
+            if (indexB !== -1) {
+                return 1;
+            }
+
+
+            return a.localeCompare(b);
+
+        });
+
+
+    /* =========================
+       CREATE CATEGORY SECTIONS
+    ========================= */
+
+    container.innerHTML =
+        categories.map(category => {
+
+            const categoryProducts =
+                grouped[category];
+
+
+            const productsHTML =
+                categoryProducts.map(product => {
+
+                    const stock =
+                        Number(product.stock || 0);
+
+
+                    const stockClass =
+                        stock <= 5
+                            ? "low-stock"
+                            : "normal-stock";
+
+
+                    const imageHTML =
+                        product.image
+                            ? `
+                                <img
+                                    class="product-image"
+                                    src="${escapeHtml(product.image)}"
+                                    alt="${escapeHtml(product.name)}"
+                                >
+                              `
+                            : `
+                                <div class="product-no-image">
+                                    No Image
+                                </div>
+                              `;
+
+
+                    return `
+
+                        <div class="product-card">
+
+                            ${imageHTML}
+
+                            <div class="product-content">
+
+                                <div class="product-brand">
+                                    ${escapeHtml(
+                                        product.brand || ""
+                                    )}
+                                </div>
+
+
+                                <div class="product-name">
+                                    ${escapeHtml(
+                                        product.name
+                                    )}
+                                </div>
+
+
+                                <div class="product-description">
+                                    ${escapeHtml(
+                                        product.description || ""
+                                    )}
+                                </div>
+
+
+                                <div class="product-info">
+
+                                    <div class="product-price">
+
+                                        ₱${Number(
+                                            product.price || 0
+                                        ).toLocaleString(
+                                            "en-PH",
+                                            {
+                                                minimumFractionDigits: 2
+                                            }
+                                        )}
+
+                                        /
+                                        ${escapeHtml(
+                                            product.unit || "Piece"
+                                        )}
+
+                                    </div>
+
+
+                                    <div
+                                        class="product-stock ${stockClass}"
+                                    >
+                                        Stock: ${stock}
+                                    </div>
+
+
+                                    <div class="product-actions">
+
+                                        <button
+                                            class="btn-warning"
+                                            onclick="editProduct(${product.id})"
+                                        >
+                                            Edit
+                                        </button>
+
+
+                                        <button
+                                            class="btn-danger"
+                                            onclick="deleteProduct(${product.id})"
+                                        >
+                                            Delete
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }).join("");
 
 
             return `
-                <div class="product-card">
 
-                    ${imageHTML}
+                <div class="product-category-section">
 
-                    <div class="product-content">
+                    <div class="product-category-header">
 
-                        <div class="product-brand">
-                            ${escapeHtml(product.brand || "")}
-                        </div>
+                        <h3>
+                            ${escapeHtml(category)}
+                        </h3>
 
-                        <div class="product-name">
-                            ${escapeHtml(product.name)}
-                        </div>
 
-                        <div class="product-description">
-                            ${escapeHtml(product.description || "")}
-                        </div>
+                        <span class="product-category-count">
 
-                        <div class="product-info">
+                            ${categoryProducts.length}
 
-                            <div class="product-price">
-                                ₱${Number(product.price || 0).toLocaleString(
-                                    "en-PH",
-                                    {
-                                        minimumFractionDigits: 2
-                                    }
-                                )}
-                                / ${escapeHtml(product.unit || "Piece")}
-                            </div>
+                            ${
+                                categoryProducts.length === 1
+                                    ? "Product"
+                                    : "Products"
+                            }
 
-                            <div class="product-stock ${stockClass}">
-                                Stock: ${stock}
-                            </div>
+                        </span>
 
-                            <div class="product-actions">
+                    </div>
 
-                                <button
-                                    class="btn-warning"
-                                    onclick="editProduct(${product.id})"
-                                >
-                                    Edit
-                                </button>
 
-                                <button
-                                    class="btn-danger"
-                                    onclick="deleteProduct(${product.id})"
-                                >
-                                    Delete
-                                </button>
+                    <div class="category-products-grid">
 
-                            </div>
-
-                        </div>
+                        ${productsHTML}
 
                     </div>
 
                 </div>
+
             `;
 
         }).join("");

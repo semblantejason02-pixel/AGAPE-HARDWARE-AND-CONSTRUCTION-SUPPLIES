@@ -1402,8 +1402,7 @@ async function placeOrder() {
                             "application/json",
 
                         "Prefer":
-                            "return=representation"
-
+    "return=minimal"
                     },
 
                     body:
@@ -1430,15 +1429,6 @@ async function placeOrder() {
 
         }
 
-
-        const result =
-            await response.json();
-
-
-        const order =
-            result[0];
-
-
         document.getElementById(
             "checkout"
         ).style.display =
@@ -1452,9 +1442,9 @@ async function placeOrder() {
 
 
         document.getElementById(
-            "orderNumber"
-        ).textContent =
-            "#" + order.id;
+    "orderNumber"
+).textContent =
+    "Order submitted";
 
 
         cart = [];

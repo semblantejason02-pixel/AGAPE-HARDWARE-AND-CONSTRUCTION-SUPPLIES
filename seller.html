@@ -4,163 +4,202 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AGAPE Seller</title>
+<title>AGAPE Hardware - Seller</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    background: #f5f5f5;
+    background: #f3f3f3;
     color: #222;
 }
 
 header {
-    background: #111827;
+    background: #111;
     color: white;
-    padding: 20px;
+    padding: 18px;
+    text-align: center;
 }
 
 header h1 {
-    margin-bottom: 5px;
+    margin: 0;
+    font-size: 22px;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1100px;
     margin: auto;
-    padding: 20px;
+    padding: 15px;
 }
 
 .card {
     background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    padding: 18px;
+    border-radius: 10px;
     margin-bottom: 20px;
-}
-
-.card h2 {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 6px;
-    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
 
 input,
-select,
-textarea {
+textarea,
+select {
     width: 100%;
-    padding: 12px;
+    padding: 11px;
+    margin-top: 5px;
+    margin-bottom: 12px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 textarea {
-    min-height: 90px;
-    resize: vertical;
+    min-height: 80px;
 }
 
 button {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 14px;
     cursor: pointer;
 }
 
-.add-product {
-    width: 100%;
-    margin-top: 20px;
-    padding: 13px;
-    background: #f59e0b;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
+.primary {
+    background: #111;
+    color: white;
 }
 
-.cancel-edit {
-    width: 100%;
-    margin-top: 10px;
-    padding: 12px;
+.green {
+    background: #16803c;
+    color: white;
+}
+
+.red {
+    background: #d32f2f;
+    color: white;
+}
+
+.gray {
     background: #ddd;
-    border: none;
+    color: #222;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.login-box {
+    max-width: 420px;
+    margin: 50px auto;
+}
+
+.message {
+    padding: 10px;
+    margin-bottom: 12px;
     border-radius: 6px;
-    font-weight: bold;
-    display: none;
+    background: #eee;
 }
 
-.product {
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
+.product-list,
+.order-list {
+    display: grid;
+    gap: 15px;
 }
 
-.product:last-child {
-    border-bottom: none;
-}
-
-.product-image {
-    width: 100%;
-    max-height: 220px;
-    object-fit: cover;
+.product-card,
+.order-card {
+    border: 1px solid #ddd;
     border-radius: 8px;
-    margin-bottom: 10px;
+    padding: 15px;
+    background: #fff;
 }
 
-.category {
-    display: inline-block;
-    background: #e5e7eb;
-    color: #374151;
-    padding: 5px 9px;
-    border-radius: 5px;
-    font-size: 13px;
-    margin-top: 6px;
+.product-card {
+    display: flex;
+    gap: 15px;
 }
 
-.price {
+.product-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #eee;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.order-number {
     font-size: 18px;
     font-weight: bold;
-    margin-top: 8px;
 }
 
-.stock {
-    color: green;
-    margin-top: 5px;
+.status {
+    padding: 6px 10px;
+    border-radius: 15px;
+    background: #eee;
+    font-size: 13px;
 }
 
-.product-buttons {
-    display: flex;
-    gap: 8px;
+.order-details {
     margin-top: 12px;
+    line-height: 1.6;
 }
 
-.edit-button,
-.delete-button {
-    padding: 9px 13px;
-    border: none;
-    border-radius: 5px;
+.order-items {
+    margin-top: 12px;
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.order-total {
+    text-align: right;
+    font-size: 19px;
     font-weight: bold;
+    margin-top: 10px;
 }
 
-.edit-button {
-    background: #3b82f6;
-    color: white;
+.logout {
+    float: right;
 }
 
-.delete-button {
-    background: #ef4444;
-    color: white;
-}
+@media (max-width: 600px) {
 
-.empty {
-    color: #777;
-    text-align: center;
-    padding: 20px;
+    .product-card {
+        flex-direction: column;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 180px;
+    }
+
+    .logout {
+        float: none;
+        margin-top: 10px;
+    }
 }
 </style>
 </head>
@@ -168,17 +207,20 @@ button {
 <body>
 
 <header>
-    <h1>🏪 AGAPE HARDWARE AND SUPPLIES</h1>
-    <p>Seller / Admin</p>
+    <h1>AGAPE HARDWARE AND SUPPLIES</h1>
+    <div>Seller / Admin Panel</div>
 </header>
+
 
 <!-- LOGIN -->
 
-<div id="loginBox" class="container">
+<div id="loginSection" class="container">
 
-    <div class="card">
+    <div class="card login-box">
 
-        <h2>🔐 Seller Login</h2>
+        <h2>Seller Login</h2>
+
+        <div id="loginMessage"></div>
 
         <label>Email</label>
 
@@ -197,38 +239,79 @@ button {
         >
 
         <button
-            type="button"
-            class="add-product"
-            id="loginButton"
+            class="primary"
+            style="width:100%;"
+            onclick="loginSeller()"
         >
-            🔐 Login
+            LOGIN
         </button>
-
-        <p
-            id="loginMessage"
-            style="margin-top:15px;"
-        ></p>
 
     </div>
 
 </div>
 
 
-<!-- ADMIN CONTENT -->
+<!-- ADMIN -->
 
-<div
-    class="container"
-    id="adminContent"
-    style="display:none;"
->
+<div id="adminSection" class="container hidden">
 
-    <!-- ADD / EDIT -->
+    <button
+        class="red logout"
+        onclick="logoutSeller()"
+    >
+        Logout
+    </button>
+
+    <div style="clear:both;"></div>
+
+    <!-- ORDERS -->
 
     <div class="card">
 
-        <h2 id="formTitle">
-            ➕ Add Product
+        <h2>📦 Customer Orders</h2>
+
+        <button
+            class="primary"
+            onclick="loadOrders()"
+        >
+            Refresh Orders
+        </button>
+
+        <div
+            id="ordersMessage"
+            style="margin-top:12px;"
+        ></div>
+
+        <div
+            id="ordersList"
+            class="order-list"
+        ></div>
+
+    </div>
+
+
+    <!-- ADD / EDIT PRODUCT -->
+
+    <div class="card">
+
+        <h2 id="productFormTitle">
+            Add Product
         </h2>
+
+        <input
+            type="hidden"
+            id="editProductId"
+        >
+
+        <label>Product Image</label>
+
+        <input
+            type="file"
+            id="productImage"
+            accept="image/*"
+        >
+
+        <div id="currentImage"></div>
 
         <label>Brand</label>
 
@@ -242,111 +325,83 @@ button {
 
         <input
             type="text"
-            id="productName"
-            placeholder="Example: Permacoat Latex Paint"
+            id="name"
+            placeholder="Example: Boysen Paint"
         >
 
         <label>Category</label>
 
         <select id="category">
 
-            <option value="">
-                Select Category
-            </option>
-
-            <option value="Cement">
-                Cement
-            </option>
-
-            <option value="Steel">
-                Steel
-            </option>
-
-            <option value="Electrical">
-                Electrical
-            </option>
-
-            <option value="Plumbing">
-                Plumbing
-            </option>
-
-            <option value="Paint">
-                Paint
-            </option>
-
-            <option value="Tools">
-                Tools
-            </option>
-
-            <option value="Others">
-                Others
-            </option>
+            <option value="Cement">Cement</option>
+            <option value="Steel">Steel</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Paint">Paint</option>
+            <option value="Tools">Tools</option>
+            <option value="Others">Others</option>
 
         </select>
 
-        <label>Product Picture</label>
-
-        <input
-            type="file"
-            id="productImage"
-            accept="image/*"
-        >
-
-        <label>Description / Specification</label>
+        <label>Description</label>
 
         <textarea
             id="description"
-            placeholder="Example: 1 gallon, white"
+            placeholder="Product description"
         ></textarea>
 
-        <label>Price (₱)</label>
+        <label>Price</label>
 
         <input
             type="number"
             id="price"
-            placeholder="850"
             min="0"
             step="0.01"
-        >
-
-        <label>Stock Quantity</label>
-
-        <input
-            type="number"
-            id="stock"
-            placeholder="25"
-            min="0"
+            placeholder="0.00"
         >
 
         <label>Unit</label>
 
-        <select id="unit">
-
-            <option value="Piece">Piece</option>
-            <option value="Box">Box</option>
-            <option value="Bag">Bag</option>
-            <option value="Meter">Meter</option>
-            <option value="Roll">Roll</option>
-            <option value="Set">Set</option>
-            <option value="Gallon">Gallon</option>
-
-        </select>
-
-        <button
-            type="button"
-            class="add-product"
-            id="saveButton"
+        <input
+            type="text"
+            id="unit"
+            value="Piece"
+            placeholder="Piece / Box / Gallon / Bag"
         >
-            ➕ Add Product
-        </button>
 
-        <button
-            type="button"
-            class="cancel-edit"
-            id="cancelButton"
+        <label>Stock</label>
+
+        <input
+            type="number"
+            id="stock"
+            min="0"
+            step="1"
+            placeholder="0"
         >
-            Cancel Edit
-        </button>
+
+        <div class="actions">
+
+            <button
+                class="green"
+                onclick="saveProduct()"
+            >
+                SAVE PRODUCT
+            </button>
+
+            <button
+                id="cancelEditButton"
+                class="gray hidden"
+                onclick="cancelEdit()"
+            >
+                CANCEL EDIT
+            </button>
+
+        </div>
+
+        <div
+            id="productMessage"
+            style="margin-top:12px;"
+        ></div>
 
     </div>
 
@@ -355,23 +410,35 @@ button {
 
     <div class="card">
 
-        <h2>📦 Products</h2>
+        <h2>🛠 Products</h2>
 
-        <div id="productList"></div>
+        <button
+            class="primary"
+            onclick="loadProducts()"
+        >
+            Refresh Products
+        </button>
+
+        <div
+            id="productsMessage"
+            style="margin-top:12px;"
+        ></div>
+
+        <div
+            id="productList"
+            class="product-list"
+        ></div>
 
     </div>
 
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 
-(function () {
-
-"use strict";
-
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
     "https://djeqfrifhqcpfxccotdl.supabase.co";
@@ -379,47 +446,22 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
 
-
 let supabaseClient = null;
-
-let products = [];
-
-let editingIndex = -1;
-
-let selectedImage = "";
 
 
 /* =========================
-   INITIALIZE SUPABASE
+   INITIALIZE
 ========================= */
 
-function initializeSupabase() {
+(function () {
 
-    if (
-        !window.supabase ||
-        typeof window.supabase.createClient !== "function"
-    ) {
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 
-        return false;
-    }
-
-    try {
-
-        supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
-            );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(error);
-
-        return false;
-    }
-}
+})();
 
 
 /* =========================
@@ -430,447 +472,476 @@ window.loginSeller = async function () {
 
     const email =
         document
-            .getElementById("loginEmail")
-            .value
-            .trim();
+        .getElementById("loginEmail")
+        .value
+        .trim();
 
     const password =
         document
-            .getElementById("loginPassword")
-            .value;
+        .getElementById("loginPassword")
+        .value;
 
     const message =
-        document.getElementById("loginMessage");
-
+        document.getElementById(
+            "loginMessage"
+        );
 
     if (!email || !password) {
 
-        message.textContent =
-            "⚠️ Please enter email and password.";
+        message.innerHTML =
+            `<div class="message">
+                Please enter email and password.
+            </div>`;
+
+        return;
+    }
+
+    message.innerHTML =
+        `<div class="message">
+            Logging in...
+        </div>`;
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+    if (error) {
+
+        console.error(error);
+
+        message.innerHTML =
+            `<div class="message">
+                Login failed: ${escapeHtml(error.message)}
+            </div>`;
 
         return;
     }
 
 
-    message.textContent =
-        "🔄 Connecting...";
+    document
+        .getElementById("loginSection")
+        .classList.add("hidden");
+
+    document
+        .getElementById("adminSection")
+        .classList.remove("hidden");
 
 
-    try {
+    await loadProducts();
 
-        const result =
-            await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
+    await loadOrders();
 
-
-        if (result.error) {
-
-            message.textContent =
-                "❌ " + result.error.message;
-
-            return;
-        }
-
-
-        document.getElementById(
-            "loginBox"
-        ).style.display = "none";
-
-
-        document.getElementById(
-            "adminContent"
-        ).style.display = "block";
-
-
-        await loadProducts();
-
-    } catch (error) {
-
-        message.textContent =
-            "❌ " + error.message;
-    }
 };
 
 
 /* =========================
-   LOAD PRODUCTS
+   LOGOUT
+========================= */
+
+window.logoutSeller = async function () {
+
+    await supabaseClient.auth.signOut();
+
+    location.reload();
+
+};
+
+
+/* =========================
+   CHECK SESSION
+========================= */
+
+async function checkSession() {
+
+    const { data } =
+        await supabaseClient.auth.getSession();
+
+    if (
+        data &&
+        data.session
+    ) {
+
+        document
+            .getElementById("loginSection")
+            .classList.add("hidden");
+
+        document
+            .getElementById("adminSection")
+            .classList.remove("hidden");
+
+        await loadProducts();
+
+        await loadOrders();
+
+    }
+
+}
+
+
+/* =========================
+   PRODUCTS
 ========================= */
 
 async function loadProducts() {
 
-    const result =
-        await supabaseClient
-            .from("products")
-            .select("*")
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
-
-
-    if (result.error) {
-
-        console.error(
-            "Load error:",
-            result.error
+    const message =
+        document.getElementById(
+            "productsMessage"
         );
 
-        alert(
-            "❌ Unable to load products:\n" +
-            result.error.message
-        );
-
-        return;
-    }
-
-
-    products =
-        result.data || [];
-
-
-    displayProducts();
-}
-
-
-/* =========================
-   IMAGE
-========================= */
-
-document
-    .getElementById("productImage")
-    .addEventListener(
-        "change",
-        function (event) {
-
-            const file =
-                event.target.files[0];
-
-            if (!file) {
-                return;
-            }
-
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                function (e) {
-
-                    selectedImage =
-                        e.target.result;
-                };
-
-
-            reader.readAsDataURL(file);
-        }
-    );
-
-
-/* =========================
-   DISPLAY
-========================= */
-
-function displayProducts() {
-
-    const productList =
+    const list =
         document.getElementById(
             "productList"
         );
 
+    message.innerHTML =
+        "Loading products...";
 
-    if (products.length === 0) {
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("products")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
 
-        productList.innerHTML = `
-            <div class="empty">
-                No products added yet.
-            </div>
-        `;
+
+    if (error) {
+
+        console.error(error);
+
+        message.innerHTML =
+            `<div class="message">
+                Error loading products:
+                ${escapeHtml(error.message)}
+            </div>`;
 
         return;
     }
 
 
-    productList.innerHTML = "";
+    message.innerHTML = "";
 
 
-    products.forEach(
-        function (product, index) {
+    if (!data || data.length === 0) {
+
+        list.innerHTML =
+            `<div class="message">
+                No products yet.
+            </div>`;
+
+        return;
+    }
+
+
+    list.innerHTML =
+        data.map(product => {
 
             const price =
-                Number(product.price || 0);
+                Number(
+                    product.price || 0
+                );
+
+            const stock =
+                Number(
+                    product.stock || 0
+                );
+
+            const image =
+                product.image ||
+                "https://via.placeholder.com/200x150?text=No+Image";
 
 
-            productList.innerHTML += `
+            return `
 
-                <div class="product">
+                <div class="product-card">
 
-                    ${
-                        product.image
-                        ? `
-                        <img
-                            class="product-image"
-                            src="${product.image}"
-                        >
-                        `
-                        : ""
-                    }
+                    <img
+                        src="${escapeHtml(image)}"
+                        alt="${escapeHtml(product.name || "")}"
+                    >
 
-                    <strong>
-                        ${product.brand || ""}
-                    </strong>
+                    <div class="product-info">
 
-                    <h3>
-                        ${product.name || ""}
-                    </h3>
-
-                    ${
-                        product.category
-                        ? `
-                        <div class="category">
-                            ${product.category}
+                        <div>
+                            <strong>
+                                ${escapeHtml(product.brand || "")}
+                            </strong>
                         </div>
-                        `
-                        : ""
-                    }
 
-                    <p style="margin-top:8px;">
-                        ${product.description || ""}
-                    </p>
+                        <h3>
+                            ${escapeHtml(product.name || "")}
+                        </h3>
 
-                    <div class="price">
-                        ₱${price.toFixed(2)}
-                        / ${product.unit || "Piece"}
-                    </div>
+                        <div>
+                            Category:
+                            ${escapeHtml(product.category || "Others")}
+                        </div>
 
-                    <div class="stock">
-                        🟢 ${product.stock || 0}
-                        available
-                    </div>
+                        <div>
+                            Price:
+                            <strong>
+                                ₱${price.toLocaleString(
+                                    "en-PH",
+                                    {
+                                        minimumFractionDigits: 2
+                                    }
+                                )}
+                            </strong>
+                            / ${escapeHtml(product.unit || "Piece")}
+                        </div>
 
-                    <div class="product-buttons">
+                        <div>
+                            Stock:
+                            <strong>
+                                ${stock}
+                            </strong>
+                        </div>
 
-                        <button
-                            type="button"
-                            class="edit-button"
-                            onclick="editProduct(${index})"
-                        >
-                            ✏️ Edit
-                        </button>
+                        <div>
+                            ${escapeHtml(
+                                product.description || ""
+                            )}
+                        </div>
 
-                        <button
-                            type="button"
-                            class="delete-button"
-                            onclick="deleteProduct(${index})"
-                        >
-                            🗑️ Delete
-                        </button>
+                        <div class="actions">
+
+                            <button
+                                class="primary"
+                                onclick='editProduct(${JSON.stringify(product)})'
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                class="red"
+                                onclick="deleteProduct(${product.id})"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
 
                     </div>
 
                 </div>
+
             `;
-        }
-    );
+
+        }).join("");
+
 }
 
 
 /* =========================
-   SAVE / UPDATE
+   SAVE PRODUCT
 ========================= */
 
-document
-    .getElementById("saveButton")
-    .addEventListener(
-        "click",
-        async function () {
+async function saveProduct() {
 
-            const brand =
-                document
-                    .getElementById("brand")
-                    .value
-                    .trim();
+    const message =
+        document.getElementById(
+            "productMessage"
+        );
 
-            const name =
-                document
-                    .getElementById("productName")
-                    .value
-                    .trim();
+    const editId =
+        document.getElementById(
+            "editProductId"
+        ).value;
 
-            const category =
-                document
-                    .getElementById("category")
-                    .value;
+    const brand =
+        document.getElementById(
+            "brand"
+        ).value.trim();
 
-            const description =
-                document
-                    .getElementById("description")
-                    .value
-                    .trim();
+    const name =
+        document.getElementById(
+            "name"
+        ).value.trim();
 
-            const price =
-                parseFloat(
-                    document
-                        .getElementById("price")
-                        .value
-                );
+    const category =
+        document.getElementById(
+            "category"
+        ).value;
 
-            const stock =
-                parseInt(
-                    document
-                        .getElementById("stock")
-                        .value
-                );
+    const description =
+        document.getElementById(
+            "description"
+        ).value.trim();
 
-            const unit =
-                document
-                    .getElementById("unit")
-                    .value;
+    const price =
+        Number(
+            document.getElementById(
+                "price"
+            ).value || 0
+        );
 
+    const unit =
+        document.getElementById(
+            "unit"
+        ).value.trim() ||
+        "Piece";
 
-            if (
-                !brand ||
-                !name ||
-                !category ||
-                isNaN(price) ||
-                isNaN(stock)
-            ) {
-
-                alert(
-                    "⚠️ Please complete the required fields."
-                );
-
-                return;
-            }
+    const stock =
+        Number(
+            document.getElementById(
+                "stock"
+            ).value || 0
+        );
 
 
-            const product = {
+    if (!name) {
 
-                brand: brand,
+        message.innerHTML =
+            `<div class="message">
+                Product name is required.
+            </div>`;
 
-                name: name,
-
-                category: category,
-
-                description: description,
-
-                price: price,
-
-                stock: stock,
-
-                unit: unit,
-
-                image:
-                    selectedImage || ""
-            };
+        return;
+    }
 
 
-            const saveButton =
-                document.getElementById(
-                    "saveButton"
-                );
+    message.innerHTML =
+        "Saving...";
 
 
-            saveButton.disabled = true;
+    let image = null;
 
 
-            saveButton.textContent =
-                editingIndex === -1
-                ? "⏳ Adding..."
-                : "⏳ Updating...";
+    /* Existing image during edit */
+
+    if (editId) {
+
+        image =
+            document.getElementById(
+                "currentImage"
+            ).dataset.image || null;
+
+    }
 
 
-            try {
+    /* New image */
 
-                if (editingIndex === -1) {
-
-                    const result =
-                        await supabaseClient
-                            .from("products")
-                            .insert(product);
+    const file =
+        document.getElementById(
+            "productImage"
+        ).files[0];
 
 
-                    if (result.error) {
-                        throw result.error;
-                    }
+    if (file) {
+
+        image =
+            await fileToDataURL(file);
+
+    }
 
 
-                    alert(
-                        "✅ Product added successfully."
-                    );
+    const productData = {
 
-                } else {
+        brand:
+            brand,
 
-                    const id =
-                        products[
-                            editingIndex
-                        ].id;
+        name:
+            name,
+
+        description:
+            description,
+
+        price:
+            price,
+
+        unit:
+            unit,
+
+        stock:
+            stock,
+
+        image:
+            image,
+
+        category:
+            category
+
+    };
 
 
-                    const result =
-                        await supabaseClient
-                            .from("products")
-                            .update(product)
-                            .eq("id", id);
+    let result;
 
 
-                    if (result.error) {
-                        throw result.error;
-                    }
+    if (editId) {
+
+        result =
+            await supabaseClient
+                .from("products")
+                .update(productData)
+                .eq("id", editId);
+
+    } else {
+
+        result =
+            await supabaseClient
+                .from("products")
+                .insert([
+                    productData
+                ]);
+
+    }
 
 
-                    alert(
-                        "✅ Product updated successfully."
-                    );
-                }
+    if (result.error) {
+
+        console.error(result.error);
+
+        message.innerHTML =
+            `<div class="message">
+                Error:
+                ${escapeHtml(
+                    result.error.message
+                )}
+            </div>`;
+
+        return;
+    }
 
 
-                clearForm();
+    message.innerHTML =
+        `<div class="message">
+            Product saved successfully.
+        </div>`;
 
-                await loadProducts();
 
-            } catch (error) {
+    cancelEdit();
 
-                console.error(
-                    "Save error:",
-                    error
-                );
+    await loadProducts();
 
-                alert(
-                    "❌ " + error.message
-                );
-
-            } finally {
-
-                saveButton.disabled = false;
-
-                saveButton.textContent =
-                    editingIndex === -1
-                    ? "➕ Add Product"
-                    : "💾 Update Product";
-            }
-
-        }
-    );
+}
 
 
 /* =========================
-   EDIT
+   EDIT PRODUCT
 ========================= */
 
-window.editProduct = function (index) {
+window.editProduct = function (product) {
 
-    const product =
-        products[index];
+    document.getElementById(
+        "productFormTitle"
+    ).textContent =
+        "Edit Product";
 
 
-    if (!product) {
-        return;
-    }
+    document.getElementById(
+        "editProductId"
+    ).value =
+        product.id;
 
 
     document.getElementById(
@@ -880,7 +951,7 @@ window.editProduct = function (index) {
 
 
     document.getElementById(
-        "productName"
+        "name"
     ).value =
         product.name || "";
 
@@ -888,7 +959,7 @@ window.editProduct = function (index) {
     document.getElementById(
         "category"
     ).value =
-        product.category || "";
+        product.category || "Others";
 
 
     document.getElementById(
@@ -900,13 +971,7 @@ window.editProduct = function (index) {
     document.getElementById(
         "price"
     ).value =
-        product.price ?? "";
-
-
-    document.getElementById(
-        "stock"
-    ).value =
-        product.stock ?? "";
+        product.price || 0;
 
 
     document.getElementById(
@@ -915,125 +980,77 @@ window.editProduct = function (index) {
         product.unit || "Piece";
 
 
-    selectedImage =
+    document.getElementById(
+        "stock"
+    ).value =
+        product.stock || 0;
+
+
+    const currentImage =
+        document.getElementById(
+            "currentImage"
+        );
+
+    currentImage.dataset.image =
         product.image || "";
 
 
-    editingIndex = index;
+    if (product.image) {
+
+        currentImage.innerHTML =
+            `
+            <p>Current image:</p>
+            <img
+                src="${escapeHtml(product.image)}"
+                style="
+                    width:120px;
+                    height:100px;
+                    object-fit:cover;
+                    border-radius:6px;
+                "
+            >
+            `;
+
+    } else {
+
+        currentImage.innerHTML =
+            "<p>No current image.</p>";
+
+    }
 
 
     document.getElementById(
-        "formTitle"
-    ).textContent =
-        "✏️ Edit Product";
-
-
-    document.getElementById(
-        "saveButton"
-    ).textContent =
-        "💾 Update Product";
-
-
-    document.getElementById(
-        "cancelButton"
-    ).style.display =
-        "block";
+        "cancelEditButton"
+    ).classList.remove("hidden");
 
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
+
 };
 
 
 /* =========================
-   DELETE
+   CANCEL EDIT
 ========================= */
 
-window.deleteProduct = async function (index) {
+window.cancelEdit = function () {
 
-    const product =
-        products[index];
-
-
-    if (!product) {
-        return;
-    }
+    document.getElementById(
+        "productFormTitle"
+    ).textContent =
+        "Add Product";
 
 
-    const confirmed =
-        confirm(
-            "Delete " +
-            product.name +
-            "?"
-        );
+    document.getElementById(
+        "editProductId"
+    ).value = "";
 
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    try {
-
-        const result =
-            await supabaseClient
-                .from("products")
-                .delete()
-                .eq(
-                    "id",
-                    product.id
-                );
-
-
-        if (result.error) {
-            throw result.error;
-        }
-
-
-        alert(
-            "✅ Product deleted successfully."
-        );
-
-
-        await loadProducts();
-
-    } catch (error) {
-
-        console.error(
-            "Delete error:",
-            error
-        );
-
-        alert(
-            "❌ " + error.message
-        );
-    }
-};
-
-
-/* =========================
-   CANCEL
-========================= */
-
-document
-    .getElementById("cancelButton")
-    .addEventListener(
-        "click",
-        function () {
-
-            clearForm();
-
-        }
-    );
-
-
-/* =========================
-   CLEAR FORM
-========================= */
-
-function clearForm() {
 
     document.getElementById(
         "brand"
@@ -1041,13 +1058,13 @@ function clearForm() {
 
 
     document.getElementById(
-        "productName"
+        "name"
     ).value = "";
 
 
     document.getElementById(
         "category"
-    ).value = "";
+    ).value = "Others";
 
 
     document.getElementById(
@@ -1061,13 +1078,13 @@ function clearForm() {
 
 
     document.getElementById(
-        "stock"
-    ).value = "";
+        "unit"
+    ).value = "Piece";
 
 
     document.getElementById(
-        "unit"
-    ).value = "Piece";
+        "stock"
+    ).value = "";
 
 
     document.getElementById(
@@ -1075,59 +1092,472 @@ function clearForm() {
     ).value = "";
 
 
-    editingIndex = -1;
+    const currentImage =
+        document.getElementById(
+            "currentImage"
+        );
 
-    selectedImage = "";
+    currentImage.innerHTML = "";
 
-
-    document.getElementById(
-        "formTitle"
-    ).textContent =
-        "➕ Add Product";
-
-
-    document.getElementById(
-        "saveButton"
-    ).textContent =
-        "➕ Add Product";
+    currentImage.dataset.image = "";
 
 
     document.getElementById(
-        "cancelButton"
-    ).style.display =
-        "none";
+        "cancelEditButton"
+    ).classList.add("hidden");
+
+};
+
+
+/* =========================
+   DELETE PRODUCT
+========================= */
+
+window.deleteProduct = async function (id) {
+
+    if (
+        !confirm(
+            "Delete this product?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("products")
+            .delete()
+            .eq("id", id);
+
+
+    if (error) {
+
+        alert(
+            "Delete failed: " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await loadProducts();
+
+};
+
+
+/* =========================
+   ORDERS
+========================= */
+
+async function loadOrders() {
+
+    const message =
+        document.getElementById(
+            "ordersMessage"
+        );
+
+    const list =
+        document.getElementById(
+            "ordersList"
+        );
+
+
+    message.innerHTML =
+        "Loading orders...";
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("orders")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+
+    if (error) {
+
+        console.error(error);
+
+        message.innerHTML =
+            `<div class="message">
+                Error loading orders:
+                ${escapeHtml(error.message)}
+            </div>`;
+
+        return;
+    }
+
+
+    message.innerHTML = "";
+
+
+    if (!data || data.length === 0) {
+
+        list.innerHTML =
+            `<div class="message">
+                No customer orders yet.
+            </div>`;
+
+        return;
+    }
+
+
+    list.innerHTML =
+        data.map(order => {
+
+            let items = [];
+
+
+            try {
+
+                items =
+                    typeof order.items === "string"
+                    ? JSON.parse(order.items)
+                    : order.items || [];
+
+            } catch (e) {
+
+                items = [];
+
+            }
+
+
+            const orderDate =
+                order.created_at
+                ? new Date(
+                    order.created_at
+                ).toLocaleString(
+                    "en-PH"
+                )
+                : "";
+
+
+            const total =
+                Number(
+                    order.total || 0
+                );
+
+
+            return `
+
+                <div class="order-card">
+
+                    <div class="order-header">
+
+                        <div class="order-number">
+                            Order #${order.id}
+                        </div>
+
+                        <div class="status">
+                            ${escapeHtml(
+                                order.status || "Pending"
+                            )}
+                        </div>
+
+                    </div>
+
+                    <div class="order-details">
+
+                        <strong>
+                            Customer:
+                        </strong>
+                        ${escapeHtml(
+                            order.customer_name || ""
+                        )}
+
+                        <br>
+
+                        <strong>
+                            Mobile:
+                        </strong>
+                        ${escapeHtml(
+                            order.phone || ""
+                        )}
+
+                        <br>
+
+                        <strong>
+                            Type:
+                        </strong>
+                        ${escapeHtml(
+                            order.fulfillment || ""
+                        )}
+
+                        <br>
+
+                        <strong>
+                            Address / Pickup:
+                        </strong>
+                        ${escapeHtml(
+                            order.address || ""
+                        )}
+
+                        <br>
+
+                        <strong>
+                            Date:
+                        </strong>
+                        ${escapeHtml(
+                            orderDate
+                        )}
+
+                        ${
+                            order.notes
+                            ? `
+                            <br>
+                            <strong>
+                                Notes:
+                            </strong>
+                            ${escapeHtml(
+                                order.notes
+                            )}
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+
+                    <div class="order-items">
+
+                        <strong>
+                            Ordered Products
+                        </strong>
+
+                        ${
+                            items.length > 0
+                            ? items.map(item => {
+
+                                const subtotal =
+                                    Number(
+                                        item.subtotal ||
+                                        (
+                                            Number(
+                                                item.price || 0
+                                            ) *
+                                            Number(
+                                                item.quantity || 0
+                                            )
+                                        )
+                                    );
+
+                                return `
+
+                                    <div style="
+                                        padding:7px 0;
+                                        border-bottom:1px solid #ddd;
+                                    ">
+
+                                        ${escapeHtml(
+                                            item.name || ""
+                                        )}
+
+                                        ×
+                                        ${Number(
+                                            item.quantity || 0
+                                        )}
+
+                                        <span style="
+                                            float:right;
+                                        ">
+
+                                            ₱${subtotal.toLocaleString(
+                                                "en-PH",
+                                                {
+                                                    minimumFractionDigits: 2
+                                                }
+                                            )}
+
+                                        </span>
+
+                                    </div>
+
+                                `;
+
+                            }).join("")
+                            : "No item details."
+
+                        }
+
+                    </div>
+
+
+                    <div class="order-total">
+
+                        Total:
+                        ₱${total.toLocaleString(
+                            "en-PH",
+                            {
+                                minimumFractionDigits: 2
+                            }
+                        )}
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            class="primary"
+                            onclick="updateOrderStatus(${order.id}, 'Pending')"
+                        >
+                            Pending
+                        </button>
+
+                        <button
+                            class="green"
+                            onclick="updateOrderStatus(${order.id}, 'Confirmed')"
+                        >
+                            Confirmed
+                        </button>
+
+                        <button
+                            class="primary"
+                            onclick="updateOrderStatus(${order.id}, 'Completed')"
+                        >
+                            Completed
+                        </button>
+
+                        <button
+                            class="red"
+                            onclick="updateOrderStatus(${order.id}, 'Cancelled')"
+                        >
+                            Cancelled
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
 }
 
 
 /* =========================
-   LOGIN BUTTON
+   UPDATE ORDER STATUS
 ========================= */
 
-document
-    .getElementById("loginButton")
-    .addEventListener(
-        "click",
-        function () {
+window.updateOrderStatus =
+async function (id, status) {
 
-            window.loginSeller();
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("orders")
+            .update({
+                status: status
+            })
+            .eq("id", id);
+
+
+    if (error) {
+
+        alert(
+            "Unable to update order: " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await loadOrders();
+
+};
+
+
+/* =========================
+   IMAGE TO DATA URL
+========================= */
+
+function fileToDataURL(file) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                () => resolve(
+                    reader.result
+                );
+
+            reader.onerror =
+                reject;
+
+            reader.readAsDataURL(file);
 
         }
     );
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 
 /* =========================
    START
 ========================= */
 
-if (!initializeSupabase()) {
-
-    document.getElementById(
-        "loginMessage"
-    ).textContent =
-        "❌ Supabase library failed to load.";
-}
-
-})();
+checkSession();
 
 </script>
 

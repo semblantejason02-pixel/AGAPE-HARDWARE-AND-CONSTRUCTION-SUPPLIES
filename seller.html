@@ -24,9 +24,7 @@ body {
     display: none !important;
 }
 
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 .login-container {
     min-height: 100vh;
@@ -56,9 +54,7 @@ body {
     color: #777;
 }
 
-/* =========================
-   INPUTS
-========================= */
+/* INPUTS */
 
 input,
 textarea,
@@ -113,9 +109,7 @@ button {
     color: white;
 }
 
-/* =========================
-   SELLER APP
-========================= */
+/* SELLER APP */
 
 .seller-app {
     display: none;
@@ -143,9 +137,7 @@ button {
     color: #f59e0b;
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+/* NAVIGATION */
 
 .nav {
     background: white;
@@ -168,9 +160,7 @@ button {
     color: white;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .main {
     width: 100%;
@@ -199,9 +189,7 @@ button {
     margin: 0;
 }
 
-/* =========================
-   DASHBOARD
-========================= */
+/* DASHBOARD */
 
 .dashboard-grid {
     display: grid;
@@ -229,34 +217,7 @@ button {
     font-weight: bold;
 }
 
-.quick-actions {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.07);
-}
-
-.quick-actions h3 {
-    margin-top: 0;
-}
-
-.quick-actions-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-/* =========================
-   PRODUCTS
-========================= */
-
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
-}
-
-/* CATEGORY GROUPING */
+/* PRODUCTS */
 
 .product-category-section {
     margin-bottom: 35px;
@@ -381,9 +342,7 @@ button {
     flex: 1;
 }
 
-/* =========================
-   PRODUCT FORM
-========================= */
+/* PRODUCT FORM */
 
 .form-card {
     background: white;
@@ -416,9 +375,7 @@ button {
     gap: 10px;
 }
 
-/* =========================
-   ORDER TABS
-========================= */
+/* ORDER TABS */
 
 .order-tabs {
     display: flex;
@@ -450,9 +407,7 @@ button {
     background: rgba(255,255,255,.25);
 }
 
-/* =========================
-   ORDERS
-========================= */
+/* ORDERS */
 
 .orders-grid {
     display: grid;
@@ -544,9 +499,7 @@ button {
     font-size: 12px;
 }
 
-/* =========================
-   EMPTY
-========================= */
+/* EMPTY */
 
 .empty {
     background: white;
@@ -557,15 +510,9 @@ button {
     grid-column: 1 / -1;
 }
 
-/* =========================
-   LARGE MONITOR
-========================= */
+/* LARGE MONITOR */
 
 @media (min-width: 1500px) {
-
-    .products-grid {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
 
     .category-products-grid {
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -576,9 +523,7 @@ button {
     }
 }
 
-/* =========================
-   TABLET
-========================= */
+/* TABLET */
 
 @media (max-width: 999px) and (min-width: 601px) {
 
@@ -586,16 +531,13 @@ button {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .products-grid,
     .orders-grid,
     .category-products-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-/* =========================
-   PHONE
-========================= */
+/* PHONE */
 
 @media (max-width: 600px) {
 
@@ -616,7 +558,6 @@ button {
     }
 
     .dashboard-grid,
-    .products-grid,
     .orders-grid,
     .category-products-grid {
         grid-template-columns: 1fr;
@@ -656,9 +597,7 @@ button {
 
 <body>
 
-<!-- =========================
-     LOGIN
-========================= -->
+<!-- LOGIN -->
 
 <div id="loginPage" class="login-container">
 
@@ -695,9 +634,7 @@ button {
 </div>
 
 
-<!-- =========================
-     SELLER APP
-========================= -->
+<!-- SELLER APP -->
 
 <div id="sellerApp" class="seller-app">
 
@@ -757,9 +694,7 @@ button {
 
     <main class="main">
 
-        <!-- =========================
-             DASHBOARD
-        ========================= -->
+        <!-- DASHBOARD -->
 
         <section id="dashboard" class="section active">
 
@@ -767,6 +702,7 @@ button {
 
                 <div>
                     <h2>Dashboard</h2>
+
                     <p style="color:#777;">
                         Manage your hardware store
                     </p>
@@ -778,74 +714,57 @@ button {
             <div class="dashboard-grid">
 
                 <div class="stat-card">
+
                     <h3>Products</h3>
+
                     <div
                         class="stat-number"
                         id="dashboardProducts"
                     >
                         0
                     </div>
+
                 </div>
 
+
                 <div class="stat-card">
+
                     <h3>Low Stock</h3>
+
                     <div
                         class="stat-number"
                         id="dashboardLowStock"
                     >
                         0
                     </div>
+
                 </div>
 
+
                 <div class="stat-card">
+
                     <h3>Total Orders</h3>
+
                     <div
                         class="stat-number"
                         id="dashboardOrders"
                     >
                         0
                     </div>
+
                 </div>
 
+
                 <div class="stat-card">
+
                     <h3>Pending Orders</h3>
+
                     <div
                         class="stat-number"
                         id="dashboardPending"
                     >
                         0
                     </div>
-                </div>
-
-            </div>
-
-
-            <div class="quick-actions">
-
-                <h3>Quick Actions</h3>
-
-                <div class="quick-actions-buttons">
-
-                    <button
-                        class="btn-primary"
-                        onclick="openAddProduct()"
-                    >
-                        + Add Product
-                    </button>
-
-                    <button
-                        class="btn-secondary"
-                        onclick="openOrders()"
-                    >
-                        View Orders
-                    </button>
-
-                    <button
-                        class="btn-secondary"
-                        onclick="openProducts()"
-                    >
-                        Manage Products
-                    </button>
 
                 </div>
 
@@ -854,20 +773,22 @@ button {
         </section>
 
 
-        <!-- =========================
-             ORDERS
-        ========================= -->
+        <!-- ORDERS -->
 
         <section id="orders" class="section">
 
             <div class="section-title">
 
                 <div>
+
                     <h2>Customer Orders</h2>
+
                     <p style="color:#777;">
                         Manage incoming customer orders
                     </p>
+
                 </div>
+
 
                 <button
                     class="btn-secondary"
@@ -879,8 +800,6 @@ button {
             </div>
 
 
-            <!-- ORDER SUB-TABS -->
-
             <div class="order-tabs">
 
                 <button
@@ -889,12 +808,14 @@ button {
                     onclick="showOrderTab('new')"
                 >
                     🆕 New Orders
+
                     <span
                         class="order-count"
                         id="newOrderCount"
                     >
                         0
                     </span>
+
                 </button>
 
 
@@ -904,26 +825,24 @@ button {
                     onclick="showOrderTab('status')"
                 >
                     📦 Order Status
+
                     <span
                         class="order-count"
                         id="statusOrderCount"
                     >
                         0
                     </span>
+
                 </button>
 
             </div>
 
-
-            <!-- NEW ORDERS -->
 
             <div
                 id="newOrdersContainer"
                 class="orders-grid"
             ></div>
 
-
-            <!-- ORDER STATUS -->
 
             <div
                 id="statusOrdersContainer"
@@ -933,20 +852,22 @@ button {
         </section>
 
 
-        <!-- =========================
-             PRODUCTS
-        ========================= -->
+        <!-- PRODUCTS -->
 
         <section id="products" class="section">
 
             <div class="section-title">
 
                 <div>
+
                     <h2>Products</h2>
+
                     <p style="color:#777;">
                         Manage your hardware products
                     </p>
+
                 </div>
+
 
                 <button
                     class="btn-primary"
@@ -958,22 +879,19 @@ button {
             </div>
 
 
-            <!-- PRODUCTS GROUPED BY CATEGORY -->
-
             <div id="productsCategories"></div>
 
         </section>
 
 
-        <!-- =========================
-             ADD PRODUCT
-        ========================= -->
+        <!-- ADD / EDIT PRODUCT -->
 
         <section id="addProduct" class="section">
 
             <div class="section-title">
 
                 <div>
+
                     <h2 id="formTitle">
                         Add Product
                     </h2>
@@ -981,6 +899,7 @@ button {
                     <p style="color:#777;">
                         Add or update your product
                     </p>
+
                 </div>
 
             </div>
@@ -992,6 +911,7 @@ button {
                     type="hidden"
                     id="productId"
                 >
+
 
                 <div class="form-grid">
 
@@ -1166,9 +1086,7 @@ button {
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
+/* SUPABASE */
 
 const SUPABASE_URL =
     "https://djeqfrifhqcpfxccotdl.supabase.co";
@@ -1176,30 +1094,24 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
 
-let supabaseClient = null;
-
-(function () {
-
-    supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-})();
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 async function login() {
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document.getElementById("loginEmail")
+            .value.trim();
 
     const password =
-        document.getElementById("loginPassword").value;
+        document.getElementById("loginPassword")
+            .value;
 
     const message =
         document.getElementById("loginMessage");
@@ -1232,9 +1144,7 @@ async function login() {
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
+/* LOGOUT */
 
 async function logout() {
 
@@ -1248,9 +1158,7 @@ async function logout() {
 }
 
 
-/* =========================
-   SESSION
-========================= */
+/* SESSION */
 
 async function checkSession() {
 
@@ -1274,9 +1182,7 @@ async function checkSession() {
 }
 
 
-/* =========================
-   SHOW APP
-========================= */
+/* SHOW SELLER APP */
 
 function showSellerApp() {
 
@@ -1291,9 +1197,7 @@ function showSellerApp() {
 }
 
 
-/* =========================
-   MAIN NAVIGATION
-========================= */
+/* MAIN NAVIGATION */
 
 function showSection(sectionId) {
 
@@ -1317,31 +1221,24 @@ function showSection(sectionId) {
         document.getElementById("navDashboard")
             .classList.add("active");
 
-    }
-
-    if (sectionId === "orders") {
+    } else if (sectionId === "orders") {
 
         document.getElementById("navOrders")
             .classList.add("active");
 
         loadOrders();
 
-    }
-
-    if (sectionId === "products") {
+    } else if (sectionId === "products") {
 
         document.getElementById("navProducts")
             .classList.add("active");
 
         loadProducts();
 
-    }
-
-    if (sectionId === "addProduct") {
+    } else if (sectionId === "addProduct") {
 
         document.getElementById("navAddProduct")
             .classList.add("active");
-
     }
 }
 
@@ -1354,21 +1251,7 @@ function openAddProduct() {
 }
 
 
-function openOrders() {
-
-    showSection("orders");
-}
-
-
-function openProducts() {
-
-    showSection("products");
-}
-
-
-/* =========================
-   ORDER SUB-TABS
-========================= */
+/* ORDER SUB-TABS */
 
 let currentOrderTab = "new";
 
@@ -1376,7 +1259,6 @@ let currentOrderTab = "new";
 function showOrderTab(tab) {
 
     currentOrderTab = tab;
-
 
     const newContainer =
         document.getElementById("newOrdersContainer");
@@ -1394,31 +1276,23 @@ function showOrderTab(tab) {
     if (tab === "new") {
 
         newContainer.classList.remove("hidden");
-
         statusContainer.classList.add("hidden");
 
         newTab.classList.add("active");
-
         statusTab.classList.remove("active");
 
     } else {
 
         newContainer.classList.add("hidden");
-
         statusContainer.classList.remove("hidden");
 
         newTab.classList.remove("active");
-
         statusTab.classList.add("active");
-
     }
 }
 
 
-/* =========================
-   LOAD PRODUCTS
-   GROUPED BY CATEGORY
-========================= */
+/* LOAD PRODUCTS */
 
 async function loadProducts() {
 
@@ -1456,8 +1330,6 @@ async function loadProducts() {
     const products = data || [];
 
 
-    /* DASHBOARD COUNTS */
-
     document.getElementById("dashboardProducts")
         .textContent = products.length;
 
@@ -1482,10 +1354,6 @@ async function loadProducts() {
     }
 
 
-    /* =========================
-       CATEGORY ORDER
-    ========================= */
-
     const categoryOrder = [
         "Cement",
         "Steel",
@@ -1497,10 +1365,6 @@ async function loadProducts() {
     ];
 
 
-    /* =========================
-       GROUP PRODUCTS
-    ========================= */
-
     const grouped = {};
 
 
@@ -1511,30 +1375,17 @@ async function loadProducts() {
                 ? String(product.category).trim()
                 : "";
 
-
-        /*
-         * If category is blank,
-         * put the product under Others.
-         */
-
         if (!category) {
             category = "Others";
         }
-
 
         if (!grouped[category]) {
             grouped[category] = [];
         }
 
-
         grouped[category].push(product);
-
     });
 
-
-    /* =========================
-       SORT CATEGORIES
-    ========================= */
 
     const categories =
         Object.keys(grouped).sort((a, b) => {
@@ -1546,45 +1397,21 @@ async function loadProducts() {
                 categoryOrder.indexOf(b);
 
 
-            /*
-             * Known categories follow:
-             * Cement
-             * Steel
-             * Electrical
-             * Plumbing
-             * Paint
-             * Tools
-             * Others
-             */
-
             if (indexA !== -1 && indexB !== -1) {
                 return indexA - indexB;
             }
-
-
-            /*
-             * Unknown categories go after
-             * the standard categories.
-             */
 
             if (indexA !== -1) {
                 return -1;
             }
 
-
             if (indexB !== -1) {
                 return 1;
             }
 
-
             return a.localeCompare(b);
-
         });
 
-
-    /* =========================
-       CREATE CATEGORY SECTIONS
-    ========================= */
 
     container.innerHTML =
         categories.map(category => {
@@ -1598,7 +1425,6 @@ async function loadProducts() {
 
                     const stock =
                         Number(product.stock || 0);
-
 
                     const stockClass =
                         stock <= 5
@@ -1623,7 +1449,6 @@ async function loadProducts() {
 
 
                     return `
-
                         <div class="product-card">
 
                             ${imageHTML}
@@ -1636,13 +1461,11 @@ async function loadProducts() {
                                     )}
                                 </div>
 
-
                                 <div class="product-name">
                                     ${escapeHtml(
                                         product.name
                                     )}
                                 </div>
-
 
                                 <div class="product-description">
                                     ${escapeHtml(
@@ -1650,11 +1473,9 @@ async function loadProducts() {
                                     )}
                                 </div>
 
-
                                 <div class="product-info">
 
                                     <div class="product-price">
-
                                         ₱${Number(
                                             product.price || 0
                                         ).toLocaleString(
@@ -1663,21 +1484,17 @@ async function loadProducts() {
                                                 minimumFractionDigits: 2
                                             }
                                         )}
-
                                         /
                                         ${escapeHtml(
                                             product.unit || "Piece"
                                         )}
-
                                     </div>
-
 
                                     <div
                                         class="product-stock ${stockClass}"
                                     >
                                         Stock: ${stock}
                                     </div>
-
 
                                     <div class="product-actions">
 
@@ -1687,7 +1504,6 @@ async function loadProducts() {
                                         >
                                             Edit
                                         </button>
-
 
                                         <button
                                             class="btn-danger"
@@ -1703,14 +1519,12 @@ async function loadProducts() {
                             </div>
 
                         </div>
-
                     `;
 
                 }).join("");
 
 
             return `
-
                 <div class="product-category-section">
 
                     <div class="product-category-header">
@@ -1719,39 +1533,29 @@ async function loadProducts() {
                             ${escapeHtml(category)}
                         </h3>
 
-
                         <span class="product-category-count">
-
                             ${categoryProducts.length}
-
                             ${
                                 categoryProducts.length === 1
                                     ? "Product"
                                     : "Products"
                             }
-
                         </span>
 
                     </div>
 
-
                     <div class="category-products-grid">
-
                         ${productsHTML}
-
                     </div>
 
                 </div>
-
             `;
 
         }).join("");
 }
 
 
-/* =========================
-   SAVE PRODUCT
-========================= */
+/* SAVE PRODUCT */
 
 async function saveProduct() {
 
@@ -1768,16 +1572,22 @@ async function saveProduct() {
         document.getElementById("category").value;
 
     const description =
-        document.getElementById("description").value.trim();
+        document.getElementById("description")
+            .value.trim();
 
     const price =
-        Number(document.getElementById("price").value || 0);
+        Number(
+            document.getElementById("price").value || 0
+        );
 
     const unit =
-        document.getElementById("unit").value.trim() || "Piece";
+        document.getElementById("unit").value.trim()
+        || "Piece";
 
     const stock =
-        Number(document.getElementById("stock").value || 0);
+        Number(
+            document.getElementById("stock").value || 0
+        );
 
     const file =
         document.getElementById("imageFile").files[0];
@@ -1802,6 +1612,7 @@ async function saveProduct() {
 
     let image = null;
 
+
     if (file) {
 
         try {
@@ -1822,7 +1633,6 @@ async function saveProduct() {
 
 
     const productData = {
-
         brand,
         name,
         category,
@@ -1830,14 +1640,11 @@ async function saveProduct() {
         price,
         unit,
         stock
-
     };
 
 
     if (image) {
-
         productData.image = image;
-
     }
 
 
@@ -1858,7 +1665,6 @@ async function saveProduct() {
             await supabaseClient
                 .from("products")
                 .insert(productData);
-
     }
 
 
@@ -1887,16 +1693,13 @@ async function saveProduct() {
     setTimeout(() => {
 
         cancelEdit();
-
-        openProducts();
+        showSection("products");
 
     }, 700);
 }
 
 
-/* =========================
-   EDIT PRODUCT
-========================= */
+/* EDIT PRODUCT */
 
 async function editProduct(id) {
 
@@ -1952,9 +1755,7 @@ async function editProduct(id) {
 }
 
 
-/* =========================
-   CANCEL EDIT
-========================= */
+/* CANCEL EDIT */
 
 function cancelEdit() {
 
@@ -1979,13 +1780,12 @@ function cancelEdit() {
     document.getElementById("formTitle").textContent =
         "Add Product";
 
-    document.getElementById("productMessage").textContent = "";
+    document.getElementById("productMessage")
+        .textContent = "";
 }
 
 
-/* =========================
-   DELETE PRODUCT
-========================= */
+/* DELETE PRODUCT */
 
 async function deleteProduct(id) {
 
@@ -1996,9 +1796,7 @@ async function deleteProduct(id) {
     }
 
 
-    const {
-        error
-    } =
+    const { error } =
         await supabaseClient
             .from("products")
             .delete()
@@ -2017,9 +1815,7 @@ async function deleteProduct(id) {
 }
 
 
-/* =========================
-   LOAD ORDERS
-========================= */
+/* LOAD ORDERS */
 
 async function loadOrders() {
 
@@ -2085,14 +1881,11 @@ async function loadOrders() {
     document.getElementById("dashboardOrders")
         .textContent = orders.length;
 
-
     document.getElementById("dashboardPending")
         .textContent = newOrders.length;
 
-
     document.getElementById("newOrderCount")
         .textContent = newOrders.length;
-
 
     document.getElementById("statusOrderCount")
         .textContent = statusOrders.length;
@@ -2116,9 +1909,7 @@ async function loadOrders() {
 }
 
 
-/* =========================
-   RENDER ORDERS
-========================= */
+/* RENDER ORDERS */
 
 function renderOrders(
     orders,
@@ -2142,6 +1933,7 @@ function renderOrders(
 
             let items = [];
 
+
             try {
 
                 items =
@@ -2152,7 +1944,6 @@ function renderOrders(
             } catch {
 
                 items = [];
-
             }
 
 
@@ -2201,12 +1992,16 @@ function renderOrders(
                 order.status || "Pending";
 
 
+            const statusLower =
+                status.toLowerCase();
+
+
             const statusClass =
-                status.toLowerCase() === "pending"
+                statusLower === "pending"
                     ? "status-pending"
-                    : status.toLowerCase() === "confirmed"
+                    : statusLower === "confirmed"
                     ? "status-confirmed"
-                    : status.toLowerCase() === "completed"
+                    : statusLower === "completed"
                     ? "status-completed"
                     : "status-cancelled";
 
@@ -2266,13 +2061,13 @@ function renderOrders(
                         ${
                             order.notes
                                 ? `
-                                <div>
-                                    <strong>Notes:</strong>
-                                    ${escapeHtml(
-                                        order.notes
-                                    )}
-                                </div>
-                                `
+                                    <div>
+                                        <strong>Notes:</strong>
+                                        ${escapeHtml(
+                                            order.notes
+                                        )}
+                                    </div>
+                                  `
                                 : ""
                         }
 
@@ -2309,47 +2104,47 @@ function renderOrders(
                         ${
                             status === "Pending"
                                 ? `
-                                <button
-                                    class="btn-warning"
-                                    onclick="updateOrderStatus(
-                                        ${order.id},
-                                        'Confirmed'
-                                    )"
-                                >
-                                    Confirm
-                                </button>
+                                    <button
+                                        class="btn-warning"
+                                        onclick="updateOrderStatus(
+                                            ${order.id},
+                                            'Confirmed'
+                                        )"
+                                    >
+                                        Confirm
+                                    </button>
 
-                                <button
-                                    class="btn-danger"
-                                    onclick="updateOrderStatus(
-                                        ${order.id},
-                                        'Cancelled'
-                                    )"
-                                >
-                                    Cancel
-                                </button>
-                                `
+                                    <button
+                                        class="btn-danger"
+                                        onclick="updateOrderStatus(
+                                            ${order.id},
+                                            'Cancelled'
+                                        )"
+                                    >
+                                        Cancel
+                                    </button>
+                                  `
                                 : `
-                                <button
-                                    class="btn-success"
-                                    onclick="updateOrderStatus(
-                                        ${order.id},
-                                        'Completed'
-                                    )"
-                                >
-                                    Complete
-                                </button>
+                                    <button
+                                        class="btn-success"
+                                        onclick="updateOrderStatus(
+                                            ${order.id},
+                                            'Completed'
+                                        )"
+                                    >
+                                        Complete
+                                    </button>
 
-                                <button
-                                    class="btn-warning"
-                                    onclick="updateOrderStatus(
-                                        ${order.id},
-                                        'Confirmed'
-                                    )"
-                                >
-                                    Confirmed
-                                </button>
-                                `
+                                    <button
+                                        class="btn-warning"
+                                        onclick="updateOrderStatus(
+                                            ${order.id},
+                                            'Confirmed'
+                                        )"
+                                    >
+                                        Confirmed
+                                    </button>
+                                  `
                         }
 
                     </div>
@@ -2362,15 +2157,11 @@ function renderOrders(
 }
 
 
-/* =========================
-   UPDATE ORDER STATUS
-========================= */
+/* UPDATE ORDER STATUS */
 
 async function updateOrderStatus(id, status) {
 
-    const {
-        error
-    } =
+    const { error } =
         await supabaseClient
             .from("orders")
             .update({
@@ -2391,9 +2182,7 @@ async function updateOrderStatus(id, status) {
 }
 
 
-/* =========================
-   IMAGE
-========================= */
+/* IMAGE TO DATA URL */
 
 function fileToDataURL(file) {
 
@@ -2409,14 +2198,11 @@ function fileToDataURL(file) {
             reject;
 
         reader.readAsDataURL(file);
-
     });
 }
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
+/* ESCAPE HTML */
 
 function escapeHtml(value) {
 
@@ -2429,9 +2215,7 @@ function escapeHtml(value) {
 }
 
 
-/* =========================
-   START
-========================= */
+/* START */
 
 checkSession();
 

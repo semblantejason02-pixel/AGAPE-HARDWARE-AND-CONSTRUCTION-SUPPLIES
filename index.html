@@ -331,6 +331,94 @@ header p {
     margin: 15px 0;
 }
 
+/* TRACK ORDER */
+
+.track-section {
+    margin-top: 30px;
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+}
+
+.track-section h2 {
+    margin-top: 0;
+}
+
+.track-section p {
+    color: #666;
+    font-size: 14px;
+}
+
+.track-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.track-form input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+.track-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    background: #111;
+    color: white;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.track-result {
+    display: none;
+    margin-top: 18px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.track-order-number {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.track-status {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #ddd;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.track-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.track-row:last-child {
+    border-bottom: none;
+}
+
+.track-error {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    background: #ffebee;
+    color: #c62828;
+    border-radius: 7px;
+}
+
 /* FOOTER */
 
 footer {
@@ -358,6 +446,8 @@ footer a {
 
 <div class="container">
 
+    <!-- SEARCH -->
+
     <div class="search-box">
         <input
             type="text"
@@ -366,6 +456,8 @@ footer a {
             oninput="filterProducts()"
         >
     </div>
+
+    <!-- CATEGORIES -->
 
     <div class="categories">
         <button class="active" onclick="setCategory('All', this)">All</button>
@@ -531,6 +623,81 @@ footer a {
         >
             Continue Shopping
         </button>
+
+    </div>
+
+    <!-- TRACK ORDER -->
+
+    <div class="track-section">
+
+        <h2>📦 Track My Order</h2>
+
+        <p>
+            Enter your Order Number and Mobile Number to check your order status.
+        </p>
+
+        <div class="track-form">
+
+            <input
+                type="number"
+                id="trackOrderId"
+                placeholder="Order Number"
+            >
+
+            <input
+                type="tel"
+                id="trackPhone"
+                placeholder="09XXXXXXXXX"
+            >
+
+            <button
+                class="track-btn"
+                id="trackButton"
+                onclick="trackOrder()"
+            >
+                CHECK ORDER STATUS
+            </button>
+
+        </div>
+
+        <div
+            id="trackError"
+            class="track-error"
+        ></div>
+
+        <div
+            id="trackResult"
+            class="track-result"
+        >
+
+            <div class="track-order-number">
+                Order #<span id="trackedOrderNumber"></span>
+            </div>
+
+            <div>
+                Status:
+                <span
+                    id="trackedStatus"
+                    class="track-status"
+                ></span>
+            </div>
+
+            <div class="track-row">
+                <span>Order Type</span>
+                <strong id="trackedFulfillment"></strong>
+            </div>
+
+            <div class="track-row">
+                <span>Total</span>
+                <strong>₱<span id="trackedTotal"></span></strong>
+            </div>
+
+            <div class="track-row">
+                <span>Date</span>
+                <strong id="trackedDate"></strong>
+            </div>
+
+        </div>
 
     </div>
 
@@ -1352,39 +1519,14 @@ async function placeOrder() {
             });
 
 
-        const orderData = {
-
-            customer_name:
-                name,
-
-            phone:
-                phone,
-
-            address:
-                address,
-
-            fulfillment:
-                fulfillment,
-
-            notes:
-                notes,
-
-            items:
-                items,
-
-            total:
-                total,
-
-            status:
-                "Pending"
-
-        };
-
+        /* =========================
+           CREATE ORDER THROUGH RPC
+        ========================= */
 
         const response =
             await fetch(
                 SUPABASE_URL +
-                "/rest/v1/orders",
+                "/rest/v1/rpc/create_order",
                 {
 
                     method: "POST",
@@ -1399,16 +1541,35 @@ async function placeOrder() {
                             SUPABASE_KEY,
 
                         "Content-Type":
-                            "application/json",
+                            "application/json"
 
-                        "Prefer":
-    "return=minimal"
                     },
 
                     body:
-                        JSON.stringify(
-                            orderData
-                        )
+                        JSON.stringify({
+
+                            p_customer_name:
+                                name,
+
+                            p_phone:
+                                phone,
+
+                            p_address:
+                                address,
+
+                            p_fulfillment:
+                                fulfillment,
+
+                            p_notes:
+                                notes,
+
+                            p_items:
+                                items,
+
+                            p_total:
+                                total
+
+                        })
 
                 }
             );
@@ -1429,6 +1590,15 @@ async function placeOrder() {
 
         }
 
+
+        /* =========================
+           GET NEW ORDER NUMBER
+        ========================= */
+
+        const orderId =
+            await response.json();
+
+
         document.getElementById(
             "checkout"
         ).style.display =
@@ -1442,9 +1612,23 @@ async function placeOrder() {
 
 
         document.getElementById(
-    "orderNumber"
-).textContent =
-    "Order submitted";
+            "orderNumber"
+        ).textContent =
+            "#" + orderId;
+
+
+        /* Save phone temporarily
+           so customer can easily track */
+
+        document.getElementById(
+            "trackOrderId"
+        ).value =
+            orderId;
+
+        document.getElementById(
+            "trackPhone"
+        ).value =
+            phone;
 
 
         cart = [];
@@ -1481,13 +1665,232 @@ async function placeOrder() {
 
 
 /* =========================
+   TRACK ORDER
+========================= */
+
+async function trackOrder() {
+
+    const orderId =
+        document
+        .getElementById("trackOrderId")
+        .value
+        .trim();
+
+    const phone =
+        document
+        .getElementById("trackPhone")
+        .value
+        .trim();
+
+
+    const button =
+        document.getElementById(
+            "trackButton"
+        );
+
+    const result =
+        document.getElementById(
+            "trackResult"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "trackError"
+        );
+
+
+    result.style.display =
+        "none";
+
+    errorBox.style.display =
+        "none";
+
+
+    if (!orderId) {
+
+        errorBox.textContent =
+            "Please enter your Order Number.";
+
+        errorBox.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    if (!phone) {
+
+        errorBox.textContent =
+            "Please enter your Mobile Number.";
+
+        errorBox.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "CHECKING...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/rest/v1/rpc/track_order",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " +
+                            SUPABASE_KEY,
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            p_order_id:
+                                Number(orderId),
+
+                            p_phone:
+                                phone
+
+                        })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to check order."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            errorBox.textContent =
+                "Order not found. Please check your Order Number and Mobile Number.";
+
+            errorBox.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        const order =
+            data[0];
+
+
+        document.getElementById(
+            "trackedOrderNumber"
+        ).textContent =
+            order.order_id;
+
+
+        document.getElementById(
+            "trackedStatus"
+        ).textContent =
+            order.status;
+
+
+        document.getElementById(
+            "trackedFulfillment"
+        ).textContent =
+            order.fulfillment;
+
+
+        document.getElementById(
+            "trackedTotal"
+        ).textContent =
+            Number(order.total || 0)
+            .toLocaleString(
+                "en-PH",
+                {
+                    minimumFractionDigits: 2
+                }
+            );
+
+
+        document.getElementById(
+            "trackedDate"
+        ).textContent =
+            new Date(
+                order.created_at
+            ).toLocaleString(
+                "en-PH",
+                {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }
+            );
+
+
+        result.style.display =
+            "block";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        errorBox.textContent =
+            "There was a problem checking your order. Please try again.";
+
+        errorBox.style.display =
+            "block";
+
+    } finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "CHECK ORDER STATUS";
+
+    }
+
+}
+
+
+/* =========================
    SECURITY / HTML
 ========================= */
 
 function escapeHtml(value) {
 
-    if (value === null ||
-        value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
 
         return "";
 

@@ -20,6 +20,10 @@ body {
     color: #222;
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* =========================
    LOGIN
 ========================= */
@@ -38,7 +42,7 @@ body {
     max-width: 420px;
     padding: 30px;
     border-radius: 14px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+    box-shadow: 0 5px 25px rgba(0,0,0,.12);
 }
 
 .login-box h1 {
@@ -51,6 +55,10 @@ body {
     text-align: center;
     color: #777;
 }
+
+/* =========================
+   INPUTS
+========================= */
 
 input,
 textarea,
@@ -105,12 +113,8 @@ button {
     color: white;
 }
 
-.hidden {
-    display: none !important;
-}
-
 /* =========================
-   SELLER HEADER
+   SELLER APP
 ========================= */
 
 .seller-app {
@@ -128,12 +132,6 @@ button {
     position: sticky;
     top: 0;
     z-index: 100;
-}
-
-.header-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
 }
 
 .header-title h1 {
@@ -176,7 +174,7 @@ button {
 
 .main {
     width: 100%;
-    max-width: 1800px;
+    max-width: 1900px;
     margin: auto;
     padding: 25px;
 }
@@ -216,7 +214,7 @@ button {
     background: white;
     padding: 22px;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
     border-left: 5px solid #d97706;
 }
 
@@ -229,14 +227,13 @@ button {
 .stat-number {
     font-size: 32px;
     font-weight: bold;
-    color: #111827;
 }
 
 .quick-actions {
     background: white;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
 }
 
 .quick-actions h3 {
@@ -250,18 +247,12 @@ button {
 }
 
 /* =========================
-   PRODUCTS GRID
+   PRODUCTS
 ========================= */
 
 .products-grid {
     display: grid;
-
-    /*
-       PC:
-       4 products per row
-    */
     grid-template-columns: repeat(4, minmax(0, 1fr));
-
     gap: 18px;
 }
 
@@ -269,23 +260,24 @@ button {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
     display: flex;
     flex-direction: column;
-    min-width: 0;
+}
+
+.product-image,
+.product-no-image {
+    width: 100%;
+    height: 210px;
 }
 
 .product-image {
-    width: 100%;
-    height: 210px;
     object-fit: contain;
     background: #f9fafb;
     padding: 12px;
 }
 
 .product-no-image {
-    width: 100%;
-    height: 210px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -304,13 +296,12 @@ button {
     color: #d97706;
     font-size: 13px;
     font-weight: bold;
-    margin-bottom: 4px;
 }
 
 .product-name {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin: 5px 0 8px;
 }
 
 .product-description {
@@ -327,7 +318,6 @@ button {
 .product-price {
     font-size: 20px;
     font-weight: bold;
-    color: #111827;
 }
 
 .product-stock {
@@ -354,14 +344,14 @@ button {
 }
 
 /* =========================
-   ADD / EDIT PRODUCT
+   PRODUCT FORM
 ========================= */
 
 .form-card {
     background: white;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
     max-width: 900px;
     margin: auto;
 }
@@ -372,14 +362,6 @@ button {
     gap: 15px;
 }
 
-.form-group {
-    min-width: 0;
-}
-
-.form-group.full {
-    grid-column: 1 / -1;
-}
-
 .form-group label {
     display: block;
     font-weight: bold;
@@ -387,26 +369,56 @@ button {
     margin-bottom: 6px;
 }
 
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
 .form-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 5px;
 }
 
 /* =========================
-   ORDERS GRID
+   ORDER TABS
+========================= */
+
+.order-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0 2px 7px rgba(0,0,0,.06);
+}
+
+.order-tab {
+    background: #f3f4f6;
+    color: #374151;
+    font-weight: bold;
+}
+
+.order-tab.active {
+    background: #d97706;
+    color: white;
+}
+
+.order-count {
+    display: inline-block;
+    min-width: 22px;
+    padding: 2px 6px;
+    margin-left: 5px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.25);
+}
+
+/* =========================
+   ORDERS
 ========================= */
 
 .orders-grid {
     display: grid;
-
-    /*
-       PC:
-       3 orders per row
-       Each card has enough room for details
-    */
     grid-template-columns: repeat(3, minmax(0, 1fr));
-
     gap: 18px;
 }
 
@@ -414,8 +426,7 @@ button {
     background: white;
     border-radius: 12px;
     padding: 18px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    min-width: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
 
 .order-header {
@@ -436,18 +447,32 @@ button {
     border-radius: 20px;
     font-size: 12px;
     font-weight: bold;
+}
+
+.status-pending {
     background: #fef3c7;
     color: #92400e;
+}
+
+.status-confirmed {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
 .order-info {
     font-size: 13px;
     line-height: 1.6;
     margin-bottom: 12px;
-}
-
-.order-info strong {
-    color: #111827;
 }
 
 .order-items {
@@ -482,7 +507,7 @@ button {
 }
 
 /* =========================
-   EMPTY STATE
+   EMPTY
 ========================= */
 
 .empty {
@@ -495,19 +520,10 @@ button {
 }
 
 /* =========================
-   RESPONSIVE
+   LARGE MONITOR
 ========================= */
 
-/*
-   Large PC / Monitor
-*/
 @media (min-width: 1500px) {
-
-    .main {
-        max-width: 1900px;
-        padding-left: 35px;
-        padding-right: 35px;
-    }
 
     .products-grid {
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -518,41 +534,26 @@ button {
     }
 }
 
-/*
-   Normal PC / Laptop
-*/
-@media (max-width: 1499px) and (min-width: 1000px) {
+/* =========================
+   TABLET
+========================= */
 
-    .products-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .orders-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-/*
-   Tablet
-*/
 @media (max-width: 999px) and (min-width: 601px) {
 
     .dashboard-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .products-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
+    .products-grid,
     .orders-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-/*
-   Phone
-*/
+/* =========================
+   PHONE
+========================= */
+
 @media (max-width: 600px) {
 
     .header {
@@ -571,14 +572,8 @@ button {
         padding: 8px 12px;
     }
 
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .products-grid {
-        grid-template-columns: 1fr;
-    }
-
+    .dashboard-grid,
+    .products-grid,
     .orders-grid {
         grid-template-columns: 1fr;
     }
@@ -592,13 +587,16 @@ button {
     }
 
     .section-title {
-        align-items: flex-start;
         flex-direction: column;
+        align-items: flex-start;
     }
 
-    .product-image,
-    .product-no-image {
-        height: 220px;
+    .order-tabs {
+        overflow-x: auto;
+    }
+
+    .order-tab {
+        white-space: nowrap;
     }
 }
 </style>
@@ -638,10 +636,7 @@ button {
             Login
         </button>
 
-        <p
-            id="loginMessage"
-            style="color:#dc2626;"
-        ></p>
+        <p id="loginMessage"></p>
 
     </div>
 
@@ -653,8 +648,6 @@ button {
 ========================= -->
 
 <div id="sellerApp" class="seller-app">
-
-    <!-- HEADER -->
 
     <div class="header">
 
@@ -674,7 +667,7 @@ button {
     </div>
 
 
-    <!-- NAVIGATION -->
+    <!-- MAIN NAV -->
 
     <div class="nav">
 
@@ -716,10 +709,7 @@ button {
              DASHBOARD
         ========================= -->
 
-        <section
-            id="dashboard"
-            class="section active"
-        >
+        <section id="dashboard" class="section active">
 
             <div class="section-title">
 
@@ -736,58 +726,43 @@ button {
             <div class="dashboard-grid">
 
                 <div class="stat-card">
-
                     <h3>Products</h3>
-
                     <div
                         class="stat-number"
                         id="dashboardProducts"
                     >
                         0
                     </div>
-
                 </div>
 
-
                 <div class="stat-card">
-
                     <h3>Low Stock</h3>
-
                     <div
                         class="stat-number"
                         id="dashboardLowStock"
                     >
                         0
                     </div>
-
                 </div>
 
-
                 <div class="stat-card">
-
                     <h3>Total Orders</h3>
-
                     <div
                         class="stat-number"
                         id="dashboardOrders"
                     >
                         0
                     </div>
-
                 </div>
 
-
                 <div class="stat-card">
-
                     <h3>Pending Orders</h3>
-
                     <div
                         class="stat-number"
                         id="dashboardPending"
                     >
                         0
                     </div>
-
                 </div>
 
             </div>
@@ -831,10 +806,7 @@ button {
              ORDERS
         ========================= -->
 
-        <section
-            id="orders"
-            class="section"
-        >
+        <section id="orders" class="section">
 
             <div class="section-title">
 
@@ -855,9 +827,55 @@ button {
             </div>
 
 
+            <!-- ORDER SUB-TABS -->
+
+            <div class="order-tabs">
+
+                <button
+                    id="newOrdersTab"
+                    class="order-tab active"
+                    onclick="showOrderTab('new')"
+                >
+                    🆕 New Orders
+                    <span
+                        class="order-count"
+                        id="newOrderCount"
+                    >
+                        0
+                    </span>
+                </button>
+
+
+                <button
+                    id="statusOrdersTab"
+                    class="order-tab"
+                    onclick="showOrderTab('status')"
+                >
+                    📦 Order Status
+                    <span
+                        class="order-count"
+                        id="statusOrderCount"
+                    >
+                        0
+                    </span>
+                </button>
+
+            </div>
+
+
+            <!-- NEW ORDERS -->
+
             <div
-                id="ordersGrid"
+                id="newOrdersContainer"
                 class="orders-grid"
+            ></div>
+
+
+            <!-- ORDER STATUS -->
+
+            <div
+                id="statusOrdersContainer"
+                class="orders-grid hidden"
             ></div>
 
         </section>
@@ -867,10 +885,7 @@ button {
              PRODUCTS
         ========================= -->
 
-        <section
-            id="products"
-            class="section"
-        >
+        <section id="products" class="section">
 
             <div class="section-title">
 
@@ -900,13 +915,10 @@ button {
 
 
         <!-- =========================
-             ADD / EDIT PRODUCT
+             ADD PRODUCT
         ========================= -->
 
-        <section
-            id="addProduct"
-            class="section"
-        >
+        <section id="addProduct" class="section">
 
             <div class="section-title">
 
@@ -930,14 +942,11 @@ button {
                     id="productId"
                 >
 
-
                 <div class="form-grid">
 
                     <div class="form-group">
 
-                        <label>
-                            Brand
-                        </label>
+                        <label>Brand</label>
 
                         <input
                             type="text"
@@ -950,9 +959,7 @@ button {
 
                     <div class="form-group">
 
-                        <label>
-                            Product Name
-                        </label>
+                        <label>Product Name</label>
 
                         <input
                             type="text"
@@ -965,9 +972,7 @@ button {
 
                     <div class="form-group">
 
-                        <label>
-                            Category
-                        </label>
+                        <label>Category</label>
 
                         <select id="category">
 
@@ -1010,9 +1015,7 @@ button {
 
                     <div class="form-group">
 
-                        <label>
-                            Unit
-                        </label>
+                        <label>Unit</label>
 
                         <input
                             type="text"
@@ -1026,9 +1029,7 @@ button {
 
                     <div class="form-group">
 
-                        <label>
-                            Price
-                        </label>
+                        <label>Price</label>
 
                         <input
                             type="number"
@@ -1043,9 +1044,7 @@ button {
 
                     <div class="form-group">
 
-                        <label>
-                            Stock
-                        </label>
+                        <label>Stock</label>
 
                         <input
                             type="number"
@@ -1059,9 +1058,7 @@ button {
 
                     <div class="form-group full">
 
-                        <label>
-                            Description
-                        </label>
+                        <label>Description</label>
 
                         <textarea
                             id="description"
@@ -1073,9 +1070,7 @@ button {
 
                     <div class="form-group full">
 
-                        <label>
-                            Product Image
-                        </label>
+                        <label>Product Image</label>
 
                         <input
                             type="file"
@@ -1170,8 +1165,8 @@ async function login() {
 
     const { error } =
         await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password
+            email,
+            password
         });
 
     if (error) {
@@ -1194,10 +1189,11 @@ async function logout() {
 
     await supabaseClient.auth.signOut();
 
-    document.getElementById("sellerApp").style.display = "none";
+    document.getElementById("sellerApp")
+        .style.display = "none";
 
-    document.getElementById("loginPage").style.display = "flex";
-
+    document.getElementById("loginPage")
+        .style.display = "flex";
 }
 
 
@@ -1209,7 +1205,8 @@ async function checkSession() {
 
     const {
         data: { session }
-    } = await supabaseClient.auth.getSession();
+    } =
+        await supabaseClient.auth.getSession();
 
     if (session) {
 
@@ -1217,32 +1214,34 @@ async function checkSession() {
 
     } else {
 
-        document.getElementById("loginPage").style.display = "flex";
-        document.getElementById("sellerApp").style.display = "none";
+        document.getElementById("loginPage")
+            .style.display = "flex";
 
+        document.getElementById("sellerApp")
+            .style.display = "none";
     }
 }
 
 
 /* =========================
-   SHOW SELLER APP
+   SHOW APP
 ========================= */
 
 function showSellerApp() {
 
-    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("loginPage")
+        .style.display = "none";
 
-    document.getElementById("sellerApp").style.display = "block";
+    document.getElementById("sellerApp")
+        .style.display = "block";
 
     loadProducts();
-
     loadOrders();
-
 }
 
 
 /* =========================
-   NAVIGATION
+   MAIN NAVIGATION
 ========================= */
 
 function showSection(sectionId) {
@@ -1293,7 +1292,6 @@ function showSection(sectionId) {
             .classList.add("active");
 
     }
-
 }
 
 
@@ -1302,21 +1300,67 @@ function openAddProduct() {
     cancelEdit();
 
     showSection("addProduct");
-
 }
 
 
 function openOrders() {
 
     showSection("orders");
-
 }
 
 
 function openProducts() {
 
     showSection("products");
+}
 
+
+/* =========================
+   ORDER SUB-TABS
+========================= */
+
+let currentOrderTab = "new";
+
+
+function showOrderTab(tab) {
+
+    currentOrderTab = tab;
+
+
+    const newContainer =
+        document.getElementById("newOrdersContainer");
+
+    const statusContainer =
+        document.getElementById("statusOrdersContainer");
+
+    const newTab =
+        document.getElementById("newOrdersTab");
+
+    const statusTab =
+        document.getElementById("statusOrdersTab");
+
+
+    if (tab === "new") {
+
+        newContainer.classList.remove("hidden");
+
+        statusContainer.classList.add("hidden");
+
+        newTab.classList.add("active");
+
+        statusTab.classList.remove("active");
+
+    } else {
+
+        newContainer.classList.add("hidden");
+
+        statusContainer.classList.remove("hidden");
+
+        newTab.classList.remove("active");
+
+        statusTab.classList.add("active");
+
+    }
 }
 
 
@@ -1409,7 +1453,6 @@ async function loadProducts() {
 
 
             return `
-
                 <div class="product-card">
 
                     ${imageHTML}
@@ -1467,16 +1510,14 @@ async function loadProducts() {
                     </div>
 
                 </div>
-
             `;
 
         }).join("");
-
 }
 
 
 /* =========================
-   ADD / EDIT PRODUCT
+   SAVE PRODUCT
 ========================= */
 
 async function saveProduct() {
@@ -1528,7 +1569,6 @@ async function saveProduct() {
 
     let image = null;
 
-
     if (file) {
 
         try {
@@ -1536,7 +1576,7 @@ async function saveProduct() {
             image =
                 await fileToDataURL(file);
 
-        } catch (error) {
+        } catch {
 
             message.textContent =
                 "Unable to read image.";
@@ -1545,25 +1585,18 @@ async function saveProduct() {
 
             return;
         }
-
     }
 
 
     const productData = {
 
-        brand: brand,
-
-        name: name,
-
-        category: category,
-
-        description: description,
-
-        price: price,
-
-        unit: unit,
-
-        stock: stock
+        brand,
+        name,
+        category,
+        description,
+        price,
+        unit,
+        stock
 
     };
 
@@ -1625,7 +1658,6 @@ async function saveProduct() {
         openProducts();
 
     }, 700);
-
 }
 
 
@@ -1678,20 +1710,12 @@ async function editProduct(id) {
     document.getElementById("stock").value =
         data.stock || 0;
 
-    document.getElementById("imageFile").value =
-        "";
-
+    document.getElementById("imageFile").value = "";
 
     document.getElementById("formTitle").textContent =
         "Edit Product";
 
-
-    document.getElementById("productMessage").textContent =
-        "";
-
-
     showSection("addProduct");
-
 }
 
 
@@ -1722,9 +1746,7 @@ function cancelEdit() {
     document.getElementById("formTitle").textContent =
         "Add Product";
 
-    document.getElementById("productMessage").textContent =
-        "";
-
+    document.getElementById("productMessage").textContent = "";
 }
 
 
@@ -1737,7 +1759,6 @@ async function deleteProduct(id) {
     if (!confirm(
         "Are you sure you want to delete this product?"
     )) {
-
         return;
     }
 
@@ -1760,7 +1781,6 @@ async function deleteProduct(id) {
 
 
     loadProducts();
-
 }
 
 
@@ -1770,12 +1790,18 @@ async function deleteProduct(id) {
 
 async function loadOrders() {
 
-    const grid =
-        document.getElementById("ordersGrid");
+    const newContainer =
+        document.getElementById("newOrdersContainer");
+
+    const statusContainer =
+        document.getElementById("statusOrdersContainer");
 
 
-    grid.innerHTML =
-        '<div class="empty">Loading orders...</div>';
+    newContainer.innerHTML =
+        '<div class="empty">Loading new orders...</div>';
+
+    statusContainer.innerHTML =
+        '<div class="empty">Loading order status...</div>';
 
 
     const {
@@ -1792,11 +1818,13 @@ async function loadOrders() {
 
     if (error) {
 
-        grid.innerHTML =
+        newContainer.innerHTML =
             `<div class="empty">
                 Error loading orders:<br>
                 ${escapeHtml(error.message)}
             </div>`;
+
+        statusContainer.innerHTML = "";
 
         return;
     }
@@ -1805,35 +1833,81 @@ async function loadOrders() {
     const orders = data || [];
 
 
+    const newOrders =
+        orders.filter(
+            order =>
+                String(order.status || "Pending")
+                    .toLowerCase() === "pending"
+        );
+
+
+    const statusOrders =
+        orders.filter(
+            order =>
+                String(order.status || "Pending")
+                    .toLowerCase() !== "pending"
+        );
+
+
     document.getElementById("dashboardOrders")
         .textContent = orders.length;
 
 
-    const pending =
-        orders.filter(
-            order =>
-                order.status === "Pending"
-        ).length;
-
-
     document.getElementById("dashboardPending")
-        .textContent = pending;
+        .textContent = newOrders.length;
 
+
+    document.getElementById("newOrderCount")
+        .textContent = newOrders.length;
+
+
+    document.getElementById("statusOrderCount")
+        .textContent = statusOrders.length;
+
+
+    renderOrders(
+        newOrders,
+        newContainer,
+        "No new orders."
+    );
+
+
+    renderOrders(
+        statusOrders,
+        statusContainer,
+        "No processed orders yet."
+    );
+
+
+    showOrderTab(currentOrderTab);
+}
+
+
+/* =========================
+   RENDER ORDERS
+========================= */
+
+function renderOrders(
+    orders,
+    container,
+    emptyMessage
+) {
 
     if (orders.length === 0) {
 
-        grid.innerHTML =
-            '<div class="empty">No customer orders yet.</div>';
+        container.innerHTML =
+            `<div class="empty">
+                ${emptyMessage}
+            </div>`;
 
         return;
     }
 
 
-    grid.innerHTML =
+    container.innerHTML =
         orders.map(order => {
 
             let items = [];
-
 
             try {
 
@@ -1842,7 +1916,7 @@ async function loadOrders() {
                         ? JSON.parse(order.items)
                         : order.items || [];
 
-            } catch (e) {
+            } catch {
 
                 items = [];
 
@@ -1855,8 +1929,12 @@ async function loadOrders() {
                     <div class="order-item">
 
                         <span>
-                            ${escapeHtml(item.name || "Product")}
-                            × ${Number(item.quantity || 0)}
+                            ${escapeHtml(
+                                item.name || "Product"
+                            )}
+                            × ${Number(
+                                item.quantity || 0
+                            )}
                         </span>
 
                         <span>
@@ -1886,6 +1964,20 @@ async function loadOrders() {
                     : "";
 
 
+            const status =
+                order.status || "Pending";
+
+
+            const statusClass =
+                status.toLowerCase() === "pending"
+                    ? "status-pending"
+                    : status.toLowerCase() === "confirmed"
+                    ? "status-confirmed"
+                    : status.toLowerCase() === "completed"
+                    ? "status-completed"
+                    : "status-cancelled";
+
+
             return `
 
                 <div class="order-card">
@@ -1896,8 +1988,8 @@ async function loadOrders() {
                             Order #${order.id}
                         </div>
 
-                        <div class="status">
-                            ${escapeHtml(order.status || "Pending")}
+                        <div class="status ${statusClass}">
+                            ${escapeHtml(status)}
                         </div>
 
                     </div>
@@ -1907,22 +1999,30 @@ async function loadOrders() {
 
                         <div>
                             <strong>Customer:</strong>
-                            ${escapeHtml(order.customer_name || "")}
+                            ${escapeHtml(
+                                order.customer_name || ""
+                            )}
                         </div>
 
                         <div>
                             <strong>Phone:</strong>
-                            ${escapeHtml(order.phone || "")}
+                            ${escapeHtml(
+                                order.phone || ""
+                            )}
                         </div>
 
                         <div>
                             <strong>Fulfillment:</strong>
-                            ${escapeHtml(order.fulfillment || "")}
+                            ${escapeHtml(
+                                order.fulfillment || ""
+                            )}
                         </div>
 
                         <div>
                             <strong>Address:</strong>
-                            ${escapeHtml(order.address || "")}
+                            ${escapeHtml(
+                                order.address || ""
+                            )}
                         </div>
 
                         <div>
@@ -1935,7 +2035,9 @@ async function loadOrders() {
                                 ? `
                                 <div>
                                     <strong>Notes:</strong>
-                                    ${escapeHtml(order.notes)}
+                                    ${escapeHtml(
+                                        order.notes
+                                    )}
                                 </div>
                                 `
                                 : ""
@@ -1946,7 +2048,10 @@ async function loadOrders() {
 
                     <div class="order-items">
 
-                        ${itemsHTML || "No item details."}
+                        ${
+                            itemsHTML ||
+                            "No item details."
+                        }
 
                     </div>
 
@@ -1954,7 +2059,9 @@ async function loadOrders() {
                     <div class="order-total">
 
                         Total:
-                        ₱${Number(order.total || 0).toLocaleString(
+                        ₱${Number(
+                            order.total || 0
+                        ).toLocaleString(
                             "en-PH",
                             {
                                 minimumFractionDigits: 2
@@ -1966,33 +2073,51 @@ async function loadOrders() {
 
                     <div class="order-actions">
 
-                        <button
-                            class="btn-warning"
-                            onclick="updateOrderStatus(${order.id}, 'Confirmed')"
-                        >
-                            Confirm
-                        </button>
+                        ${
+                            status === "Pending"
+                                ? `
+                                <button
+                                    class="btn-warning"
+                                    onclick="updateOrderStatus(
+                                        ${order.id},
+                                        'Confirmed'
+                                    )"
+                                >
+                                    Confirm
+                                </button>
 
-                        <button
-                            class="btn-success"
-                            onclick="updateOrderStatus(${order.id}, 'Completed')"
-                        >
-                            Complete
-                        </button>
+                                <button
+                                    class="btn-danger"
+                                    onclick="updateOrderStatus(
+                                        ${order.id},
+                                        'Cancelled'
+                                    )"
+                                >
+                                    Cancel
+                                </button>
+                                `
+                                : `
+                                <button
+                                    class="btn-success"
+                                    onclick="updateOrderStatus(
+                                        ${order.id},
+                                        'Completed'
+                                    )"
+                                >
+                                    Complete
+                                </button>
 
-                        <button
-                            class="btn-danger"
-                            onclick="updateOrderStatus(${order.id}, 'Cancelled')"
-                        >
-                            Cancel
-                        </button>
-
-                        <button
-                            class="btn-secondary"
-                            onclick="updateOrderStatus(${order.id}, 'Pending')"
-                        >
-                            Pending
-                        </button>
+                                <button
+                                    class="btn-warning"
+                                    onclick="updateOrderStatus(
+                                        ${order.id},
+                                        'Confirmed'
+                                    )"
+                                >
+                                    Confirmed
+                                </button>
+                                `
+                        }
 
                     </div>
 
@@ -2001,7 +2126,6 @@ async function loadOrders() {
             `;
 
         }).join("");
-
 }
 
 
@@ -2030,13 +2154,12 @@ async function updateOrderStatus(id, status) {
     }
 
 
-    loadOrders();
-
+    await loadOrders();
 }
 
 
 /* =========================
-   IMAGE TO DATA URL
+   IMAGE
 ========================= */
 
 function fileToDataURL(file) {
@@ -2055,7 +2178,6 @@ function fileToDataURL(file) {
         reader.readAsDataURL(file);
 
     });
-
 }
 
 
@@ -2071,7 +2193,6 @@ function escapeHtml(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
-
 }
 
 

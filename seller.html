@@ -385,12 +385,16 @@ button {
     padding: 8px;
     border-radius: 10px;
     box-shadow: 0 2px 7px rgba(0,0,0,.06);
+    flex-wrap: wrap;
 }
 
 .order-tab {
     background: #f3f4f6;
     color: #374151;
     font-weight: bold;
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
 }
 
 .order-tab.active {
@@ -577,11 +581,11 @@ button {
     }
 
     .order-tabs {
-        overflow-x: auto;
+        flex-direction: column;
     }
 
     .order-tab {
-        white-space: nowrap;
+        width: 100%;
     }
 
     .product-category-header {
@@ -820,15 +824,15 @@ button {
 
 
                 <button
-                    id="statusOrdersTab"
+                    id="confirmedOrdersTab"
                     class="order-tab"
-                    onclick="showOrderTab('status')"
+                    onclick="showOrderTab('confirmed')"
                 >
-                    📦 Order Status
+                    📦 Confirmed
 
                     <span
                         class="order-count"
-                        id="statusOrderCount"
+                        id="confirmedOrderCount"
                     >
                         0
                     </span>
@@ -841,11 +845,28 @@ button {
                     class="order-tab"
                     onclick="showOrderTab('completed')"
                 >
-                    ✅ Order Completed
+                    ✅ Completed
 
                     <span
                         class="order-count"
                         id="completedOrderCount"
+                    >
+                        0
+                    </span>
+
+                </button>
+
+
+                <button
+                    id="cancelledOrdersTab"
+                    class="order-tab"
+                    onclick="showOrderTab('cancelled')"
+                >
+                    ❌ Cancelled
+
+                    <span
+                        class="order-count"
+                        id="cancelledOrderCount"
                     >
                         0
                     </span>
@@ -862,13 +883,19 @@ button {
 
 
             <div
-                id="statusOrdersContainer"
+                id="confirmedOrdersContainer"
                 class="orders-grid hidden"
             ></div>
 
 
             <div
                 id="completedOrdersContainer"
+                class="orders-grid hidden"
+            ></div>
+
+
+            <div
+                id="cancelledOrdersContainer"
                 class="orders-grid hidden"
             ></div>
 
@@ -1278,59 +1305,34 @@ function openAddProduct() {
 
 let currentOrderTab = "new";
 
+
 function showOrderTab(tab) {
 
     currentOrderTab = tab;
 
-    const newContainer =
-        document.getElementById("newOrdersContainer");
+    const containers = {
+        new: document.getElementById("newOrdersContainer"),
+        confirmed: document.getElementById("confirmedOrdersContainer"),
+        completed: document.getElementById("completedOrdersContainer"),
+        cancelled: document.getElementById("cancelledOrdersContainer")
+    };
 
-    const statusContainer =
-        document.getElementById("statusOrdersContainer");
+    const tabs = {
+        new: document.getElementById("newOrdersTab"),
+        confirmed: document.getElementById("confirmedOrdersTab"),
+        completed: document.getElementById("completedOrdersTab"),
+        cancelled: document.getElementById("cancelledOrdersTab")
+    };
 
-    const completedContainer =
-        document.getElementById("completedOrdersContainer");
-
-    const newTab =
-        document.getElementById("newOrdersTab");
-
-    const statusTab =
-        document.getElementById("statusOrdersTab");
-
-    const completedTab =
-        document.getElementById("completedOrdersTab");
-
-
-    if (tab === "new") {
-
-        newContainer.classList.remove("hidden");
-        statusContainer.classList.add("hidden");
-        completedContainer.classList.add("hidden");
-
-        newTab.classList.add("active");
-        statusTab.classList.remove("active");
-        completedTab.classList.remove("active");
-
-    } else if (tab === "status") {
-
-        newContainer.classList.add("hidden");
-        statusContainer.classList.remove("hidden");
-        completedContainer.classList.add("hidden");
-
-        newTab.classList.remove("active");
-        statusTab.classList.add("active");
-        completedTab.classList.remove("active");
-
-    } else {
-
-        newContainer.classList.add("hidden");
-        statusContainer.classList.add("hidden");
-        completedContainer.classList.remove("hidden");
-
-        newTab.classList.remove("active");
-        statusTab.classList.remove("active");
-        completedTab.classList.add("active");
-    }
+    Object.keys(containers).forEach(key => {
+        if (key === tab) {
+            containers[key].classList.remove("hidden");
+            tabs[key].classList.add("active");
+        } else {
+            containers[key].classList.add("hidden");
+            tabs[key].classList.remove("active");
+        }
+    });
 }
 
 
@@ -1864,21 +1866,27 @@ async function loadOrders() {
     const newContainer =
         document.getElementById("newOrdersContainer");
 
-    const statusContainer =
-        document.getElementById("statusOrdersContainer");
+    const confirmedContainer =
+        document.getElementById("confirmedOrdersContainer");
 
     const completedContainer =
         document.getElementById("completedOrdersContainer");
+
+    const cancelledContainer =
+        document.getElementById("cancelledOrdersContainer");
 
 
     newContainer.innerHTML =
         '<div class="empty">Loading new orders...</div>';
 
-    statusContainer.innerHTML =
-        '<div class="empty">Loading order status...</div>';
+    confirmedContainer.innerHTML =
+        '<div class="empty">Loading confirmed orders...</div>';
 
     completedContainer.innerHTML =
         '<div class="empty">Loading completed orders...</div>';
+
+    cancelledContainer.innerHTML =
+        '<div class="empty">Loading cancelled orders...</div>';
 
 
     const {
@@ -1901,8 +1909,9 @@ async function loadOrders() {
                 ${escapeHtml(error.message)}
             </div>`;
 
-        statusContainer.innerHTML = "";
+        confirmedContainer.innerHTML = "";
         completedContainer.innerHTML = "";
+        cancelledContainer.innerHTML = "";
 
         return;
     }
@@ -1919,20 +1928,27 @@ async function loadOrders() {
         );
 
 
+    const confirmedOrders =
+        orders.filter(
+            order =>
+                String(order.status || "")
+                    .toLowerCase() === "confirmed"
+        );
+
+
     const completedOrders =
         orders.filter(
             order =>
-                String(order.status || "Pending")
+                String(order.status || "")
                     .toLowerCase() === "completed"
         );
 
 
-    const statusOrders =
+    const cancelledOrders =
         orders.filter(
-            order => {
-                const status = String(order.status || "Pending").toLowerCase();
-                return status !== "pending" && status !== "completed";
-            }
+            order =>
+                String(order.status || "")
+                    .toLowerCase() === "cancelled"
         );
 
 
@@ -1945,11 +1961,14 @@ async function loadOrders() {
     document.getElementById("newOrderCount")
         .textContent = newOrders.length;
 
-    document.getElementById("statusOrderCount")
-        .textContent = statusOrders.length;
+    document.getElementById("confirmedOrderCount")
+        .textContent = confirmedOrders.length;
 
     document.getElementById("completedOrderCount")
         .textContent = completedOrders.length;
+
+    document.getElementById("cancelledOrderCount")
+        .textContent = cancelledOrders.length;
 
 
     renderOrders(
@@ -1960,9 +1979,9 @@ async function loadOrders() {
 
 
     renderOrders(
-        statusOrders,
-        statusContainer,
-        "No active order statuses."
+        confirmedOrders,
+        confirmedContainer,
+        "No confirmed orders."
     );
 
 
@@ -1970,6 +1989,13 @@ async function loadOrders() {
         completedOrders,
         completedContainer,
         "No completed orders yet."
+    );
+
+
+    renderOrders(
+        cancelledOrders,
+        cancelledContainer,
+        "No cancelled orders."
     );
 
 
@@ -2074,6 +2100,59 @@ function renderOrders(
                     : "status-cancelled";
 
 
+            let actionButtons = "";
+
+            if (statusLower === "pending") {
+                actionButtons = `
+                    <button
+                        class="btn-warning"
+                        onclick="updateOrderStatus(${order.id}, 'Confirmed')"
+                    >
+                        Confirm
+                    </button>
+                    <button
+                        class="btn-danger"
+                        onclick="updateOrderStatus(${order.id}, 'Cancelled')"
+                    >
+                        Cancel
+                    </button>
+                `;
+            } else if (statusLower === "confirmed") {
+                actionButtons = `
+                    <button
+                        class="btn-success"
+                        onclick="updateOrderStatus(${order.id}, 'Completed')"
+                    >
+                        Complete
+                    </button>
+                    <button
+                        class="btn-danger"
+                        onclick="updateOrderStatus(${order.id}, 'Cancelled')"
+                    >
+                        Cancel
+                    </button>
+                `;
+            } else if (statusLower === "completed") {
+                actionButtons = `
+                    <button
+                        class="btn-secondary"
+                        onclick="updateOrderStatus(${order.id}, 'Confirmed')"
+                    >
+                        Reopen
+                    </button>
+                `;
+            } else {
+                actionButtons = `
+                    <button
+                        class="btn-warning"
+                        onclick="updateOrderStatus(${order.id}, 'Pending')"
+                    >
+                        Restore
+                    </button>
+                `;
+            }
+
+
             return `
 
                 <div class="order-card">
@@ -2168,53 +2247,7 @@ function renderOrders(
 
 
                     <div class="order-actions">
-
-                        ${
-                            status === "Pending"
-                                ? `
-                                    <button
-                                        class="btn-warning"
-                                        onclick="updateOrderStatus(
-                                            ${order.id},
-                                            'Confirmed'
-                                        )"
-                                    >
-                                        Confirm
-                                    </button>
-
-                                    <button
-                                        class="btn-danger"
-                                        onclick="updateOrderStatus(
-                                            ${order.id},
-                                            'Cancelled'
-                                        )"
-                                    >
-                                        Cancel
-                                    </button>
-                                  `
-                                : `
-                                    <button
-                                        class="btn-success"
-                                        onclick="updateOrderStatus(
-                                            ${order.id},
-                                            'Completed'
-                                        )"
-                                    >
-                                        Complete
-                                    </button>
-
-                                    <button
-                                        class="btn-warning"
-                                        onclick="updateOrderStatus(
-                                            ${order.id},
-                                            'Confirmed'
-                                        )"
-                                    >
-                                        Confirmed
-                                    </button>
-                                  `
-                        }
-
+                        ${actionButtons}
                     </div>
 
                 </div>

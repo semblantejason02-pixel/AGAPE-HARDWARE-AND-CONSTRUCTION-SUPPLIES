@@ -835,6 +835,23 @@ button {
 
                 </button>
 
+
+                <button
+                    id="completedOrdersTab"
+                    class="order-tab"
+                    onclick="showOrderTab('completed')"
+                >
+                    ✅ Order Completed
+
+                    <span
+                        class="order-count"
+                        id="completedOrderCount"
+                    >
+                        0
+                    </span>
+
+                </button>
+
             </div>
 
 
@@ -846,6 +863,12 @@ button {
 
             <div
                 id="statusOrdersContainer"
+                class="orders-grid hidden"
+            ></div>
+
+
+            <div
+                id="completedOrdersContainer"
                 class="orders-grid hidden"
             ></div>
 
@@ -1255,7 +1278,6 @@ function openAddProduct() {
 
 let currentOrderTab = "new";
 
-
 function showOrderTab(tab) {
 
     currentOrderTab = tab;
@@ -1266,28 +1288,48 @@ function showOrderTab(tab) {
     const statusContainer =
         document.getElementById("statusOrdersContainer");
 
+    const completedContainer =
+        document.getElementById("completedOrdersContainer");
+
     const newTab =
         document.getElementById("newOrdersTab");
 
     const statusTab =
         document.getElementById("statusOrdersTab");
 
+    const completedTab =
+        document.getElementById("completedOrdersTab");
+
 
     if (tab === "new") {
 
         newContainer.classList.remove("hidden");
         statusContainer.classList.add("hidden");
+        completedContainer.classList.add("hidden");
 
         newTab.classList.add("active");
         statusTab.classList.remove("active");
+        completedTab.classList.remove("active");
+
+    } else if (tab === "status") {
+
+        newContainer.classList.add("hidden");
+        statusContainer.classList.remove("hidden");
+        completedContainer.classList.add("hidden");
+
+        newTab.classList.remove("active");
+        statusTab.classList.add("active");
+        completedTab.classList.remove("active");
 
     } else {
 
         newContainer.classList.add("hidden");
-        statusContainer.classList.remove("hidden");
+        statusContainer.classList.add("hidden");
+        completedContainer.classList.remove("hidden");
 
         newTab.classList.remove("active");
-        statusTab.classList.add("active");
+        statusTab.classList.remove("active");
+        completedTab.classList.add("active");
     }
 }
 
@@ -1825,12 +1867,18 @@ async function loadOrders() {
     const statusContainer =
         document.getElementById("statusOrdersContainer");
 
+    const completedContainer =
+        document.getElementById("completedOrdersContainer");
+
 
     newContainer.innerHTML =
         '<div class="empty">Loading new orders...</div>';
 
     statusContainer.innerHTML =
         '<div class="empty">Loading order status...</div>';
+
+    completedContainer.innerHTML =
+        '<div class="empty">Loading completed orders...</div>';
 
 
     const {
@@ -1854,6 +1902,7 @@ async function loadOrders() {
             </div>`;
 
         statusContainer.innerHTML = "";
+        completedContainer.innerHTML = "";
 
         return;
     }
@@ -1870,11 +1919,20 @@ async function loadOrders() {
         );
 
 
-    const statusOrders =
+    const completedOrders =
         orders.filter(
             order =>
                 String(order.status || "Pending")
-                    .toLowerCase() !== "pending"
+                    .toLowerCase() === "completed"
+        );
+
+
+    const statusOrders =
+        orders.filter(
+            order => {
+                const status = String(order.status || "Pending").toLowerCase();
+                return status !== "pending" && status !== "completed";
+            }
         );
 
 
@@ -1890,6 +1948,9 @@ async function loadOrders() {
     document.getElementById("statusOrderCount")
         .textContent = statusOrders.length;
 
+    document.getElementById("completedOrderCount")
+        .textContent = completedOrders.length;
+
 
     renderOrders(
         newOrders,
@@ -1901,7 +1962,14 @@ async function loadOrders() {
     renderOrders(
         statusOrders,
         statusContainer,
-        "No processed orders yet."
+        "No active order statuses."
+    );
+
+
+    renderOrders(
+        completedOrders,
+        completedContainer,
+        "No completed orders yet."
     );
 
 

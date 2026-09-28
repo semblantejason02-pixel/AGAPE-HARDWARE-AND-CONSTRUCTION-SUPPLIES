@@ -17,6 +17,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -38,6 +42,7 @@ header {
 .brand-svg {
     height: 38px;
     width: auto;
+    max-width: 90%;
 }
 
 header p {
@@ -184,7 +189,190 @@ header p {
     cursor: not-allowed;
 }
 
-/* CART */
+
+/* =========================
+   FLOATING CUSTOMER BUTTONS
+========================= */
+
+.floating-actions {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.floating-btn {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 23px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+    transition: transform 0.2s, width 0.2s;
+}
+
+.floating-btn:hover {
+    transform: scale(1.06);
+}
+
+.floating-cart {
+    background: var(--primary-blue);
+}
+
+.floating-chat {
+    background: #16a34a;
+}
+
+.floating-track {
+    background: var(--dark-bg);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 21px;
+    height: 21px;
+    padding: 0 5px;
+    border-radius: 20px;
+    background: var(--primary-red);
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+.floating-label {
+    position: absolute;
+    right: 58px;
+    white-space: nowrap;
+    background: #111;
+    color: white;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(5px);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.floating-btn:hover .floating-label {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* =========================
+   CHAT WINDOW
+========================= */
+
+.chat-window {
+    display: none;
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    width: 330px;
+    max-width: calc(100vw - 36px);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+    overflow: hidden;
+    z-index: 10000;
+}
+
+.chat-header {
+    background: var(--dark-bg);
+    color: white;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header strong {
+    font-size: 15px;
+}
+
+.chat-close {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.chat-body {
+    height: 280px;
+    padding: 14px;
+    overflow-y: auto;
+    background: #f5f5f5;
+}
+
+.chat-message {
+    max-width: 85%;
+    padding: 9px 11px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.chat-message.seller {
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.chat-message.customer {
+    background: var(--primary-blue);
+    color: white;
+    margin-left: auto;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 7px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: white;
+}
+
+.chat-input-area input {
+    min-width: 0;
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.chat-send {
+    border: none;
+    background: var(--primary-blue);
+    color: white;
+    padding: 0 13px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+/* =========================
+   CART
+========================= */
 
 .cart-section {
     margin-top: 30px;
@@ -260,7 +448,10 @@ header p {
     background: #1e40af;
 }
 
-/* CHECKOUT */
+
+/* =========================
+   CHECKOUT
+========================= */
 
 .checkout {
     display: none;
@@ -337,7 +528,10 @@ header p {
     cursor: pointer;
 }
 
-/* SUCCESS */
+
+/* =========================
+   SUCCESS
+========================= */
 
 .success {
     display: none;
@@ -360,7 +554,10 @@ header p {
     color: var(--primary-red);
 }
 
-/* TRACK ORDER */
+
+/* =========================
+   TRACK ORDER
+========================= */
 
 .track-section {
     margin-top: 30px;
@@ -449,7 +646,10 @@ header p {
     border-radius: 7px;
 }
 
-/* FOOTER */
+
+/* =========================
+   FOOTER
+========================= */
 
 footer {
     margin-top: 40px;
@@ -464,78 +664,454 @@ footer a {
     color: white;
     text-decoration: none;
 }
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .product img {
+        height: 130px;
+    }
+
+    .product-info {
+        padding: 9px;
+    }
+
+    .product-name {
+        font-size: 14px;
+    }
+
+    .price {
+        font-size: 16px;
+    }
+
+    .add-btn {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+
+    /* Floating buttons on phone */
+
+    .floating-actions {
+        top: auto;
+        bottom: 18px;
+        right: 12px;
+        gap: 9px;
+    }
+
+    .floating-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 21px;
+    }
+
+    .floating-label {
+        display: none;
+    }
+
+    .chat-window {
+        right: 10px;
+        bottom: 75px;
+        width: calc(100vw - 20px);
+        max-width: none;
+    }
+
+    .chat-body {
+        height: 250px;
+    }
+
+}
+
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 380px) {
+
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    .floating-actions {
+        right: 9px;
+        bottom: 12px;
+    }
+
+    .floating-btn {
+        width: 46px;
+        height: 46px;
+    }
+
+}
+
+
+/* =========================
+   LARGE PC
+========================= */
+
+@media (min-width: 1200px) {
+
+    .floating-actions {
+        right: 25px;
+        top: 22px;
+    }
+
+    .floating-btn {
+        width: 54px;
+        height: 54px;
+        font-size: 24px;
+    }
+
+}
 </style>
 </head>
 
 <body>
 
+
 <header>
+
     <!-- AGAPE Hardware & Construction Supplies Logo Graphic -->
-    <svg class="brand-svg" viewBox="0 0 450 65" xmlns="http://www.w3.org/2000/svg">
+
+    <svg
+        class="brand-svg"
+        viewBox="0 0 450 65"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+
         <!-- Blue A with house roof icon -->
-        <path d="M5,55 L32,5 L59,55 L47,55 L32,26 L17,55 Z" fill="#1d4ed8"/>
-        <path d="M22,38 L32,20 L42,38 Z" fill="#1d4ed8"/>
-        <path d="M22,42 L22,55 L28,55 L28,42 Z" fill="#ffffff"/>
-        <path d="M36,42 L36,55 L42,55 L42,42 Z" fill="#ffffff"/>
+
+        <path
+            d="M5,55 L32,5 L59,55 L47,55 L32,26 L17,55 Z"
+            fill="#1d4ed8"
+        />
+
+        <path
+            d="M22,38 L32,20 L42,38 Z"
+            fill="#1d4ed8"
+        />
+
+        <path
+            d="M22,42 L22,55 L28,55 L28,42 Z"
+            fill="#ffffff"
+        />
+
+        <path
+            d="M36,42 L36,55 L42,55 L42,42 Z"
+            fill="#ffffff"
+        />
+
         <!-- White G -->
-        <path d="M68,55 L68,15 L108,15 L108,25 L80,25 L80,45 L105,45 L105,38 L95,38 L95,30 L115,30 L115,55 Z" fill="#ffffff"/>
+
+        <path
+            d="M68,55 L68,15 L108,15 L108,25 L80,25 L80,45 L105,45 L105,38 L95,38 L95,30 L115,30 L115,55 Z"
+            fill="#ffffff"
+        />
+
         <!-- Red A -->
-        <path d="M125,55 L155,5 L185,55 L173,55 L155,22 L137,55 Z" fill="#dc2626"/>
+
+        <path
+            d="M125,55 L155,5 L185,55 L173,55 L155,22 L137,55 Z"
+            fill="#dc2626"
+        />
+
         <!-- White P -->
-        <path d="M195,55 L195,15 L230,15 C242,15 248,22 248,30 C248,38 242,45 230,45 L207,45 L207,55 Z M207,25 L207,35 L228,35 C233,35 236,32 236,30 C236,28 233,25 228,25 Z" fill="#ffffff"/>
+
+        <path
+            d="M195,55 L195,15 L230,15 C242,15 248,22 248,30 C248,38 242,45 230,45 L207,45 L207,55 Z M207,25 L207,35 L228,35 C233,35 236,32 236,30 C236,28 233,25 228,25 Z"
+            fill="#ffffff"
+        />
+
         <!-- Blue E -->
-        <path d="M255,55 L255,15 L295,15 L295,25 L267,25 L267,31 L290,31 L290,41 L267,41 L267,45 L295,45 L295,55 Z" fill="#1d4ed8"/>
+
+        <path
+            d="M255,55 L255,15 L295,15 L295,25 L267,25 L267,31 L290,31 L290,41 L267,41 L267,45 L295,45 L295,55 Z"
+            fill="#1d4ed8"
+        />
+
         <!-- Subtitle -->
-        <text x="5" y="63" font-family="Arial, sans-serif" font-weight="bold" font-size="8.5" fill="#cccccc" letter-spacing="1.5">HARDWARE & CONSTRUCTION SUPPLIES</text>
+
+        <text
+            x="5"
+            y="63"
+            font-family="Arial, sans-serif"
+            font-weight="bold"
+            font-size="8.5"
+            fill="#cccccc"
+            letter-spacing="1.5"
+        >
+            HARDWARE & CONSTRUCTION SUPPLIES
+        </text>
+
     </svg>
-    <p>Hardware • Construction • Electrical • Plumbing • Paint • Tools</p>
+
+    <p>
+        Hardware • Construction • Electrical • Plumbing • Paint • Tools
+    </p>
+
 </header>
 
+
+<!-- =========================
+     FLOATING CUSTOMER ACTIONS
+========================= -->
+
+<div class="floating-actions">
+
+    <!-- CART -->
+
+    <button
+        type="button"
+        class="floating-btn floating-cart"
+        onclick="goToCart()"
+        aria-label="Open cart"
+    >
+
+        🛒
+
+        <span
+            id="cartBadge"
+            class="cart-badge"
+        >
+            0
+        </span>
+
+        <span class="floating-label">
+            Cart
+        </span>
+
+    </button>
+
+
+    <!-- CHAT -->
+
+    <button
+        type="button"
+        class="floating-btn floating-chat"
+        onclick="toggleChat()"
+        aria-label="Open customer chat"
+    >
+
+        💬
+
+        <span class="floating-label">
+            Customer Chat
+        </span>
+
+    </button>
+
+
+    <!-- TRACK ORDER -->
+
+    <button
+        type="button"
+        class="floating-btn floating-track"
+        onclick="goToTracking()"
+        aria-label="Track order"
+    >
+
+        📦
+
+        <span class="floating-label">
+            Track Order
+        </span>
+
+    </button>
+
+</div>
+
+
+<!-- =========================
+     CHAT WINDOW
+========================= -->
+
+<div
+    id="chatWindow"
+    class="chat-window"
+>
+
+    <div class="chat-header">
+
+        <strong>
+            💬 AGAPE Customer Chat
+        </strong>
+
+        <button
+            type="button"
+            class="chat-close"
+            onclick="toggleChat()"
+            aria-label="Close chat"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div
+        id="chatBody"
+        class="chat-body"
+    >
+
+        <div class="chat-message seller">
+
+            Hello! 👋<br>
+            Welcome to AGAPE Hardware & Supplies.
+            How can we help you?
+
+        </div>
+
+    </div>
+
+
+    <form
+        class="chat-input-area"
+        onsubmit="sendChatMessage(event)"
+    >
+
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message..."
+            autocomplete="off"
+        >
+
+        <button
+            type="submit"
+            class="chat-send"
+        >
+            Send
+        </button>
+
+    </form>
+
+</div>
+
+
 <div class="container">
+
 
     <!-- SEARCH -->
 
     <div class="search-box">
+
         <input
             type="text"
             id="searchInput"
             placeholder="Search products..."
             oninput="filterProducts()"
         >
+
     </div>
+
 
     <!-- CATEGORIES -->
 
     <div class="categories">
-        <button class="active" onclick="setCategory('All', this)">All</button>
-        <button onclick="setCategory('Cement', this)">Cement</button>
-        <button onclick="setCategory('Steel', this)">Steel</button>
-        <button onclick="setCategory('Electrical', this)">Electrical</button>
-        <button onclick="setCategory('Plumbing', this)">Plumbing</button>
-        <button onclick="setCategory('Paint', this)">Paint</button>
-        <button onclick="setCategory('Tools', this)">Tools</button>
-        <button onclick="setCategory('Others', this)">Others</button>
+
+        <button
+            class="active"
+            onclick="setCategory('All', this)"
+        >
+            All
+        </button>
+
+        <button
+            onclick="setCategory('Cement', this)"
+        >
+            Cement
+        </button>
+
+        <button
+            onclick="setCategory('Steel', this)"
+        >
+            Steel
+        </button>
+
+        <button
+            onclick="setCategory('Electrical', this)"
+        >
+            Electrical
+        </button>
+
+        <button
+            onclick="setCategory('Plumbing', this)"
+        >
+            Plumbing
+        </button>
+
+        <button
+            onclick="setCategory('Paint', this)"
+        >
+            Paint
+        </button>
+
+        <button
+            onclick="setCategory('Tools', this)"
+        >
+            Tools
+        </button>
+
+        <button
+            onclick="setCategory('Others', this)"
+        >
+            Others
+        </button>
+
     </div>
 
-    <div id="status" class="status">
+
+    <div
+        id="status"
+        class="status"
+    >
         Loading products...
     </div>
 
-    <div id="products" class="products"></div>
+
+    <div
+        id="products"
+        class="products"
+    ></div>
+
 
     <!-- CART -->
 
-    <div class="cart-section">
+    <div
+        id="cartSection"
+        class="cart-section"
+    >
 
-        <h2>🛒 Your Cart</h2>
+        <h2>
+            🛒 Your Cart
+        </h2>
+
 
         <div id="cartItems">
             Your cart is empty.
         </div>
 
+
         <div class="cart-total">
-            Total: ₱<span id="cartTotal">0.00</span>
+
+            Total:
+            ₱<span id="cartTotal">0.00</span>
+
         </div>
+
 
         <button
             id="checkoutButton"
@@ -548,35 +1124,59 @@ footer a {
 
     </div>
 
+
     <!-- CHECKOUT -->
 
-    <div id="checkout" class="checkout">
+    <div
+        id="checkout"
+        class="checkout"
+    >
 
-        <h2>Checkout</h2>
+        <h2>
+            Checkout
+        </h2>
+
 
         <div class="form-group">
-            <label>Customer Name</label>
+
+            <label>
+                Customer Name
+            </label>
+
             <input
                 type="text"
                 id="customerName"
                 placeholder="Enter your full name"
             >
+
         </div>
 
+
         <div class="form-group">
-            <label>Mobile Number</label>
+
+            <label>
+                Mobile Number
+            </label>
+
             <input
                 type="tel"
                 id="customerPhone"
                 placeholder="09XXXXXXXXX"
             >
+
         </div>
+
 
         <div class="form-group">
 
-            <label>Order Type</label>
+            <label>
+                Order Type
+            </label>
 
-            <select id="fulfillment" onchange="updateAddressLabel()">
+            <select
+                id="fulfillment"
+                onchange="updateAddressLabel()"
+            >
 
                 <option value="Delivery">
                     Delivery
@@ -589,6 +1189,7 @@ footer a {
             </select>
 
         </div>
+
 
         <div class="form-group">
 
@@ -603,9 +1204,12 @@ footer a {
 
         </div>
 
+
         <div class="form-group">
 
-            <label>Notes / Special Instructions</label>
+            <label>
+                Notes / Special Instructions
+            </label>
 
             <textarea
                 id="orderNotes"
@@ -614,19 +1218,28 @@ footer a {
 
         </div>
 
+
         <div class="checkout-summary">
 
-            <strong>Order Summary</strong>
+            <strong>
+                Order Summary
+            </strong>
 
             <div id="checkoutSummary"></div>
 
             <hr>
 
             <strong>
-                Total: ₱<span id="checkoutTotal">0.00</span>
+
+                Total:
+                ₱<span id="checkoutTotal">
+                    0.00
+                </span>
+
             </strong>
 
         </div>
+
 
         <button
             id="placeOrderButton"
@@ -635,6 +1248,7 @@ footer a {
         >
             PLACE ORDER
         </button>
+
 
         <button
             class="cancel-btn"
@@ -645,24 +1259,38 @@ footer a {
 
     </div>
 
+
     <!-- SUCCESS -->
 
-    <div id="success" class="success">
+    <div
+        id="success"
+        class="success"
+    >
 
-        <h2>Order Placed Successfully!</h2>
+        <h2>
+            Order Placed Successfully!
+        </h2>
 
-        <p>Thank you for ordering from AGAPE HARDWARE AND SUPPLIES.</p>
+        <p>
+            Thank you for ordering from
+            AGAPE HARDWARE AND SUPPLIES.
+        </p>
 
-        <p>Your order number is:</p>
+        <p>
+            Your order number is:
+        </p>
+
 
         <div
             id="orderNumber"
             class="order-number"
         ></div>
 
+
         <p>
             Please keep this order number for your reference.
         </p>
+
 
         <button
             class="checkout-btn"
@@ -673,15 +1301,24 @@ footer a {
 
     </div>
 
+
     <!-- TRACK ORDER -->
 
-    <div class="track-section">
+    <div
+        id="trackSection"
+        class="track-section"
+    >
 
-        <h2>📦 Track My Order</h2>
+        <h2>
+            📦 Track My Order
+        </h2>
+
 
         <p>
-            Enter your Order Number and Mobile Number to check your order status.
+            Enter your Order Number and Mobile Number
+            to check your order status.
         </p>
+
 
         <div class="track-form">
 
@@ -691,11 +1328,13 @@ footer a {
                 placeholder="Order Number"
             >
 
+
             <input
                 type="tel"
                 id="trackPhone"
                 placeholder="09XXXXXXXXX"
             >
+
 
             <button
                 class="track-btn"
@@ -707,10 +1346,12 @@ footer a {
 
         </div>
 
+
         <div
             id="trackError"
             class="track-error"
         ></div>
+
 
         <div
             id="trackResult"
@@ -718,30 +1359,57 @@ footer a {
         >
 
             <div class="track-order-number">
-                Order #<span id="trackedOrderNumber"></span>
+
+                Order #
+                <span id="trackedOrderNumber"></span>
+
             </div>
 
+
             <div>
+
                 Status:
+
                 <span
                     id="trackedStatus"
                     class="track-status"
                 ></span>
+
             </div>
 
+
             <div class="track-row">
-                <span>Order Type</span>
+
+                <span>
+                    Order Type
+                </span>
+
                 <strong id="trackedFulfillment"></strong>
+
             </div>
 
-            <div class="track-row">
-                <span>Total</span>
-                <strong>₱<span id="trackedTotal"></span></strong>
-            </div>
 
             <div class="track-row">
-                <span>Date</span>
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ₱<span id="trackedTotal"></span>
+                </strong>
+
+            </div>
+
+
+            <div class="track-row">
+
+                <span>
+                    Date
+                </span>
+
                 <strong id="trackedDate"></strong>
+
             </div>
 
         </div>
@@ -749,6 +1417,7 @@ footer a {
     </div>
 
 </div>
+
 
 <footer>
 
@@ -964,16 +1633,19 @@ function displayProducts() {
 
                     </div>
 
+
                     <button
                         class="add-btn"
                         onclick="addToCart(${product.id})"
                         ${stock <= 0 ? "disabled" : ""}
                     >
+
                         ${
                             stock > 0
                             ? "Add to Cart"
                             : "Out of Stock"
                         }
+
                     </button>
 
                 </div>
@@ -1169,6 +1841,22 @@ function updateCart() {
     const checkoutButton =
         document.getElementById("checkoutButton");
 
+    const cartBadge =
+        document.getElementById("cartBadge");
+
+
+    /* Update floating cart quantity */
+
+    const totalItems =
+        cart.reduce(
+            (sum, item) =>
+                sum + Number(item.quantity),
+            0
+        );
+
+    cartBadge.textContent =
+        totalItems;
+
 
     if (cart.length === 0) {
 
@@ -1283,6 +1971,149 @@ function updateCart() {
 
 
 /* =========================
+   FLOATING CART
+========================= */
+
+function goToCart() {
+
+    const cartSection =
+        document.getElementById(
+            "cartSection"
+        );
+
+    if (!cartSection) return;
+
+    cartSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+/* =========================
+   FLOATING TRACKING
+========================= */
+
+function goToTracking() {
+
+    const trackSection =
+        document.getElementById(
+            "trackSection"
+        );
+
+    if (!trackSection) return;
+
+    trackSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+/* =========================
+   CUSTOMER CHAT
+========================= */
+
+function toggleChat() {
+
+    const chat =
+        document.getElementById(
+            "chatWindow"
+        );
+
+    if (
+        chat.style.display === "block"
+    ) {
+
+        chat.style.display =
+            "none";
+
+    } else {
+
+        chat.style.display =
+            "block";
+
+        setTimeout(() => {
+
+            const input =
+                document.getElementById(
+                    "chatInput"
+                );
+
+            if (input) {
+                input.focus();
+            }
+
+        }, 100);
+
+    }
+
+}
+
+
+function sendChatMessage(event) {
+
+    event.preventDefault();
+
+    const input =
+        document.getElementById(
+            "chatInput"
+        );
+
+    const message =
+        input.value.trim();
+
+    if (!message) return;
+
+
+    const body =
+        document.getElementById(
+            "chatBody"
+        );
+
+
+    const customerMessage =
+        document.createElement(
+            "div"
+        );
+
+    customerMessage.className =
+        "chat-message customer";
+
+    customerMessage.textContent =
+        message;
+
+
+    body.appendChild(
+        customerMessage
+    );
+
+
+    input.value = "";
+
+
+    body.scrollTop =
+        body.scrollHeight;
+
+
+    /*
+       CHAT BACKEND NOT CONNECTED YET.
+
+       This is currently only the
+       customer-side chat interface.
+
+       Later we can connect it to
+       Supabase so the Seller Web
+       receives and replies to
+       messages.
+    */
+
+}
+
+
+/* =========================
    CHECKOUT
 ========================= */
 
@@ -1290,7 +2121,9 @@ function openCheckout() {
 
     if (cart.length === 0) {
 
-        alert("Your cart is empty.");
+        alert(
+            "Your cart is empty."
+        );
 
         return;
 
@@ -1298,7 +2131,8 @@ function openCheckout() {
 
     document.getElementById(
         "checkout"
-    ).style.display = "block";
+    ).style.display =
+        "block";
 
 
     updateCheckoutSummary();
@@ -1322,7 +2156,8 @@ function closeCheckout() {
 
     document.getElementById(
         "checkout"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
 }
 
@@ -1345,6 +2180,7 @@ function updateCheckoutSummary() {
                 item.quantity;
 
             total += subtotal;
+
 
             return `
 

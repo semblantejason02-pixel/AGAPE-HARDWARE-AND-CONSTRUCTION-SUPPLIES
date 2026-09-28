@@ -4,28 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AGAPE Hardware & Construction Supplies</title>
+
+<!-- Supabase JS Client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
+:root {
+    --primary-blue: #1d4ed8;
+    --primary-red: #dc2626;
+    --dark-bg: #111827;
+    --accent-dark: #1f2937;
+    --text-color: #1f2937;
+    --bg-light: #f3f4f6;
+    --white: #ffffff;
+    --border-color: #e5e7eb;
+}
+
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f3f4f6;
-    color: #111827;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    line-height: 1.5;
 }
 
-.hidden {
-    display: none !important;
-}
-
-/* HEADER */
+/* HEADER & NAVIGATION */
 header {
-    background: #111827;
-    color: white;
-    padding: 16px 25px;
+    background-color: var(--dark-bg);
+    color: var(--white);
+    padding: 15px 25px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -35,182 +47,137 @@ header {
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-.brand-container {
+.logo-container {
     display: flex;
     flex-direction: column;
+    text-decoration: none;
 }
 
-.brand-title {
-    font-size: 24px;
-    font-weight: 900;
-    letter-spacing: 1px;
-}
-
-.brand-sub {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: #9ca3af;
-    font-weight: bold;
-    text-transform: uppercase;
+.brand-svg {
+    height: 38px;
+    width: auto;
 }
 
 .header-actions {
     display: flex;
-    gap: 12px;
+    gap: 15px;
     align-items: center;
 }
 
-button {
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
     border: none;
-    border-radius: 8px;
-    padding: 10px 16px;
+    font-weight: bold;
     cursor: pointer;
     font-size: 14px;
-    font-weight: bold;
+    transition: background 0.2s;
 }
 
 .btn-primary {
-    background: #1d4ed8;
-    color: white;
+    background-color: var(--primary-blue);
+    color: var(--white);
 }
 
 .btn-primary:hover {
-    background: #1e40af;
+    background-color: #1e40af;
 }
 
-.btn-accent {
-    background: #dc2626;
-    color: white;
+.btn-danger {
+    background-color: var(--primary-red);
+    color: var(--white);
 }
 
-.btn-accent:hover {
-    background: #b91c1c;
+.btn-danger:hover {
+    background-color: #b91c1c;
 }
 
-.btn-secondary {
-    background: #374151;
-    color: white;
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--white);
+    color: var(--white);
 }
 
-.btn-secondary:hover {
-    background: #1f2937;
+.btn-outline:hover {
+    background: rgba(255,255,255,0.1);
 }
 
-.cart-btn {
-    position: relative;
-    background: #f59e0b;
-    color: #111827;
-}
-
-.cart-badge {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: #dc2626;
-    color: white;
-    font-size: 11px;
-    padding: 2px 6px;
-    border-radius: 50%;
-    font-weight: bold;
-}
-
-/* MAIN LAYOUT */
-.main-container {
-    max-width: 1400px;
+/* MAIN CONTAINER */
+.container {
+    max-width: 1300px;
     margin: 25px auto;
     padding: 0 20px;
 }
 
-/* SEARCH & FILTER BAR */
-.search-filter-section {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    margin-bottom: 25px;
+/* SEARCH & FILTERS */
+.store-controls {
     display: flex;
-    flex-direction: column;
     gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    background: var(--white);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.search-bar-row {
-    display: flex;
-    gap: 10px;
-}
-
-.search-bar-row input {
+.search-bar {
     flex: 1;
-    padding: 12px 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
+    min-width: 250px;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     font-size: 15px;
 }
 
-.categories-scroll {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 5px;
-}
-
-.cat-chip {
-    background: #f3f4f6;
-    color: #374151;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: bold;
-    white-space: nowrap;
-    border: 1px solid #e5e7eb;
+.category-filter {
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--white);
+    font-size: 15px;
     cursor: pointer;
-}
-
-.cat-chip.active {
-    background: #1d4ed8;
-    color: white;
-    border-color: #1d4ed8;
 }
 
 /* PRODUCTS GRID */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px;
 }
 
 .product-card {
-    background: white;
-    border-radius: 12px;
+    background: var(--white);
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s;
 }
 
 .product-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-.product-img, .product-no-img {
-    width: 100%;
-    height: 190px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .product-img {
+    width: 100%;
+    height: 180px;
     object-fit: contain;
-    background: #f9fafb;
+    background: #fafafa;
     padding: 10px;
 }
 
 .product-no-img {
+    width: 100%;
+    height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #e5e7eb;
     color: #6b7280;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .product-info {
@@ -222,23 +189,22 @@ button {
 
 .product-brand {
     font-size: 12px;
-    color: #1d4ed8;
+    color: var(--primary-blue);
     font-weight: bold;
     text-transform: uppercase;
 }
 
 .product-name {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
-    margin: 4px 0 8px;
+    margin: 5px 0;
 }
 
 .product-desc {
     font-size: 13px;
     color: #6b7280;
-    line-height: 1.4;
-    margin-bottom: 12px;
-    flex: 1;
+    margin-bottom: 10px;
+    line-height: 1.3;
 }
 
 .product-footer {
@@ -252,258 +218,292 @@ button {
 .product-price {
     font-size: 18px;
     font-weight: bold;
-    color: #111827;
+    color: var(--dark-bg);
 }
 
-/* CART DRAWER / MODAL */
-.modal-overlay {
+/* CART & CHECKOUT MODALS */
+.modal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: flex-end;
-    z-index: 2000;
-}
-
-.drawer {
-    background: white;
-    width: 100%;
-    max-width: 450px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-shadow: -5px 0 25px rgba(0,0,0,0.15);
-    animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
-}
-
-.drawer-header {
-    padding: 20px;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    z-index: 2000;
+    padding: 15px;
 }
 
-.drawer-header h2 {
-    margin: 0;
-    font-size: 20px;
+.modal.active {
+    display: flex;
 }
 
-.drawer-body {
-    padding: 20px;
+.modal-content {
+    background: var(--white);
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    padding: 25px;
+    max-height: 90vh;
     overflow-y: auto;
-    flex: 1;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
 }
 
-.drawer-footer {
-    padding: 20px;
-    border-top: 1px solid #e5e7eb;
-    background: #f9fafb;
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.modal-header h2 {
+    color: var(--dark-bg);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6b7280;
 }
 
 .cart-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #f3f4f6;
-    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.cart-item-details h4 {
-    margin: 0 0 4px;
-    font-size: 15px;
-}
-
-.cart-item-details p {
-    margin: 0;
-    font-size: 13px;
-    color: #6b7280;
-}
-
-.qty-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.qty-btn {
-    background: #e5e7eb;
-    padding: 4px 10px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-/* CHECKOUT FORM */
 .form-group {
     margin-bottom: 15px;
 }
 
 .form-group label {
     display: block;
-    font-size: 13px;
     font-weight: bold;
-    margin-bottom: 6px;
-}
-
-.form-group input, .form-group select, .form-group textarea {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
+    margin-bottom: 5px;
     font-size: 14px;
 }
 
-.success-box {
-    background: #ecfdf5;
-    border: 1px solid #10b981;
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* FLOATING CART BUTTON */
+.floating-cart {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(29, 78, 216, 0.4);
+    cursor: pointer;
+    z-index: 1001;
+    font-size: 22px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--primary-red);
+    color: var(--white);
+    font-size: 12px;
+    padding: 2px 7px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+/* TRACK ORDER SECTION */
+.tracking-box {
+    background: var(--white);
     padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.success-box h3 {
-    color: #065f46;
-    margin-top: 0;
-}
-
-/* RESPONSIVE BREAKPOINTS */
-@media(max-width: 1200px) {
-    .products-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-@media(max-width: 900px) {
-    .products-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    gap: 10px;
 }
 
 @media(max-width: 600px) {
-    .products-grid {
-        grid-template-columns: 1fr;
-    }
-    header {
-        padding: 12px 15px;
-    }
-    .brand-title {
-        font-size: 18px;
-    }
-    .main-container {
-        padding: 0 10px;
-        margin: 15px auto;
+    .store-controls {
+        flex-direction: column;
     }
 }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-    <div class="brand-container">
-        <div class="brand-title">
-            <span style="color:#1d4ed8;">A</span><span style="color:white;">G</span><span style="color:#dc2626;">A</span><span style="color:white;">P</span><span style="color:#1d4ed8;">E</span>
-        </div>
-        <div class="brand-sub">Hardware & Construction Supplies</div>
-    </div>
+    <a href="#" class="logo-container">
+        <!-- SVG Logo reproducing AGAPE Hardware & Construction Supplies styling -->
+        <svg class="brand-svg" viewBox="0 0 450 65" xmlns="http://www.w3.org/2000/svg">
+            <!-- Blue A with house roof icon -->
+            <path d="M5,55 L32,5 L59,55 L47,55 L32,26 L17,55 Z" fill="#1d4ed8"/>
+            <path d="M22,38 L32,20 L42,38 Z" fill="#1d4ed8"/>
+            <path d="M22,42 L22,55 L28,55 L28,42 Z" fill="#111827"/>
+            <path d="M36,42 L36,55 L42,55 L42,42 Z" fill="#111827"/>
+            <!-- Black G -->
+            <path d="M68,55 L68,15 L108,15 L108,25 L80,25 L80,45 L105,45 L105,38 L95,38 L95,30 L115,30 L115,55 Z" fill="#111827"/>
+            <!-- Red A -->
+            <path d="M125,55 L155,5 L185,55 L173,55 L155,22 L137,55 Z" fill="#dc2626"/>
+            <!-- Black P -->
+            <path d="M195,55 L195,15 L230,15 C242,15 248,22 248,30 C248,38 242,45 230,45 L207,45 L207,55 Z M207,25 L207,35 L228,35 C233,35 236,32 236,30 C236,28 233,25 228,25 Z" fill="#111827"/>
+            <!-- Blue E -->
+            <path d="M255,55 L255,15 L295,15 L295,25 L267,25 L267,31 L290,31 L290,41 L267,41 L267,45 L295,45 L295,55 Z" fill="#1d4ed8"/>
+            <!-- Subtitle -->
+            <text x="5" y="63" font-family="Arial, sans-serif" font-weight="bold" font-size="8.5" fill="#ffffff" letter-spacing="1.5">HARDWARE & CONSTRUCTION SUPPLIES</text>
+        </svg>
+    </a>
+    
     <div class="header-actions">
-        <button class="btn-secondary" onclick="openTrackerModal()">Track Order</button>
-        <button class="cart-btn" onclick="openCartModal()">
-            🛒 Cart <span id="cartCount" class="cart-badge">0</span>
-        </button>
+        <button class="btn btn-outline" onclick="openTrackerModal()">Track Order</button>
     </div>
 </header>
 
-<div class="main-container">
-    <!-- Search and Filters -->
-    <div class="search-filter-section">
-        <div class="search-bar-row">
-            <input type="text" id="searchInput" placeholder="Search cement, steel, tools, plumbing..." oninput="filterProducts()">
-        </div>
-        <div class="categories-scroll" id="categoryChips">
-            <div class="cat-chip active" onclick="setCategory('All', this)">All Products</div>
-            <div class="cat-chip" onclick="setCategory('Cement', this)">Cement</div>
-            <div class="cat-chip" onclick="setCategory('Steel', this)">Steel</div>
-            <div class="cat-chip" onclick="setCategory('Electrical', this)">Electrical</div>
-            <div class="cat-chip" onclick="setCategory('Plumbing', this)">Plumbing</div>
-            <div class="cat-chip" onclick="setCategory('Paint', this)">Paint</div>
-            <div class="cat-chip" onclick="setCategory('Tools', this)">Tools</div>
-            <div class="cat-chip" onclick="setCategory('Others', this)">Others</div>
-        </div>
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+    <!-- TRACKING QUICK BAR -->
+    <div class="tracking-box">
+        <input type="text" id="trackInput" class="search-bar" placeholder="Enter Order Number to Track Status...">
+        <button class="btn btn-primary" onclick="trackOrder()">Check Status</button>
     </div>
 
-    <!-- Product Catalog Grid -->
+    <!-- CONTROLS -->
+    <div class="store-controls">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search hardware items, tools, paints..." oninput="filterProducts()">
+        <select id="categoryFilter" class="category-filter" onchange="filterProducts()">
+            <option value="">All Categories</option>
+            <option value="Cement">Cement</option>
+            <option value="Steel">Steel</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Paint">Paint</option>
+            <option value="Tools">Tools</option>
+            <option value="Others">Others</option>
+        </select>
+    </div>
+
+    <!-- PRODUCTS GRID -->
     <div id="productsGrid" class="products-grid">
-        <div style="grid-column: 1/-1; text-align:center; padding: 40px; color:#6b7280;">Loading catalog...</div>
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">Loading products...</div>
     </div>
+
 </div>
 
-<!-- CART / CHECKOUT DRAWER -->
-<div id="cartModal" class="modal-overlay hidden" onclick="if(event.target === this) closeCartModal()">
-    <div class="drawer">
-        <div class="drawer-header">
+<!-- FLOATING CART BUTTON -->
+<div class="floating-cart" onclick="openCartModal()">
+    🛒
+    <span id="cartBadge" class="cart-badge">0</span>
+</div>
+
+<!-- CART MODAL -->
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
             <h2>Your Shopping Cart</h2>
-            <button class="btn-secondary" onclick="closeCartModal()" style="padding: 6px 12px;">✕</button>
+            <button class="close-btn" onclick="closeCartModal()">&times;</button>
         </div>
-        <div class="drawer-body" id="cartDrawerBody">
-            <!-- Dynamic Cart Items / Checkout Form -->
+        <div id="cartItemsContainer">
+            <p style="color: #6b7280; text-align: center; padding: 20px;">Your cart is empty.</p>
         </div>
-        <div class="drawer-footer" id="cartDrawerFooter">
-            <!-- Dynamic Footer Buttons -->
+        <div style="border-top: 1px solid var(--border-color); margin-top: 15px; padding-top: 15px; display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;">
+            <span>Total:</span>
+            <span id="cartTotalPrice">₱0.00</span>
         </div>
+        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="openCheckoutModal()">Proceed to Checkout</button>
     </div>
 </div>
 
-<!-- ORDER TRACKER MODAL -->
-<div id="trackerModal" class="modal-overlay hidden" onclick="if(event.target === this) closeTrackerModal()">
-    <div class="drawer" style="max-width: 400px; height: auto; border-radius: 12px; margin: auto;">
-        <div class="drawer-header">
-            <h2>Track Order Status</h2>
-            <button class="btn-secondary" onclick="closeTrackerModal()" style="padding: 6px 12px;">✕</button>
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Checkout Details</h2>
+            <button class="close-btn" onclick="closeCheckoutModal()">&times;</button>
         </div>
-        <div class="drawer-body">
-            <div class="form-group">
-                <label>Enter Order ID or Phone Number</label>
-                <input type="text" id="trackQuery" placeholder="e.g. 13 or 09939084944">
-            </div>
-            <button class="btn-primary" style="width:100%;" onclick="trackOrder()">Search Order</button>
-            <div id="trackResult" style="margin-top: 15px;"></div>
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="customerName" class="form-control" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="customerPhone" class="form-control" placeholder="09XXXXXXXXX">
+        </div>
+        <div class="form-group">
+            <label>Fulfillment Type</label>
+            <select id="fulfillmentType" class="form-control" onchange="toggleAddressField()">
+                <option value="Delivery">Delivery</option>
+                <option value="Pickup">Store Pickup</option>
+            </select>
+        </div>
+        <div class="form-group" id="addressGroup">
+            <label>Delivery Address</label>
+            <textarea id="customerAddress" class="form-control" placeholder="Complete delivery address"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Notes / Instructions (Optional)</label>
+            <textarea id="customerNotes" class="form-control" placeholder="Landmarks, specific delivery instructions..."></textarea>
+        </div>
+        <button class="btn btn-primary" style="width: 100%;" onclick="submitOrder()">Place Order</button>
+        <p id="checkoutMessage" style="margin-top: 10px; text-align: center; font-weight: bold;"></p>
+    </div>
+</div>
+
+<!-- ORDER STATUS MODAL -->
+<div id="trackerModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Order Tracking Results</h2>
+            <button class="close-btn" onclick="closeTrackerModal()">&times;</button>
+        </div>
+        <div id="trackerResultContainer">
+            <p style="text-align: center; color: #6b7280; padding: 20px;">Enter an order number above or search here.</p>
         </div>
     </div>
 </div>
 
 <script>
-// SUPABASE CONFIGURATION
+/* SUPABASE CONFIG */
 const SUPABASE_URL = "https://djeqfrifhqcpfxccotdl.supabase.co";
 const SUPABASE_KEY = "sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let allProducts = [];
 let cart = [];
-let selectedCategory = "All";
 
-// INIT
-async function initStore() {
-    await fetchProducts();
-}
-
-async function fetchProducts() {
+// Load products on start
+async function loadStoreProducts() {
     const { data, error } = await supabaseClient
         .from("products")
         .select("*")
         .order("created_at", { ascending: false });
 
     if (error) {
-        document.getElementById("productsGrid").innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#dc2626;">Error loading products: ${error.message}</div>`;
+        document.getElementById("productsGrid").innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: red;">Error loading products: ${error.message}</div>`;
         return;
     }
 
@@ -514,15 +514,14 @@ async function fetchProducts() {
 function renderProducts(products) {
     const grid = document.getElementById("productsGrid");
     if (products.length === 0) {
-        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 40px; color:#6b7280;">No products found.</div>`;
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">No products found.</div>`;
         return;
     }
 
     grid.innerHTML = products.map(p => {
-        const stock = Number(p.stock || 0);
         const imageHTML = p.image 
             ? `<img class="product-img" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}">`
-            : `<div class="product-no-img">No Image Available</div>`;
+            : `<div class="product-no-img">No Image</div>`;
 
         return `
             <div class="product-card">
@@ -532,48 +531,33 @@ function renderProducts(products) {
                     <div class="product-name">${escapeHtml(p.name)}</div>
                     <div class="product-desc">${escapeHtml(p.description || '')}</div>
                     <div class="product-footer">
-                        <div>
-                            <div class="product-price">₱${Number(p.price || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</div>
-                            <div style="font-size:11px; color:${stock > 0 ? '#10b981':'#dc2626'}; font-weight:bold;">Stock: ${stock}</div>
-                        </div>
-                        <button class="btn-primary" onclick="addToCart(${p.id})" ${stock <= 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"':''}>+ Add</button>
+                        <div class="product-price">₱${Number(p.price || 0).toLocaleString("en-PH", {minimumFractionDigits: 2})}</div>
+                        <button class="btn btn-primary" onclick='addToCart(${JSON.stringify(p)})'>+ Add</button>
                     </div>
                 </div>
             </div>
         `;
-    }).join('');
-}
-
-function setCategory(cat, element) {
-    selectedCategory = cat;
-    document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-    element.classList.add('active');
-    filterProducts();
+    }).join("");
 }
 
 function filterProducts() {
-    const query = document.getElementById('searchInput').value.toLowerCase();
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    const category = document.getElementById("categoryFilter").value;
+
     const filtered = allProducts.filter(p => {
-        const matchesCat = selectedCategory === 'All' || (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase());
-        const matchesQuery = (p.name && p.name.toLowerCase().includes(query)) || 
-                             (p.brand && p.brand.toLowerCase().includes(query)) || 
-                             (p.description && p.description.toLowerCase().includes(query));
-        return matchesCat && matchesQuery;
+        const matchesSearch = (p.name && p.name.toLowerCase().includes(search)) || 
+                              (p.brand && p.brand.toLowerCase().includes(search));
+        const matchesCat = !category || p.category === category;
+        return matchesSearch && matchesCat;
     });
+
     renderProducts(filtered);
 }
 
-// CART MANAGEMENT
-function addToCart(productId) {
-    const product = allProducts.find(p => p.id === productId);
-    if (!product) return;
-
-    const existing = cart.find(item => item.id === productId);
+/* CART MANAGEMENT */
+function addToCart(product) {
+    const existing = cart.find(item => item.id === product.id);
     if (existing) {
-        if (existing.quantity + 1 > Number(product.stock || 0)) {
-            alert("Cannot add more than available stock.");
-            return;
-        }
         existing.quantity += 1;
         existing.subtotal = existing.quantity * existing.price;
     } else {
@@ -585,223 +569,154 @@ function addToCart(productId) {
             subtotal: Number(product.price || 0)
         });
     }
-    updateCartBadge();
-    openCartModal();
+    updateCartUI();
 }
 
-function updateQuantity(productId, delta) {
-    const item = cart.find(i => i.id === productId);
-    const product = allProducts.find(p => p.id === productId);
-    if (!item) return;
+function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById("cartBadge").textContent = totalItems;
 
-    const newQty = item.quantity + delta;
-    if (newQty <= 0) {
-        cart = cart.filter(i => i.id !== productId);
-    } else {
-        if (product && newQty > Number(product.stock || 0)) {
-            alert("Exceeds available stock.");
-            return;
-        }
-        item.quantity = newQty;
-        item.subtotal = item.quantity * item.price;
-    }
-    updateCartBadge();
-    renderCartContents();
-}
-
-function updateCartBadge() {
-    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    document.getElementById("cartCount").textContent = totalCount;
-}
-
-function openCartModal() {
-    document.getElementById("cartModal").classList.remove("hidden");
-    renderCartContents();
-}
-
-function closeCartModal() {
-    document.getElementById("cartModal").classList.add("hidden");
-}
-
-function renderCartContents() {
-    const body = document.getElementById("cartDrawerBody");
-    const footer = document.getElementById("cartDrawerFooter");
-
+    const container = document.getElementById("cartItemsContainer");
     if (cart.length === 0) {
-        body.innerHTML = `<div style="text-align:center; padding: 40px; color:#6b7280;">Your cart is empty.</div>`;
-        footer.innerHTML = `<button class="btn-secondary" style="width:100%;" onclick="closeCartModal()">Continue Shopping</button>`;
+        container.innerHTML = `<p style="color: #6b7280; text-align: center; padding: 20px;">Your cart is empty.</p>`;
+        document.getElementById("cartTotalPrice").textContent = "₱0.00";
         return;
     }
 
-    body.innerHTML = cart.map(item => `
+    container.innerHTML = cart.map((item, index) => `
         <div class="cart-item">
-            <div class="cart-item-details">
-                <h4>${escapeHtml(item.name)}</h4>
-                <p>₱${item.price.toLocaleString('en-PH', {minimumFractionDigits: 2})} each</p>
+            <div>
+                <strong>${escapeHtml(item.name)}</strong><br>
+                <small>₱${item.price.toLocaleString("en-PH", {minimumFractionDigits: 2})} × ${item.quantity}</small>
             </div>
-            <div class="qty-controls">
-                <div class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</div>
-                <span>${item.quantity}</span>
-                <div class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span>₱${item.subtotal.toLocaleString("en-PH", {minimumFractionDigits: 2})}</span>
+                <button class="btn btn-danger" style="padding: 2px 6px; font-size: 12px;" onclick="removeFromCart(${index})">X</button>
             </div>
         </div>
-    `).join('');
+    `).join("");
 
-    const totalAmount = cart.reduce((sum, i) => sum + i.subtotal, 0);
-    footer.innerHTML = `
-        <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:bold; margin-bottom:15px;">
-            <span>Total:</span>
-            <span>₱${totalAmount.toLocaleString('en-PH', {minimumFractionDigits: 2})}</span>
-        </div>
-        <button class="btn-primary" style="width:100%;" onclick="showCheckoutForm()">Proceed to Checkout</button>
-    `;
+    const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+    document.getElementById("cartTotalPrice").textContent = `₱${total.toLocaleString("en-PH", {minimumFractionDigits: 2})}`;
 }
 
-function showCheckoutForm() {
-    const body = document.getElementById("cartDrawerBody");
-    const footer = document.getElementById("cartDrawerFooter");
-
-    body.innerHTML = `
-        <h3 style="margin-top:0;">Customer & Delivery Info</h3>
-        <div class="form-group">
-            <label>Full Name *</label>
-            <input type="text" id="chkName" placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-            <label>Phone Number *</label>
-            <input type="text" id="chkPhone" placeholder="09XXXXXXXXX">
-        </div>
-        <div class="form-group">
-            <label>Fulfillment Method *</label>
-            <select id="chkFulfillment" onchange="toggleAddressField()">
-                <option value="Delivery">Delivery</option>
-                <option value="Pickup">Store Pickup</option>
-            </select>
-        </div>
-        <div class="form-group" id="addressGroup">
-            <label>Complete Address *</label>
-            <textarea id="chkAddress" placeholder="Street, Barangay, Municipality"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Order Notes (Optional)</label>
-            <textarea id="chkNotes" placeholder="Landmark or specific instructions"></textarea>
-        </div>
-    `;
-
-    footer.innerHTML = `
-        <div style="display:flex; gap:10px;">
-            <button class="btn-secondary" style="flex:1;" onclick="renderCartContents()">Back</button>
-            <button class="btn-accent" style="flex:1;" onclick="submitOrder()">Place Order</button>
-        </div>
-    `;
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
 }
+
+function openCartModal() { document.getElementById("cartModal").classList.add("active"); }
+function closeCartModal() { document.getElementById("cartModal").classList.remove("active"); }
+
+function openCheckoutModal() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    closeCartModal();
+    document.getElementById("checkoutModal").classList.add("active");
+}
+function closeCheckoutModal() { document.getElementById("checkoutModal").classList.remove("active"); }
 
 function toggleAddressField() {
-    const method = document.getElementById("chkFulfillment").value;
-    const addrGroup = document.getElementById("addressGroup");
-    addrGroup.style.display = method === "Pickup" ? "none" : "block";
+    const type = document.getElementById("fulfillmentType").value;
+    document.getElementById("addressGroup").style.display = type === "Delivery" ? "block" : "none";
 }
 
+/* SUBMIT ORDER USING RPC / TABLE */
 async function submitOrder() {
-    const customer_name = document.getElementById("chkName").value.trim();
-    const phone = document.getElementById("chkPhone").value.trim();
-    const fulfillment = document.getElementById("chkFulfillment").value;
-    const address = fulfillment === "Pickup" ? "Store Pickup" : document.getElementById("chkAddress").value.trim();
-    const notes = document.getElementById("chkNotes").value.trim();
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    const fulfillment = document.getElementById("fulfillmentType").value;
+    const address = fulfillment === "Delivery" ? document.getElementById("customerAddress").value.trim() : "Store Pickup";
+    const notes = document.getElementById("customerNotes").value.trim();
+    const msg = document.getElementById("checkoutMessage");
 
-    if (!customer_name || !phone || (fulfillment === "Delivery" && !address)) {
-        alert("Please fill in all required fields.");
+    if (!name || !phone || (fulfillment === "Delivery" && !address)) {
+        msg.style.color = "red";
+        msg.textContent = "Please fill in all required customer details.";
         return;
     }
 
-    const total = cart.reduce((sum, i) => sum + i.subtotal, 0);
+    const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
 
-    // Call Supabase RPC create_order
-    const { data, error } = await supabaseClient.rpc('create_order', {
-        p_customer_name: customer_name,
-        p_phone: phone,
-        p_fulfillment: fulfillment,
-        p_address: address,
-        p_notes: notes,
-        p_total: total,
-        p_items: JSON.stringify(cart)
-    });
+    // Insert order into Supabase
+    const { data, error } = await supabaseClient
+        .from("orders")
+        .insert({
+            customer_name: name,
+            phone: phone,
+            fulfillment: fulfillment,
+            address: address,
+            notes: notes,
+            items: cart,
+            total: total,
+            status: "Pending"
+        })
+        .select()
+        .single();
 
     if (error) {
-        alert("Error placing order: " + error.message);
+        msg.style.color = "red";
+        msg.textContent = error.message;
         return;
     }
 
-    const orderId = data;
+    msg.style.color = "green";
+    msg.textContent = `Order placed successfully! Order #${data.id}`;
     cart = [];
-    updateCartBadge();
+    updateCartUI();
 
-    const body = document.getElementById("cartDrawerBody");
-    const footer = document.getElementById("cartDrawerFooter");
+    setTimeout(() => {
+        closeCheckoutModal();
+        msg.textContent = "";
+        alert(`Your order has been submitted successfully! Your Order ID is #${data.id}. Keep this for tracking.`);
+    }, 1500);
+}
 
-    body.innerHTML = `
-        <div class="success-box">
-            <h3>Order Placed Successfully!</h3>
-            <p>Your Order ID is <strong>#${orderId}</strong></p>
-            <p style="font-size:13px; color:#047857;">We have received your order and will process it shortly.</p>
+/* TRACK ORDER */
+async function trackOrder() {
+    const orderId = document.getElementById("trackInput").value.trim();
+    if (!orderId) {
+        alert("Please enter an Order Number.");
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("orders")
+        .select("*")
+        .eq("id", orderId)
+        .single();
+
+    const container = document.getElementById("trackerResultContainer");
+    openTrackerModal();
+
+    if (error || !data) {
+        container.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Order #${escapeHtml(orderId)} not found.</p>`;
+        return;
+    }
+
+    container.innerHTML = `
+        <div style="line-height: 1.6;">
+            <h3>Order #${data.id}</h3>
+            <p><strong>Status:</strong> <span style="color: var(--primary-blue); font-weight: bold;">${escapeHtml(data.status)}</span></p>
+            <p><strong>Customer:</strong> ${escapeHtml(data.customer_name)}</p>
+            <p><strong>Fulfillment:</strong> ${escapeHtml(data.fulfillment)}</p>
+            <p><strong>Total:</strong> ₱${Number(data.total || 0).toLocaleString("en-PH", {minimumFractionDigits: 2})}</p>
+            <p><strong>Date:</strong> ${new Date(data.created_at).toLocaleString("en-PH")}</p>
         </div>
     `;
-    footer.innerHTML = `<button class="btn-primary" style="width:100%;" onclick="closeCartModal()">Done</button>`;
 }
 
-// ORDER TRACKER
-function openTrackerModal() {
-    document.getElementById("trackerModal").classList.remove("hidden");
-}
-
-function closeTrackerModal() {
-    document.getElementById("trackerModal").classList.add("hidden");
-}
-
-async function trackOrder() {
-    const query = document.getElementById("trackQuery").value.trim();
-    const resultDiv = document.getElementById("trackResult");
-    if (!query) {
-        resultDiv.innerHTML = `<p style="color:#dc2626; font-size:13px;">Please enter an Order ID or Phone.</p>`;
-        return;
-    }
-
-    resultDiv.innerHTML = `<p style="font-size:13px; color:#6b7280;">Searching orders...</p>`;
-
-    let dbQuery = supabaseClient.from("orders").select("*");
-    if (!isNaN(query)) {
-        dbQuery = dbQuery.eq("id", Number(query));
-    } else {
-        dbQuery = dbQuery.eq("phone", query);
-    }
-
-    const { data, error } = await dbQuery;
-
-    if (error || !data || data.length === 0) {
-        resultDiv.innerHTML = `<p style="color:#dc2626; font-size:13px;">No orders found matching "${escapeHtml(query)}".</p>`;
-        return;
-    }
-
-    resultDiv.innerHTML = data.map(o => `
-        <div style="background:#f9fafb; border:1px solid #e5e7eb; padding:12px; border-radius:8px; margin-top:8px; font-size:13px;">
-            <div><strong>Order #${o.id}</strong> - <span style="color:#1d4ed8; font-weight:bold;">${escapeHtml(o.status || 'Pending')}</span></div>
-            <div>Customer: ${escapeHtml(o.customer_name)}</div>
-            <div>Total: ₱${Number(o.total || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</div>
-        </div>
-    `).join('');
-}
+function openTrackerModal() { document.getElementById("trackerModal").classList.add("active"); }
+function closeTrackerModal() { document.getElementById("trackerModal").classList.remove("active"); }
 
 function escapeHtml(str) {
-    return String(str ?? '')
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(str ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
-// Initialize on load
-initStore();
+// Initial Load
+loadStoreProducts();
 </script>
 
 </body>

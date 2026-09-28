@@ -11,6 +11,7 @@
     --primary-blue: #1d4ed8;
     --primary-red: #dc2626;
     --dark-bg: #111111;
+    --green: #16a34a;
 }
 
 * {
@@ -26,6 +27,10 @@ body {
     font-family: Arial, sans-serif;
     background: #f5f5f5;
     color: #222;
+}
+
+body.popup-open {
+    overflow: hidden;
 }
 
 header {
@@ -177,7 +182,6 @@ header p {
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
-    transition: background 0.2s;
 }
 
 .add-btn:hover {
@@ -190,51 +194,84 @@ header p {
 }
 
 
-/* =========================
-   FLOATING CUSTOMER BUTTONS
-========================= */
+/* ==================================================
+   FLOATING CUSTOMER MENU
+================================================== */
 
-.floating-actions {
+.floating-menu {
     position: fixed;
-    top: 18px;
     right: 18px;
-    z-index: 9999;
+    bottom: 20px;
+    z-index: 9000;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 10px;
 }
 
-.floating-btn {
-    position: relative;
-    width: 50px;
-    height: 50px;
+.floating-main {
+    width: 56px;
+    height: 56px;
     border: none;
     border-radius: 50%;
+    background: var(--primary-blue);
     color: white;
+    font-size: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform .2s;
+}
+
+.floating-main:hover {
+    transform: scale(1.07);
+}
+
+.floating-options {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 9px;
+}
+
+.floating-options.show {
+    display: flex;
+}
+
+.floating-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: white;
+    padding: 9px 12px 9px 9px;
+    border-radius: 30px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.22);
+    cursor: pointer;
+    font-weight: bold;
+    color: #222;
+}
+
+.floating-option-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    font-size: 23px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
-    transition: transform 0.2s, width 0.2s;
+    color: white;
+    font-size: 18px;
 }
 
-.floating-btn:hover {
-    transform: scale(1.06);
-}
-
-.floating-cart {
+.cart-icon {
     background: var(--primary-blue);
 }
 
-.floating-chat {
-    background: #16a34a;
+.track-icon {
+    background: #111;
 }
 
-.floating-track {
-    background: var(--dark-bg);
+.service-icon {
+    background: var(--green);
 }
 
 .cart-badge {
@@ -255,124 +292,327 @@ header p {
     border: 2px solid white;
 }
 
-.floating-label {
-    position: absolute;
-    right: 58px;
-    white-space: nowrap;
-    background: #111;
-    color: white;
-    padding: 7px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(5px);
-    transition: opacity 0.2s, transform 0.2s;
-}
 
-.floating-btn:hover .floating-label {
-    opacity: 1;
-    transform: translateX(0);
-}
+/* ==================================================
+   POPUP OVERLAY
+================================================== */
 
-
-/* =========================
-   CHAT WINDOW
-========================= */
-
-.chat-window {
+.popup-overlay {
     display: none;
     position: fixed;
-    right: 18px;
-    bottom: 18px;
-    width: 330px;
-    max-width: calc(100vw - 36px);
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.25);
-    overflow: hidden;
+    inset: 0;
+    background: rgba(0,0,0,.55);
     z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
 }
 
-.chat-header {
+.popup-overlay.show {
+    display: flex;
+}
+
+.popup {
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,.35);
+    animation: popupIn .2s ease;
+}
+
+@keyframes popupIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.popup-header {
     background: var(--dark-bg);
     color: white;
-    padding: 14px;
+    padding: 15px 17px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 }
 
-.chat-header strong {
-    font-size: 15px;
+.popup-header h2 {
+    margin: 0;
+    font-size: 18px;
 }
 
-.chat-close {
+.popup-close {
     border: none;
     background: transparent;
     color: white;
-    font-size: 22px;
+    font-size: 27px;
+    line-height: 1;
     cursor: pointer;
 }
 
-.chat-body {
-    height: 280px;
-    padding: 14px;
+.popup-body {
+    padding: 17px;
+    max-height: calc(90vh - 70px);
     overflow-y: auto;
-    background: #f5f5f5;
 }
 
-.chat-message {
-    max-width: 85%;
-    padding: 9px 11px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+
+/* ==================================================
+   CART POPUP
+================================================== */
+
+.cart-popup-items {
+    max-height: 330px;
+    overflow-y: auto;
+}
+
+.cart-popup-empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: #777;
+}
+
+.popup-cart-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.popup-cart-item:last-child {
+    border-bottom: none;
+}
+
+.popup-cart-name {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.popup-cart-price {
     font-size: 13px;
-    line-height: 1.4;
+    color: #666;
 }
 
-.chat-message.seller {
-    background: white;
-    border: 1px solid #ddd;
-}
-
-.chat-message.customer {
-    background: var(--primary-blue);
-    color: white;
-    margin-left: auto;
-}
-
-.chat-input-area {
+.popup-cart-controls {
     display: flex;
+    align-items: center;
     gap: 7px;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-    background: white;
+    margin-top: 9px;
 }
 
-.chat-input-area input {
-    min-width: 0;
-    flex: 1;
-    padding: 10px;
+.popup-qty {
+    width: 31px;
+    height: 31px;
     border: 1px solid #ccc;
-    border-radius: 7px;
-    font-size: 14px;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 17px;
 }
 
-.chat-send {
+.popup-remove {
+    margin-left: auto;
+    border: none;
+    background: #fee2e2;
+    color: var(--primary-red);
+    padding: 7px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.popup-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 19px;
+    font-weight: bold;
+    padding: 15px 0 5px;
+}
+
+.popup-checkout {
+    width: 100%;
     border: none;
     background: var(--primary-blue);
     color: white;
-    padding: 0 13px;
-    border-radius: 7px;
-    cursor: pointer;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 15px;
     font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.popup-checkout:disabled {
+    background: #aaa;
+    cursor: not-allowed;
 }
 
 
-/* =========================
-   CART
-========================= */
+/* ==================================================
+   TRACKING POPUP
+================================================== */
+
+.track-popup-description {
+    color: #666;
+    font-size: 14px;
+    margin-top: 0;
+}
+
+.popup-form-group {
+    margin-bottom: 13px;
+}
+
+.popup-form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.popup-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.popup-track-btn {
+    width: 100%;
+    border: none;
+    background: #111;
+    color: white;
+    padding: 13px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.popup-track-btn:disabled {
+    background: #888;
+}
+
+.popup-track-error {
+    display: none;
+    margin-top: 12px;
+    padding: 10px;
+    background: #fee2e2;
+    color: var(--primary-red);
+    border-radius: 7px;
+    font-size: 13px;
+}
+
+.popup-track-result {
+    display: none;
+    margin-top: 15px;
+    padding: 14px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.popup-order-number {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.popup-status {
+    display: inline-block;
+    margin: 9px 0;
+    padding: 7px 12px;
+    background: #dbeafe;
+    color: var(--primary-blue);
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.popup-track-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.popup-track-row:last-child {
+    border-bottom: none;
+}
+
+
+/* ==================================================
+   CUSTOMER SERVICE
+================================================== */
+
+.service-welcome {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.service-welcome .service-big-icon {
+    font-size: 42px;
+}
+
+.service-welcome h3 {
+    margin: 8px 0 5px;
+}
+
+.service-welcome p {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+.service-option {
+    width: 100%;
+    border: 1px solid #ddd;
+    background: white;
+    padding: 13px;
+    border-radius: 9px;
+    margin-top: 9px;
+    text-align: left;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.service-option:hover {
+    background: #f5f5f5;
+}
+
+.service-option span {
+    font-size: 22px;
+}
+
+.service-message {
+    margin-top: 15px;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #555;
+}
+
+.service-chat-btn {
+    width: 100%;
+    border: none;
+    background: var(--green);
+    color: white;
+    padding: 13px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+
+/* ==================================================
+   CART SECTION
+================================================== */
 
 .cart-section {
     margin-top: 30px;
@@ -449,9 +689,9 @@ header p {
 }
 
 
-/* =========================
+/* ==================================================
    CHECKOUT
-========================= */
+================================================== */
 
 .checkout {
     display: none;
@@ -510,10 +750,6 @@ header p {
     cursor: pointer;
 }
 
-.place-order-btn:hover {
-    background: #1e40af;
-}
-
 .place-order-btn:disabled {
     background: #999;
 }
@@ -529,9 +765,9 @@ header p {
 }
 
 
-/* =========================
+/* ==================================================
    SUCCESS
-========================= */
+================================================== */
 
 .success {
     display: none;
@@ -555,9 +791,9 @@ header p {
 }
 
 
-/* =========================
-   TRACK ORDER
-========================= */
+/* ==================================================
+   TRACK SECTION
+================================================== */
 
 .track-section {
     margin-top: 30px;
@@ -647,9 +883,9 @@ header p {
 }
 
 
-/* =========================
+/* ==================================================
    FOOTER
-========================= */
+================================================== */
 
 footer {
     margin-top: 40px;
@@ -666,9 +902,9 @@ footer a {
 }
 
 
-/* =========================
+/* ==================================================
    MOBILE
-========================= */
+================================================== */
 
 @media (max-width: 600px) {
 
@@ -702,42 +938,49 @@ footer a {
         font-size: 12px;
     }
 
-    /* Floating buttons on phone */
-
-    .floating-actions {
-        top: auto;
-        bottom: 18px;
+    .floating-menu {
         right: 12px;
-        gap: 9px;
+        bottom: 15px;
     }
 
-    .floating-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 21px;
+    .floating-main {
+        width: 52px;
+        height: 52px;
+        font-size: 23px;
     }
 
-    .floating-label {
-        display: none;
+    .floating-option {
+        padding: 7px 10px 7px 7px;
+        font-size: 13px;
     }
 
-    .chat-window {
-        right: 10px;
-        bottom: 75px;
-        width: calc(100vw - 20px);
+    .floating-option-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .popup-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .popup {
         max-width: none;
+        width: 100%;
+        max-height: 92vh;
+        border-radius: 16px 16px 0 0;
     }
 
-    .chat-body {
-        height: 250px;
+    .popup-body {
+        max-height: calc(92vh - 65px);
     }
 
 }
 
 
-/* =========================
+/* ==================================================
    SMALL PHONES
-========================= */
+================================================== */
 
 @media (max-width: 380px) {
 
@@ -745,34 +988,22 @@ footer a {
         grid-template-columns: 1fr;
     }
 
-    .floating-actions {
+    .floating-menu {
         right: 9px;
-        bottom: 12px;
-    }
-
-    .floating-btn {
-        width: 46px;
-        height: 46px;
     }
 
 }
 
 
-/* =========================
+/* ==================================================
    LARGE PC
-========================= */
+================================================== */
 
 @media (min-width: 1200px) {
 
-    .floating-actions {
+    .floating-menu {
         right: 25px;
-        top: 22px;
-    }
-
-    .floating-btn {
-        width: 54px;
-        height: 54px;
-        font-size: 24px;
+        bottom: 25px;
     }
 
 }
@@ -784,219 +1015,601 @@ footer a {
 
 <header>
 
-    <!-- AGAPE Hardware & Construction Supplies Logo Graphic -->
+<svg
+    class="brand-svg"
+    viewBox="0 0 450 65"
+    xmlns="http://www.w3.org/2000/svg"
+>
 
-    <svg
-        class="brand-svg"
-        viewBox="0 0 450 65"
-        xmlns="http://www.w3.org/2000/svg"
-    >
+<path
+    d="M5,55 L32,5 L59,55 L47,55 L32,26 L17,55 Z"
+    fill="#1d4ed8"
+/>
 
-        <!-- Blue A with house roof icon -->
+<path
+    d="M22,38 L32,20 L42,38 Z"
+    fill="#1d4ed8"
+/>
 
-        <path
-            d="M5,55 L32,5 L59,55 L47,55 L32,26 L17,55 Z"
-            fill="#1d4ed8"
-        />
+<path
+    d="M22,42 L22,55 L28,55 L28,42 Z"
+    fill="#ffffff"
+/>
 
-        <path
-            d="M22,38 L32,20 L42,38 Z"
-            fill="#1d4ed8"
-        />
+<path
+    d="M36,42 L36,55 L42,55 L42,42 Z"
+    fill="#ffffff"
+/>
 
-        <path
-            d="M22,42 L22,55 L28,55 L28,42 Z"
-            fill="#ffffff"
-        />
+<path
+    d="M68,55 L68,15 L108,15 L108,25 L80,25 L80,45 L105,45 L105,38 L95,38 L95,30 L115,30 L115,55 Z"
+    fill="#ffffff"
+/>
 
-        <path
-            d="M36,42 L36,55 L42,55 L42,42 Z"
-            fill="#ffffff"
-        />
+<path
+    d="M125,55 L155,5 L185,55 L173,55 L155,22 L137,55 Z"
+    fill="#dc2626"
+/>
 
-        <!-- White G -->
+<path
+    d="M195,55 L195,15 L230,15 C242,15 248,22 248,30 C248,38 242,45 230,45 L207,45 L207,55 Z M207,25 L207,35 L228,35 C233,35 236,32 236,30 C236,28 233,25 228,25 Z"
+    fill="#ffffff"
+/>
 
-        <path
-            d="M68,55 L68,15 L108,15 L108,25 L80,25 L80,45 L105,45 L105,38 L95,38 L95,30 L115,30 L115,55 Z"
-            fill="#ffffff"
-        />
+<path
+    d="M255,55 L255,15 L295,15 L295,25 L267,25 L267,31 L290,31 L290,41 L267,41 L267,45 L295,45 L295,55 Z"
+    fill="#1d4ed8"
+/>
 
-        <!-- Red A -->
+<text
+    x="5"
+    y="63"
+    font-family="Arial, sans-serif"
+    font-weight="bold"
+    font-size="8.5"
+    fill="#cccccc"
+    letter-spacing="1.5"
+>
+HARDWARE & CONSTRUCTION SUPPLIES
+</text>
 
-        <path
-            d="M125,55 L155,5 L185,55 L173,55 L155,22 L137,55 Z"
-            fill="#dc2626"
-        />
+</svg>
 
-        <!-- White P -->
-
-        <path
-            d="M195,55 L195,15 L230,15 C242,15 248,22 248,30 C248,38 242,45 230,45 L207,45 L207,55 Z M207,25 L207,35 L228,35 C233,35 236,32 236,30 C236,28 233,25 228,25 Z"
-            fill="#ffffff"
-        />
-
-        <!-- Blue E -->
-
-        <path
-            d="M255,55 L255,15 L295,15 L295,25 L267,25 L267,31 L290,31 L290,41 L267,41 L267,45 L295,45 L295,55 Z"
-            fill="#1d4ed8"
-        />
-
-        <!-- Subtitle -->
-
-        <text
-            x="5"
-            y="63"
-            font-family="Arial, sans-serif"
-            font-weight="bold"
-            font-size="8.5"
-            fill="#cccccc"
-            letter-spacing="1.5"
-        >
-            HARDWARE & CONSTRUCTION SUPPLIES
-        </text>
-
-    </svg>
-
-    <p>
-        Hardware • Construction • Electrical • Plumbing • Paint • Tools
-    </p>
+<p>
+Hardware • Construction • Electrical • Plumbing • Paint • Tools
+</p>
 
 </header>
 
 
-<!-- =========================
-     FLOATING CUSTOMER ACTIONS
-========================= -->
+<!-- ==================================================
+     FLOATING CUSTOMER MENU
+================================================== -->
 
-<div class="floating-actions">
+<div class="floating-menu">
 
-    <!-- CART -->
-
-    <button
-        type="button"
-        class="floating-btn floating-cart"
-        onclick="goToCart()"
-        aria-label="Open cart"
+    <div
+        id="floatingOptions"
+        class="floating-options"
     >
 
-        🛒
-
-        <span
-            id="cartBadge"
-            class="cart-badge"
+        <button
+            class="floating-option"
+            onclick="openCartPopup()"
         >
-            0
-        </span>
 
-        <span class="floating-label">
+            <span class="floating-option-icon cart-icon">
+                🛒
+            </span>
+
             Cart
-        </span>
 
-    </button>
+            <span
+                id="floatingCartBadge"
+                class="cart-badge"
+                style="position:static;margin-left:2px;"
+            >
+                0
+            </span>
 
-
-    <!-- CHAT -->
-
-    <button
-        type="button"
-        class="floating-btn floating-chat"
-        onclick="toggleChat()"
-        aria-label="Open customer chat"
-    >
-
-        💬
-
-        <span class="floating-label">
-            Customer Chat
-        </span>
-
-    </button>
+        </button>
 
 
-    <!-- TRACK ORDER -->
+        <button
+            class="floating-option"
+            onclick="openTrackPopup()"
+        >
 
-    <button
-        type="button"
-        class="floating-btn floating-track"
-        onclick="goToTracking()"
-        aria-label="Track order"
-    >
+            <span class="floating-option-icon track-icon">
+                📦
+            </span>
 
-        📦
-
-        <span class="floating-label">
             Track Order
-        </span>
 
+        </button>
+
+
+        <button
+            class="floating-option"
+            onclick="openServicePopup()"
+        >
+
+            <span class="floating-option-icon service-icon">
+                💬
+            </span>
+
+            Customer Service
+
+        </button>
+
+    </div>
+
+
+    <button
+        class="floating-main"
+        id="floatingMainButton"
+        onclick="toggleFloatingMenu()"
+        aria-label="Customer menu"
+    >
+        ☰
     </button>
 
 </div>
 
 
-<!-- =========================
-     CHAT WINDOW
-========================= -->
+<!-- ==================================================
+     CART POPUP
+================================================== -->
 
 <div
-    id="chatWindow"
-    class="chat-window"
+    id="cartPopup"
+    class="popup-overlay"
+    onclick="closePopupOutside(event, 'cartPopup')"
 >
 
-    <div class="chat-header">
+    <div class="popup">
 
-        <strong>
-            💬 AGAPE Customer Chat
-        </strong>
+        <div class="popup-header">
 
-        <button
-            type="button"
-            class="chat-close"
-            onclick="toggleChat()"
-            aria-label="Close chat"
-        >
-            ×
-        </button>
+            <h2>
+                🛒 My Cart
+            </h2>
 
-    </div>
+            <button
+                class="popup-close"
+                onclick="closePopup('cartPopup')"
+            >
+                ×
+            </button>
+
+        </div>
 
 
-    <div
-        id="chatBody"
-        class="chat-body"
-    >
+        <div class="popup-body">
 
-        <div class="chat-message seller">
+            <div
+                id="popupCartItems"
+                class="cart-popup-items"
+            ></div>
 
-            Hello! 👋<br>
-            Welcome to AGAPE Hardware & Supplies.
-            How can we help you?
+
+            <div class="popup-total">
+
+                <span>
+                    Total
+                </span>
+
+                <span>
+                    ₱<span id="popupCartTotal">
+                        0.00
+                    </span>
+                </span>
+
+            </div>
+
+
+            <button
+                id="popupCheckoutButton"
+                class="popup-checkout"
+                onclick="checkoutFromPopup()"
+                disabled
+            >
+                PROCEED TO CHECKOUT
+            </button>
 
         </div>
 
     </div>
 
+</div>
 
-    <form
-        class="chat-input-area"
-        onsubmit="sendChatMessage(event)"
-    >
 
-        <input
-            type="text"
-            id="chatInput"
-            placeholder="Type your message..."
-            autocomplete="off"
-        >
+<!-- ==================================================
+     TRACK ORDER POPUP
+================================================== -->
 
-        <button
-            type="submit"
-            class="chat-send"
-        >
-            Send
-        </button>
+<div
+    id="trackPopup"
+    class="popup-overlay"
+    onclick="closePopupOutside(event, 'trackPopup')"
+>
 
-    </form>
+    <div class="popup">
+
+        <div class="popup-header">
+
+            <h2>
+                📦 Track My Order
+            </h2>
+
+            <button
+                class="popup-close"
+                onclick="closePopup('trackPopup')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="popup-body">
+
+            <p class="track-popup-description">
+                Enter your Order Number and Mobile Number
+                to check your order status.
+            </p>
+
+
+            <div class="popup-form-group">
+
+                <label>
+                    Order Number
+                </label>
+
+                <input
+                    type="number"
+                    id="popupTrackOrderId"
+                    placeholder="Example: 1001"
+                >
+
+            </div>
+
+
+            <div class="popup-form-group">
+
+                <label>
+                    Mobile Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="popupTrackPhone"
+                    placeholder="09XXXXXXXXX"
+                >
+
+            </div>
+
+
+            <button
+                id="popupTrackButton"
+                class="popup-track-btn"
+                onclick="trackOrderPopup()"
+            >
+                CHECK ORDER STATUS
+            </button>
+
+
+            <div
+                id="popupTrackError"
+                class="popup-track-error"
+            ></div>
+
+
+            <div
+                id="popupTrackResult"
+                class="popup-track-result"
+            >
+
+                <div class="popup-order-number">
+                    Order #
+                    <span id="popupTrackedOrderNumber"></span>
+                </div>
+
+
+                <span
+                    id="popupTrackedStatus"
+                    class="popup-status"
+                ></span>
+
+
+                <div class="popup-track-row">
+
+                    <span>
+                        Order Type
+                    </span>
+
+                    <strong id="popupTrackedFulfillment"></strong>
+
+                </div>
+
+
+                <div class="popup-track-row">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₱<span id="popupTrackedTotal"></span>
+                    </strong>
+
+                </div>
+
+
+                <div class="popup-track-row">
+
+                    <span>
+                        Date
+                    </span>
+
+                    <strong id="popupTrackedDate"></strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     CUSTOMER SERVICE POPUP
+================================================== -->
+
+<div
+    id="servicePopup"
+    class="popup-overlay"
+    onclick="closePopupOutside(event, 'servicePopup')"
+>
+
+    <div class="popup">
+
+        <div class="popup-header">
+
+            <h2>
+                💬 Customer Service
+            </h2>
+
+            <button
+                class="popup-close"
+                onclick="closePopup('servicePopup')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="popup-body">
+
+            <div class="service-welcome">
+
+                <div class="service-big-icon">
+                    👋
+                </div>
+
+                <h3>
+                    How can we help?
+                </h3>
+
+                <p>
+                    Select what you need assistance with.
+                </p>
+
+            </div>
+
+
+            <button
+                class="service-option"
+                onclick="showServiceMessage('order')"
+            >
+
+                <span>
+                    📦
+                </span>
+
+                Order Concern
+
+            </button>
+
+
+            <button
+                class="service-option"
+                onclick="showServiceMessage('delivery')"
+            >
+
+                <span>
+                    🚚
+                </span>
+
+                Delivery Question
+
+            </button>
+
+
+            <button
+                class="service-option"
+                onclick="showServiceMessage('product')"
+            >
+
+                <span>
+                    🛠️
+                </span>
+
+                Product Inquiry
+
+            </button>
+
+
+            <button
+                class="service-option"
+                onclick="showServiceMessage('pickup')"
+            >
+
+                <span>
+                    🏪
+                </span>
+
+                Store Pickup
+
+            </button>
+
+
+            <div
+                id="serviceMessage"
+                class="service-message"
+            >
+                Select a concern above and we'll guide you.
+            </div>
+
+
+            <button
+                class="service-chat-btn"
+                onclick="openChatFromService()"
+            >
+                💬 MESSAGE AGAPE
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     CHAT POPUP
+================================================== -->
+
+<div
+    id="chatPopup"
+    class="popup-overlay"
+    onclick="closePopupOutside(event, 'chatPopup')"
+>
+
+    <div class="popup">
+
+        <div class="popup-header">
+
+            <h2>
+                💬 Message AGAPE
+            </h2>
+
+            <button
+                class="popup-close"
+                onclick="closePopup('chatPopup')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="popup-body">
+
+            <div
+                id="chatBody"
+                style="
+                    height:260px;
+                    overflow-y:auto;
+                    background:#f5f5f5;
+                    padding:12px;
+                    border-radius:8px;
+                "
+            >
+
+                <div
+                    class="chat-message seller"
+                    style="
+                        background:white;
+                        border:1px solid #ddd;
+                        padding:10px;
+                        border-radius:10px;
+                        max-width:85%;
+                        margin-bottom:10px;
+                        font-size:13px;
+                    "
+                >
+
+                    Hello! 👋<br><br>
+
+                    Welcome to AGAPE Hardware & Supplies.
+                    How can we help you?
+
+                </div>
+
+            </div>
+
+
+            <form
+                onsubmit="sendChatMessage(event)"
+                style="
+                    display:flex;
+                    gap:7px;
+                    margin-top:10px;
+                "
+            >
+
+                <input
+                    type="text"
+                    id="chatInput"
+                    placeholder="Type your message..."
+                    autocomplete="off"
+                    style="
+                        flex:1;
+                        min-width:0;
+                        padding:11px;
+                        border:1px solid #ccc;
+                        border-radius:7px;
+                    "
+                >
+
+                <button
+                    type="submit"
+                    style="
+                        border:none;
+                        background:#1d4ed8;
+                        color:white;
+                        padding:0 14px;
+                        border-radius:7px;
+                        font-weight:bold;
+                    "
+                >
+                    Send
+                </button>
+
+            </form>
+
+
+            <p
+                style="
+                    font-size:11px;
+                    color:#888;
+                    text-align:center;
+                    margin-bottom:0;
+                "
+            >
+                Seller messaging will be connected to the
+                Seller Web chat system.
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -1004,450 +1617,452 @@ footer a {
 <div class="container">
 
 
-    <!-- SEARCH -->
+<!-- ==================================================
+     SEARCH
+================================================== -->
+
+<div class="search-box">
+
+<input
+    type="text"
+    id="searchInput"
+    placeholder="Search products..."
+    oninput="filterProducts()"
+>
 
-    <div class="search-box">
+</div>
+
+
+<!-- ==================================================
+     CATEGORIES
+================================================== -->
+
+<div class="categories">
+
+<button
+    class="active"
+    onclick="setCategory('All', this)"
+>
+All
+</button>
 
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search products..."
-            oninput="filterProducts()"
-        >
+<button
+    onclick="setCategory('Cement', this)"
+>
+Cement
+</button>
+
+<button
+    onclick="setCategory('Steel', this)"
+>
+Steel
+</button>
 
-    </div>
+<button
+    onclick="setCategory('Electrical', this)"
+>
+Electrical
+</button>
 
+<button
+    onclick="setCategory('Plumbing', this)"
+>
+Plumbing
+</button>
 
-    <!-- CATEGORIES -->
+<button
+    onclick="setCategory('Paint', this)"
+>
+Paint
+</button>
 
-    <div class="categories">
+<button
+    onclick="setCategory('Tools', this)"
+>
+Tools
+</button>
 
-        <button
-            class="active"
-            onclick="setCategory('All', this)"
-        >
-            All
-        </button>
+<button
+    onclick="setCategory('Others', this)"
+>
+Others
+</button>
 
-        <button
-            onclick="setCategory('Cement', this)"
-        >
-            Cement
-        </button>
+</div>
 
-        <button
-            onclick="setCategory('Steel', this)"
-        >
-            Steel
-        </button>
 
-        <button
-            onclick="setCategory('Electrical', this)"
-        >
-            Electrical
-        </button>
+<div
+    id="status"
+    class="status"
+>
+Loading products...
+</div>
 
-        <button
-            onclick="setCategory('Plumbing', this)"
-        >
-            Plumbing
-        </button>
 
-        <button
-            onclick="setCategory('Paint', this)"
-        >
-            Paint
-        </button>
+<div
+    id="products"
+    class="products"
+></div>
 
-        <button
-            onclick="setCategory('Tools', this)"
-        >
-            Tools
-        </button>
 
-        <button
-            onclick="setCategory('Others', this)"
-        >
-            Others
-        </button>
+<!-- ==================================================
+     EXISTING CART SECTION
+================================================== -->
 
-    </div>
+<div
+    id="cartSection"
+    class="cart-section"
+>
 
+<h2>
+🛒 Your Cart
+</h2>
 
-    <div
-        id="status"
-        class="status"
-    >
-        Loading products...
-    </div>
+<div id="cartItems">
+Your cart is empty.
+</div>
 
+<div class="cart-total">
 
-    <div
-        id="products"
-        class="products"
-    ></div>
+Total:
+₱<span id="cartTotal">0.00</span>
 
+</div>
 
-    <!-- CART -->
+<button
+    id="checkoutButton"
+    class="checkout-btn"
+    onclick="openCheckout()"
+    disabled
+>
+Proceed to Checkout
+</button>
 
-    <div
-        id="cartSection"
-        class="cart-section"
-    >
+</div>
 
-        <h2>
-            🛒 Your Cart
-        </h2>
 
+<!-- ==================================================
+     CHECKOUT
+================================================== -->
 
-        <div id="cartItems">
-            Your cart is empty.
-        </div>
+<div
+    id="checkout"
+    class="checkout"
+>
 
+<h2>
+Checkout
+</h2>
 
-        <div class="cart-total">
 
-            Total:
-            ₱<span id="cartTotal">0.00</span>
+<div class="form-group">
 
-        </div>
+<label>
+Customer Name
+</label>
 
+<input
+    type="text"
+    id="customerName"
+    placeholder="Enter your full name"
+>
 
-        <button
-            id="checkoutButton"
-            class="checkout-btn"
-            onclick="openCheckout()"
-            disabled
-        >
-            Proceed to Checkout
-        </button>
+</div>
 
-    </div>
 
+<div class="form-group">
 
-    <!-- CHECKOUT -->
+<label>
+Mobile Number
+</label>
 
-    <div
-        id="checkout"
-        class="checkout"
-    >
+<input
+    type="tel"
+    id="customerPhone"
+    placeholder="09XXXXXXXXX"
+>
 
-        <h2>
-            Checkout
-        </h2>
+</div>
 
 
-        <div class="form-group">
+<div class="form-group">
 
-            <label>
-                Customer Name
-            </label>
+<label>
+Order Type
+</label>
 
-            <input
-                type="text"
-                id="customerName"
-                placeholder="Enter your full name"
-            >
+<select
+    id="fulfillment"
+    onchange="updateAddressLabel()"
+>
 
-        </div>
+<option value="Delivery">
+Delivery
+</option>
 
+<option value="Store Pickup">
+Store Pickup
+</option>
 
-        <div class="form-group">
+</select>
 
-            <label>
-                Mobile Number
-            </label>
+</div>
 
-            <input
-                type="tel"
-                id="customerPhone"
-                placeholder="09XXXXXXXXX"
-            >
 
-        </div>
+<div class="form-group">
 
+<label id="addressLabel">
+Delivery Address
+</label>
 
-        <div class="form-group">
+<textarea
+    id="customerAddress"
+    placeholder="Enter complete delivery address"
+></textarea>
 
-            <label>
-                Order Type
-            </label>
+</div>
 
-            <select
-                id="fulfillment"
-                onchange="updateAddressLabel()"
-            >
 
-                <option value="Delivery">
-                    Delivery
-                </option>
+<div class="form-group">
 
-                <option value="Store Pickup">
-                    Store Pickup
-                </option>
+<label>
+Notes / Special Instructions
+</label>
 
-            </select>
+<textarea
+    id="orderNotes"
+    placeholder="Optional"
+></textarea>
 
-        </div>
+</div>
 
 
-        <div class="form-group">
+<div class="checkout-summary">
 
-            <label id="addressLabel">
-                Delivery Address
-            </label>
+<strong>
+Order Summary
+</strong>
 
-            <textarea
-                id="customerAddress"
-                placeholder="Enter complete delivery address"
-            ></textarea>
+<div id="checkoutSummary"></div>
 
-        </div>
+<hr>
 
+<strong>
 
-        <div class="form-group">
+Total:
+₱<span id="checkoutTotal">
+0.00
+</span>
 
-            <label>
-                Notes / Special Instructions
-            </label>
+</strong>
 
-            <textarea
-                id="orderNotes"
-                placeholder="Optional"
-            ></textarea>
+</div>
 
-        </div>
 
+<button
+    id="placeOrderButton"
+    class="place-order-btn"
+    onclick="placeOrder()"
+>
+PLACE ORDER
+</button>
 
-        <div class="checkout-summary">
 
-            <strong>
-                Order Summary
-            </strong>
+<button
+    class="cancel-btn"
+    onclick="closeCheckout()"
+>
+Cancel
+</button>
 
-            <div id="checkoutSummary"></div>
+</div>
 
-            <hr>
 
-            <strong>
+<!-- ==================================================
+     SUCCESS
+================================================== -->
 
-                Total:
-                ₱<span id="checkoutTotal">
-                    0.00
-                </span>
+<div
+    id="success"
+    class="success"
+>
 
-            </strong>
+<h2>
+Order Placed Successfully!
+</h2>
 
-        </div>
+<p>
+Thank you for ordering from
+AGAPE HARDWARE AND SUPPLIES.
+</p>
 
+<p>
+Your order number is:
+</p>
 
-        <button
-            id="placeOrderButton"
-            class="place-order-btn"
-            onclick="placeOrder()"
-        >
-            PLACE ORDER
-        </button>
+<div
+    id="orderNumber"
+    class="order-number"
+></div>
 
+<p>
+Please keep this order number for your reference.
+</p>
 
-        <button
-            class="cancel-btn"
-            onclick="closeCheckout()"
-        >
-            Cancel
-        </button>
+<button
+    class="checkout-btn"
+    onclick="location.reload()"
+>
+Continue Shopping
+</button>
 
-    </div>
+</div>
 
 
-    <!-- SUCCESS -->
+<!-- ==================================================
+     EXISTING TRACK SECTION
+================================================== -->
 
-    <div
-        id="success"
-        class="success"
-    >
+<div
+    id="trackSection"
+    class="track-section"
+>
 
-        <h2>
-            Order Placed Successfully!
-        </h2>
+<h2>
+📦 Track My Order
+</h2>
 
-        <p>
-            Thank you for ordering from
-            AGAPE HARDWARE AND SUPPLIES.
-        </p>
+<p>
+Enter your Order Number and Mobile Number
+to check your order status.
+</p>
 
-        <p>
-            Your order number is:
-        </p>
+<div class="track-form">
 
+<input
+    type="number"
+    id="trackOrderId"
+    placeholder="Order Number"
+>
 
-        <div
-            id="orderNumber"
-            class="order-number"
-        ></div>
+<input
+    type="tel"
+    id="trackPhone"
+    placeholder="09XXXXXXXXX"
+>
 
+<button
+    class="track-btn"
+    id="trackButton"
+    onclick="trackOrder()"
+>
+CHECK ORDER STATUS
+</button>
 
-        <p>
-            Please keep this order number for your reference.
-        </p>
+</div>
 
 
-        <button
-            class="checkout-btn"
-            onclick="location.reload()"
-        >
-            Continue Shopping
-        </button>
+<div
+    id="trackError"
+    class="track-error"
+></div>
 
-    </div>
 
+<div
+    id="trackResult"
+    class="track-result"
+>
 
-    <!-- TRACK ORDER -->
+<div class="track-order-number">
 
-    <div
-        id="trackSection"
-        class="track-section"
-    >
+Order #
+<span id="trackedOrderNumber"></span>
 
-        <h2>
-            📦 Track My Order
-        </h2>
+</div>
 
 
-        <p>
-            Enter your Order Number and Mobile Number
-            to check your order status.
-        </p>
+<div>
 
+Status:
 
-        <div class="track-form">
+<span
+    id="trackedStatus"
+    class="track-status"
+></span>
 
-            <input
-                type="number"
-                id="trackOrderId"
-                placeholder="Order Number"
-            >
+</div>
 
 
-            <input
-                type="tel"
-                id="trackPhone"
-                placeholder="09XXXXXXXXX"
-            >
+<div class="track-row">
 
+<span>
+Order Type
+</span>
 
-            <button
-                class="track-btn"
-                id="trackButton"
-                onclick="trackOrder()"
-            >
-                CHECK ORDER STATUS
-            </button>
+<strong id="trackedFulfillment"></strong>
 
-        </div>
+</div>
 
 
-        <div
-            id="trackError"
-            class="track-error"
-        ></div>
+<div class="track-row">
 
+<span>
+Total
+</span>
 
-        <div
-            id="trackResult"
-            class="track-result"
-        >
+<strong>
+₱<span id="trackedTotal"></span>
+</strong>
 
-            <div class="track-order-number">
+</div>
 
-                Order #
-                <span id="trackedOrderNumber"></span>
 
-            </div>
+<div class="track-row">
 
+<span>
+Date
+</span>
 
-            <div>
+<strong id="trackedDate"></strong>
 
-                Status:
+</div>
 
-                <span
-                    id="trackedStatus"
-                    class="track-status"
-                ></span>
+</div>
 
-            </div>
-
-
-            <div class="track-row">
-
-                <span>
-                    Order Type
-                </span>
-
-                <strong id="trackedFulfillment"></strong>
-
-            </div>
-
-
-            <div class="track-row">
-
-                <span>
-                    Total
-                </span>
-
-                <strong>
-                    ₱<span id="trackedTotal"></span>
-                </strong>
-
-            </div>
-
-
-            <div class="track-row">
-
-                <span>
-                    Date
-                </span>
-
-                <strong id="trackedDate"></strong>
-
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 
 <footer>
 
-    AGAPE HARDWARE AND SUPPLIES
+AGAPE HARDWARE AND SUPPLIES
 
-    <br><br>
+<br><br>
 
-    <a href="seller.html">
-        Seller / Admin
-    </a>
+<a href="seller.html">
+Seller / Admin
+</a>
 
 </footer>
 
 
 <script>
 
-/* =========================
+/* ==================================================
    SUPABASE
-========================= */
+================================================== */
 
 const SUPABASE_URL =
-    "https://djeqfrifhqcpfxccotdl.supabase.co";
+"https://djeqfrifhqcpfxccotdl.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
+"sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
 
 
-/* =========================
+/* ==================================================
    VARIABLES
-========================= */
+================================================== */
 
 let products = [];
 
@@ -1456,14 +2071,697 @@ let cart = [];
 let selectedCategory = "All";
 
 
-/* =========================
+/* ==================================================
+   FLOATING MENU
+================================================== */
+
+function toggleFloatingMenu() {
+
+    const menu =
+        document.getElementById(
+            "floatingOptions"
+        );
+
+    const button =
+        document.getElementById(
+            "floatingMainButton"
+        );
+
+    menu.classList.toggle("show");
+
+    if (
+        menu.classList.contains("show")
+    ) {
+
+        button.textContent = "×";
+
+    } else {
+
+        button.textContent = "☰";
+
+    }
+
+}
+
+
+function closeFloatingMenu() {
+
+    const menu =
+        document.getElementById(
+            "floatingOptions"
+        );
+
+    const button =
+        document.getElementById(
+            "floatingMainButton"
+        );
+
+    menu.classList.remove("show");
+
+    button.textContent = "☰";
+
+}
+
+
+/* ==================================================
+   POPUP FUNCTIONS
+================================================== */
+
+function openPopup(id) {
+
+    document
+        .getElementById(id)
+        .classList.add("show");
+
+    document.body.classList.add(
+        "popup-open"
+    );
+
+}
+
+
+function closePopup(id) {
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+
+    document.body.classList.remove(
+        "popup-open"
+    );
+
+}
+
+
+function closePopupOutside(event, id) {
+
+    if (
+        event.target.id === id
+    ) {
+
+        closePopup(id);
+
+    }
+
+}
+
+
+/* ==================================================
+   CART POPUP
+================================================== */
+
+function openCartPopup() {
+
+    closeFloatingMenu();
+
+    updateCartPopup();
+
+    openPopup("cartPopup");
+
+}
+
+
+function updateCartPopup() {
+
+    const container =
+        document.getElementById(
+            "popupCartItems"
+        );
+
+    const totalElement =
+        document.getElementById(
+            "popupCartTotal"
+        );
+
+    const checkoutButton =
+        document.getElementById(
+            "popupCheckoutButton"
+        );
+
+
+    if (cart.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="cart-popup-empty">
+
+                <div style="font-size:40px;">
+                    🛒
+                </div>
+
+                <p>
+                    Your cart is empty.
+                </p>
+
+                <small>
+                    Add products to your cart
+                    to see them here.
+                </small>
+
+            </div>
+
+        `;
+
+        totalElement.textContent =
+            "0.00";
+
+        checkoutButton.disabled =
+            true;
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+
+    container.innerHTML =
+        cart.map(item => {
+
+            const subtotal =
+                item.price *
+                item.quantity;
+
+            total += subtotal;
+
+
+            return `
+
+                <div class="popup-cart-item">
+
+                    <div class="popup-cart-name">
+                        ${escapeHtml(item.name)}
+                    </div>
+
+                    <div class="popup-cart-price">
+
+                        ₱${item.price.toLocaleString(
+                            "en-PH",
+                            {
+                                minimumFractionDigits: 2
+                            }
+                        )}
+
+                        / ${escapeHtml(item.unit)}
+
+                    </div>
+
+
+                    <div class="popup-cart-controls">
+
+                        <button
+                            class="popup-qty"
+                            onclick="decreaseQuantity(${item.id}); updateCartPopup()"
+                        >
+                            −
+                        </button>
+
+                        <strong>
+                            ${item.quantity}
+                        </strong>
+
+                        <button
+                            class="popup-qty"
+                            onclick="increaseQuantity(${item.id}); updateCartPopup()"
+                        >
+                            +
+                        </button>
+
+                        <span style="
+                            margin-left:5px;
+                            font-weight:bold;
+                        ">
+                            ₱${subtotal.toLocaleString(
+                                "en-PH",
+                                {
+                                    minimumFractionDigits: 2
+                                }
+                            )}
+                        </span>
+
+                        <button
+                            class="popup-remove"
+                            onclick="removeFromCart(${item.id}); updateCartPopup()"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    totalElement.textContent =
+        total.toLocaleString(
+            "en-PH",
+            {
+                minimumFractionDigits: 2
+            }
+        );
+
+
+    checkoutButton.disabled =
+        false;
+
+}
+
+
+function checkoutFromPopup() {
+
+    if (cart.length === 0) {
+
+        return;
+
+    }
+
+    closePopup("cartPopup");
+
+    openCheckout();
+
+}
+
+
+/* ==================================================
+   TRACK POPUP
+================================================== */
+
+function openTrackPopup() {
+
+    closeFloatingMenu();
+
+    const oldId =
+        document.getElementById(
+            "trackOrderId"
+        ).value;
+
+    const oldPhone =
+        document.getElementById(
+            "trackPhone"
+        ).value;
+
+    if (oldId) {
+
+        document.getElementById(
+            "popupTrackOrderId"
+        ).value =
+            oldId;
+
+    }
+
+    if (oldPhone) {
+
+        document.getElementById(
+            "popupTrackPhone"
+        ).value =
+            oldPhone;
+
+    }
+
+    openPopup("trackPopup");
+
+}
+
+
+async function trackOrderPopup() {
+
+    const orderId =
+        document
+        .getElementById(
+            "popupTrackOrderId"
+        )
+        .value
+        .trim();
+
+    const phone =
+        document
+        .getElementById(
+            "popupTrackPhone"
+        )
+        .value
+        .trim();
+
+    const button =
+        document.getElementById(
+            "popupTrackButton"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "popupTrackError"
+        );
+
+    const result =
+        document.getElementById(
+            "popupTrackResult"
+        );
+
+
+    errorBox.style.display =
+        "none";
+
+    result.style.display =
+        "none";
+
+
+    if (!orderId) {
+
+        errorBox.textContent =
+            "Please enter your Order Number.";
+
+        errorBox.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    if (!phone) {
+
+        errorBox.textContent =
+            "Please enter your Mobile Number.";
+
+        errorBox.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "CHECKING...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/rest/v1/rpc/track_order",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " +
+                            SUPABASE_KEY,
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            p_order_id:
+                                Number(orderId),
+
+                            p_phone:
+                                phone
+
+                        })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to check order."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            errorBox.textContent =
+                "Order not found. Please check your Order Number and Mobile Number.";
+
+            errorBox.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        const order =
+            data[0];
+
+
+        document.getElementById(
+            "popupTrackedOrderNumber"
+        ).textContent =
+            order.order_id;
+
+
+        document.getElementById(
+            "popupTrackedStatus"
+        ).textContent =
+            order.status;
+
+
+        document.getElementById(
+            "popupTrackedFulfillment"
+        ).textContent =
+            order.fulfillment;
+
+
+        document.getElementById(
+            "popupTrackedTotal"
+        ).textContent =
+            Number(
+                order.total || 0
+            ).toLocaleString(
+                "en-PH",
+                {
+                    minimumFractionDigits: 2
+                }
+            );
+
+
+        document.getElementById(
+            "popupTrackedDate"
+        ).textContent =
+            new Date(
+                order.created_at
+            ).toLocaleString(
+                "en-PH",
+                {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }
+            );
+
+
+        result.style.display =
+            "block";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        errorBox.textContent =
+            "There was a problem checking your order. Please try again.";
+
+        errorBox.style.display =
+            "block";
+
+    } finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "CHECK ORDER STATUS";
+
+    }
+
+}
+
+
+/* ==================================================
+   CUSTOMER SERVICE
+================================================== */
+
+function openServicePopup() {
+
+    closeFloatingMenu();
+
+    openPopup(
+        "servicePopup"
+    );
+
+}
+
+
+function showServiceMessage(type) {
+
+    const box =
+        document.getElementById(
+            "serviceMessage"
+        );
+
+
+    const messages = {
+
+        order:
+            "For an order concern, please prepare your Order Number and Mobile Number. You can also use Track My Order.",
+
+        delivery:
+            "For delivery questions, please tell us your Order Number and delivery location when contacting AGAPE.",
+
+        product:
+            "For product inquiries, please provide the product name, brand, size or specification you are looking for.",
+
+        pickup:
+            "For Store Pickup, please have your Order Number ready when you visit AGAPE."
+
+    };
+
+
+    box.textContent =
+        messages[type] ||
+        "Please contact AGAPE for assistance.";
+
+}
+
+
+function openChatFromService() {
+
+    closePopup(
+        "servicePopup"
+    );
+
+    openPopup(
+        "chatPopup"
+    );
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById(
+                "chatInput"
+            )
+            .focus();
+
+    }, 200);
+
+}
+
+
+/* ==================================================
+   CHAT
+================================================== */
+
+function sendChatMessage(event) {
+
+    event.preventDefault();
+
+
+    const input =
+        document.getElementById(
+            "chatInput"
+        );
+
+    const body =
+        document.getElementById(
+            "chatBody"
+        );
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+
+        return;
+
+    }
+
+
+    const customerMessage =
+        document.createElement(
+            "div"
+        );
+
+
+    customerMessage.style.cssText = `
+        background:#1d4ed8;
+        color:white;
+        padding:10px;
+        border-radius:10px;
+        max-width:85%;
+        margin:0 0 10px auto;
+        font-size:13px;
+    `;
+
+
+    customerMessage.textContent =
+        message;
+
+
+    body.appendChild(
+        customerMessage
+    );
+
+
+    input.value = "";
+
+
+    body.scrollTop =
+        body.scrollHeight;
+
+
+    /*
+        CUSTOMER CHAT UI IS READY.
+
+        Actual customer-to-seller messaging
+        will require a Supabase messages table
+        and Seller Web chat interface.
+    */
+
+}
+
+
+/* ==================================================
    LOAD PRODUCTS
-========================= */
+================================================== */
 
 async function loadProducts() {
 
     const status =
-        document.getElementById("status");
+        document.getElementById(
+            "status"
+        );
+
 
     try {
 
@@ -1474,16 +2772,23 @@ async function loadProducts() {
                 "?select=*" +
                 "&order=created_at.desc",
                 {
+
                     method: "GET",
 
                     headers: {
-                        "apikey": SUPABASE_KEY,
+
+                        "apikey":
+                            SUPABASE_KEY,
 
                         "Authorization":
-                            "Bearer " + SUPABASE_KEY
+                            "Bearer " +
+                            SUPABASE_KEY
+
                     }
+
                 }
             );
+
 
         if (!response.ok) {
 
@@ -1493,12 +2798,17 @@ async function loadProducts() {
 
         }
 
+
         products =
             await response.json();
 
-        status.style.display = "none";
+
+        status.style.display =
+            "none";
+
 
         displayProducts();
+
 
     } catch (error) {
 
@@ -1512,42 +2822,62 @@ async function loadProducts() {
 }
 
 
-/* =========================
+/* ==================================================
    DISPLAY PRODUCTS
-========================= */
+================================================== */
 
 function displayProducts() {
 
     const container =
-        document.getElementById("products");
+        document.getElementById(
+            "products"
+        );
+
 
     const search =
         document
-        .getElementById("searchInput")
+        .getElementById(
+            "searchInput"
+        )
         .value
         .toLowerCase()
         .trim();
+
 
     const filtered =
         products.filter(product => {
 
             const matchesCategory =
                 selectedCategory === "All" ||
-                (product.category || "Others") === selectedCategory;
+                (
+                    product.category ||
+                    "Others"
+                ) === selectedCategory;
+
 
             const text =
                 (
-                    (product.brand || "") +
-                    " " +
-                    (product.name || "") +
-                    " " +
-                    (product.description || "") +
-                    " " +
-                    (product.category || "")
-                ).toLowerCase();
+                    product.brand || ""
+                ) +
+                " " +
+                (
+                    product.name || ""
+                ) +
+                " " +
+                (
+                    product.description || ""
+                ) +
+                " " +
+                (
+                    product.category || ""
+                );
+
 
             const matchesSearch =
-                text.includes(search);
+                text
+                .toLowerCase()
+                .includes(search);
+
 
             return (
                 matchesCategory &&
@@ -1557,7 +2887,9 @@ function displayProducts() {
         });
 
 
-    if (filtered.length === 0) {
+    if (
+        filtered.length === 0
+    ) {
 
         container.innerHTML =
             `<div class="status">
@@ -1565,6 +2897,7 @@ function displayProducts() {
             </div>`;
 
         return;
+
     }
 
 
@@ -1572,14 +2905,21 @@ function displayProducts() {
         filtered.map(product => {
 
             const stock =
-                Number(product.stock || 0);
+                Number(
+                    product.stock || 0
+                );
+
 
             const price =
-                Number(product.price || 0);
+                Number(
+                    product.price || 0
+                );
+
 
             const image =
                 product.image ||
                 "https://via.placeholder.com/400x300?text=No+Image";
+
 
             return `
 
@@ -1590,36 +2930,46 @@ function displayProducts() {
                         alt="${escapeHtml(product.name || "")}"
                     >
 
+
                     <div class="product-info">
 
                         <div class="brand">
                             ${escapeHtml(product.brand || "")}
                         </div>
 
+
                         <div class="product-name">
                             ${escapeHtml(product.name || "")}
                         </div>
+
 
                         <div class="category">
                             ${escapeHtml(product.category || "Others")}
                         </div>
 
+
                         <div class="description">
                             ${escapeHtml(product.description || "")}
                         </div>
+
 
                         <div class="price">
                             ₱${price.toLocaleString(
                                 "en-PH",
                                 {
-                                    minimumFractionDigits: 2
+                                    minimumFractionDigits:2
                                 }
                             )}
                         </div>
 
+
                         <div class="unit">
-                            per ${escapeHtml(product.unit || "Piece")}
+                            per ${escapeHtml(
+                                product.unit ||
+                                "Piece"
+                            )}
                         </div>
+
 
                         <div class="stock">
 
@@ -1657,9 +3007,9 @@ function displayProducts() {
 }
 
 
-/* =========================
+/* ==================================================
    SEARCH
-========================= */
+================================================== */
 
 function filterProducts() {
 
@@ -1668,43 +3018,64 @@ function filterProducts() {
 }
 
 
-/* =========================
+/* ==================================================
    CATEGORY
-========================= */
+================================================== */
 
-function setCategory(category, button) {
+function setCategory(
+    category,
+    button
+) {
 
     selectedCategory =
         category;
 
+
     document
-        .querySelectorAll(".categories button")
+        .querySelectorAll(
+            ".categories button"
+        )
         .forEach(btn => {
-            btn.classList.remove("active");
+
+            btn.classList.remove(
+                "active"
+            );
+
         });
 
-    button.classList.add("active");
+
+    button.classList.add(
+        "active"
+    );
+
 
     displayProducts();
 
 }
 
 
-/* =========================
-   CART
-========================= */
+/* ==================================================
+   CART FUNCTIONS
+================================================== */
 
 function addToCart(productId) {
 
     const product =
         products.find(
-            p => Number(p.id) === Number(productId)
+            p =>
+                Number(p.id) ===
+                Number(productId)
         );
+
 
     if (!product) return;
 
+
     const stock =
-        Number(product.stock || 0);
+        Number(
+            product.stock || 0
+        );
+
 
     const existing =
         cart.find(
@@ -1717,7 +3088,8 @@ function addToCart(productId) {
     if (existing) {
 
         if (
-            existing.quantity >= stock
+            existing.quantity >=
+            stock
         ) {
 
             alert(
@@ -1725,31 +3097,45 @@ function addToCart(productId) {
             );
 
             return;
+
         }
 
+
         existing.quantity++;
+
 
     } else {
 
         cart.push({
 
-            id: product.id,
+            id:
+                product.id,
 
-            brand: product.brand,
+            brand:
+                product.brand,
 
-            name: product.name,
+            name:
+                product.name,
 
-            price: Number(product.price || 0),
+            price:
+                Number(
+                    product.price || 0
+                ),
 
-            unit: product.unit || "Piece",
+            unit:
+                product.unit ||
+                "Piece",
 
-            stock: stock,
+            stock:
+                stock,
 
-            quantity: 1
+            quantity:
+                1
 
         });
 
     }
+
 
     updateCart();
 
@@ -1765,7 +3151,9 @@ function increaseQuantity(id) {
                 Number(id)
         );
 
+
     if (!item) return;
+
 
     if (
         item.quantity >=
@@ -1777,9 +3165,12 @@ function increaseQuantity(id) {
         );
 
         return;
+
     }
 
+
     item.quantity++;
+
 
     updateCart();
 
@@ -1795,11 +3186,16 @@ function decreaseQuantity(id) {
                 Number(id)
         );
 
+
     if (!item) return;
+
 
     item.quantity--;
 
-    if (item.quantity <= 0) {
+
+    if (
+        item.quantity <= 0
+    ) {
 
         cart =
             cart.filter(
@@ -1809,6 +3205,7 @@ function decreaseQuantity(id) {
             );
 
     }
+
 
     updateCart();
 
@@ -1824,51 +3221,67 @@ function removeFromCart(id) {
                 Number(id)
         );
 
+
     updateCart();
 
 }
 
 
-/* =========================
+/* ==================================================
    UPDATE CART
-========================= */
+================================================== */
 
 function updateCart() {
 
     const container =
-        document.getElementById("cartItems");
+        document.getElementById(
+            "cartItems"
+        );
+
 
     const checkoutButton =
-        document.getElementById("checkoutButton");
+        document.getElementById(
+            "checkoutButton"
+        );
 
-    const cartBadge =
-        document.getElementById("cartBadge");
-
-
-    /* Update floating cart quantity */
 
     const totalItems =
         cart.reduce(
-            (sum, item) =>
-                sum + Number(item.quantity),
+            (
+                sum,
+                item
+            ) =>
+                sum +
+                Number(
+                    item.quantity
+                ),
             0
         );
 
-    cartBadge.textContent =
+
+    document.getElementById(
+        "floatingCartBadge"
+    ).textContent =
         totalItems;
 
 
-    if (cart.length === 0) {
+    if (
+        cart.length === 0
+    ) {
 
         container.innerHTML =
             "Your cart is empty.";
 
+
         document.getElementById(
             "cartTotal"
-        ).textContent = "0.00";
+        ).textContent =
+            "0.00";
+
 
         checkoutButton.disabled =
             true;
+
 
         return;
 
@@ -1885,37 +3298,47 @@ function updateCart() {
                 item.price *
                 item.quantity;
 
+
             total += subtotal;
+
 
             return `
 
                 <div class="cart-item">
 
                     <div class="cart-item-name">
-                        ${escapeHtml(item.name)}
+                        ${escapeHtml(
+                            item.name
+                        )}
                     </div>
+
 
                     <div>
                         ₱${item.price.toLocaleString(
                             "en-PH",
                             {
-                                minimumFractionDigits: 2
+                                minimumFractionDigits:2
                             }
                         )}
                         × ${item.quantity}
                     </div>
 
+
                     <div>
+
                         Subtotal:
+
                         <strong>
                             ₱${subtotal.toLocaleString(
                                 "en-PH",
                                 {
-                                    minimumFractionDigits: 2
+                                    minimumFractionDigits:2
                                 }
                             )}
                         </strong>
+
                     </div>
+
 
                     <div class="cart-controls">
 
@@ -1926,9 +3349,11 @@ function updateCart() {
                             −
                         </button>
 
+
                         <strong>
                             ${item.quantity}
                         </strong>
+
 
                         <button
                             class="qty-btn"
@@ -1936,6 +3361,7 @@ function updateCart() {
                         >
                             +
                         </button>
+
 
                         <button
                             class="remove-btn"
@@ -1959,7 +3385,7 @@ function updateCart() {
         total.toLocaleString(
             "en-PH",
             {
-                minimumFractionDigits: 2
+                minimumFractionDigits:2
             }
         );
 
@@ -1967,159 +3393,33 @@ function updateCart() {
     checkoutButton.disabled =
         false;
 
-}
 
-
-/* =========================
-   FLOATING CART
-========================= */
-
-function goToCart() {
-
-    const cartSection =
-        document.getElementById(
-            "cartSection"
-        );
-
-    if (!cartSection) return;
-
-    cartSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-
-}
-
-
-/* =========================
-   FLOATING TRACKING
-========================= */
-
-function goToTracking() {
-
-    const trackSection =
-        document.getElementById(
-            "trackSection"
-        );
-
-    if (!trackSection) return;
-
-    trackSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-
-}
-
-
-/* =========================
-   CUSTOMER CHAT
-========================= */
-
-function toggleChat() {
-
-    const chat =
-        document.getElementById(
-            "chatWindow"
-        );
+    /* Update popup if it is open */
 
     if (
-        chat.style.display === "block"
+        document
+        .getElementById(
+            "cartPopup"
+        )
+        .classList.contains("show")
     ) {
 
-        chat.style.display =
-            "none";
-
-    } else {
-
-        chat.style.display =
-            "block";
-
-        setTimeout(() => {
-
-            const input =
-                document.getElementById(
-                    "chatInput"
-                );
-
-            if (input) {
-                input.focus();
-            }
-
-        }, 100);
+        updateCartPopup();
 
     }
 
 }
 
 
-function sendChatMessage(event) {
-
-    event.preventDefault();
-
-    const input =
-        document.getElementById(
-            "chatInput"
-        );
-
-    const message =
-        input.value.trim();
-
-    if (!message) return;
-
-
-    const body =
-        document.getElementById(
-            "chatBody"
-        );
-
-
-    const customerMessage =
-        document.createElement(
-            "div"
-        );
-
-    customerMessage.className =
-        "chat-message customer";
-
-    customerMessage.textContent =
-        message;
-
-
-    body.appendChild(
-        customerMessage
-    );
-
-
-    input.value = "";
-
-
-    body.scrollTop =
-        body.scrollHeight;
-
-
-    /*
-       CHAT BACKEND NOT CONNECTED YET.
-
-       This is currently only the
-       customer-side chat interface.
-
-       Later we can connect it to
-       Supabase so the Seller Web
-       receives and replies to
-       messages.
-    */
-
-}
-
-
-/* =========================
+/* ==================================================
    CHECKOUT
-========================= */
+================================================== */
 
 function openCheckout() {
 
-    if (cart.length === 0) {
+    if (
+        cart.length === 0
+    ) {
 
         alert(
             "Your cart is empty."
@@ -2128,6 +3428,7 @@ function openCheckout() {
         return;
 
     }
+
 
     document.getElementById(
         "checkout"
@@ -2145,7 +3446,8 @@ function openCheckout() {
                 "checkout"
             ).offsetTop - 20,
 
-        behavior: "smooth"
+        behavior:
+            "smooth"
 
     });
 
@@ -2169,6 +3471,7 @@ function updateCheckoutSummary() {
             "checkoutSummary"
         );
 
+
     let total = 0;
 
 
@@ -2178,6 +3481,7 @@ function updateCheckoutSummary() {
             const subtotal =
                 item.price *
                 item.quantity;
+
 
             total += subtotal;
 
@@ -2191,15 +3495,18 @@ function updateCheckoutSummary() {
                 ">
 
                     <span>
-                        ${escapeHtml(item.name)}
+                        ${escapeHtml(
+                            item.name
+                        )}
                         × ${item.quantity}
                     </span>
+
 
                     <strong>
                         ₱${subtotal.toLocaleString(
                             "en-PH",
                             {
-                                minimumFractionDigits: 2
+                                minimumFractionDigits:2
                             }
                         )}
                     </strong>
@@ -2217,7 +3524,7 @@ function updateCheckoutSummary() {
         total.toLocaleString(
             "en-PH",
             {
-                minimumFractionDigits: 2
+                minimumFractionDigits:2
             }
         );
 
@@ -2231,10 +3538,12 @@ function updateAddressLabel() {
             "fulfillment"
         ).value;
 
+
     const label =
         document.getElementById(
             "addressLabel"
         );
+
 
     const address =
         document.getElementById(
@@ -2250,6 +3559,7 @@ function updateAddressLabel() {
         label.textContent =
             "Pickup Information";
 
+
         address.placeholder =
             "Enter any pickup details or preferred pickup time";
 
@@ -2257,6 +3567,7 @@ function updateAddressLabel() {
 
         label.textContent =
             "Delivery Address";
+
 
         address.placeholder =
             "Enter complete delivery address";
@@ -2266,38 +3577,52 @@ function updateAddressLabel() {
 }
 
 
-/* =========================
+/* ==================================================
    PLACE ORDER
-========================= */
+================================================== */
 
 async function placeOrder() {
 
     const name =
         document
-        .getElementById("customerName")
+        .getElementById(
+            "customerName"
+        )
         .value
         .trim();
+
 
     const phone =
         document
-        .getElementById("customerPhone")
+        .getElementById(
+            "customerPhone"
+        )
         .value
         .trim();
+
 
     const address =
         document
-        .getElementById("customerAddress")
+        .getElementById(
+            "customerAddress"
+        )
         .value
         .trim();
 
+
     const fulfillment =
         document
-        .getElementById("fulfillment")
+        .getElementById(
+            "fulfillment"
+        )
         .value;
+
 
     const notes =
         document
-        .getElementById("orderNotes")
+        .getElementById(
+            "orderNotes"
+        )
         .value
         .trim();
 
@@ -2337,7 +3662,9 @@ async function placeOrder() {
     }
 
 
-    if (cart.length === 0) {
+    if (
+        cart.length === 0
+    ) {
 
         alert(
             "Your cart is empty."
@@ -2353,7 +3680,10 @@ async function placeOrder() {
             "placeOrderButton"
         );
 
-    button.disabled = true;
+
+    button.disabled =
+        true;
+
 
     button.textContent =
         "PLACING ORDER...";
@@ -2370,6 +3700,7 @@ async function placeOrder() {
                 const subtotal =
                     item.price *
                     item.quantity;
+
 
                 total += subtotal;
 
@@ -2402,17 +3733,14 @@ async function placeOrder() {
             });
 
 
-        /* =========================
-           CREATE ORDER THROUGH RPC
-        ========================= */
-
         const response =
             await fetch(
                 SUPABASE_URL +
                 "/rest/v1/rpc/create_order",
                 {
 
-                    method: "POST",
+                    method:
+                        "POST",
 
                     headers: {
 
@@ -2467,16 +3795,13 @@ async function placeOrder() {
                 errorText
             );
 
+
             throw new Error(
                 "Order could not be submitted."
             );
 
         }
 
-
-        /* =========================
-           GET NEW ORDER NUMBER
-        ========================= */
 
         const orderId =
             await response.json();
@@ -2500,13 +3825,11 @@ async function placeOrder() {
             "#" + orderId;
 
 
-        /* Save phone temporarily
-           so customer can easily track */
-
         document.getElementById(
             "trackOrderId"
         ).value =
             orderId;
+
 
         document.getElementById(
             "trackPhone"
@@ -2515,6 +3838,7 @@ async function placeOrder() {
 
 
         cart = [];
+
 
         updateCart();
 
@@ -2532,12 +3856,15 @@ async function placeOrder() {
 
         console.error(error);
 
+
         alert(
             "There was a problem placing your order. Please try again."
         );
 
+
         button.disabled =
             false;
+
 
         button.textContent =
             "PLACE ORDER";
@@ -2547,21 +3874,26 @@ async function placeOrder() {
 }
 
 
-/* =========================
-   TRACK ORDER
-========================= */
+/* ==================================================
+   EXISTING TRACK ORDER
+================================================== */
 
 async function trackOrder() {
 
     const orderId =
         document
-        .getElementById("trackOrderId")
+        .getElementById(
+            "trackOrderId"
+        )
         .value
         .trim();
 
+
     const phone =
         document
-        .getElementById("trackPhone")
+        .getElementById(
+            "trackPhone"
+        )
         .value
         .trim();
 
@@ -2571,10 +3903,12 @@ async function trackOrder() {
             "trackButton"
         );
 
+
     const result =
         document.getElementById(
             "trackResult"
         );
+
 
     const errorBox =
         document.getElementById(
@@ -2584,6 +3918,7 @@ async function trackOrder() {
 
     result.style.display =
         "none";
+
 
     errorBox.style.display =
         "none";
@@ -2615,7 +3950,9 @@ async function trackOrder() {
     }
 
 
-    button.disabled = true;
+    button.disabled =
+        true;
+
 
     button.textContent =
         "CHECKING...";
@@ -2629,7 +3966,8 @@ async function trackOrder() {
                 "/rest/v1/rpc/track_order",
                 {
 
-                    method: "POST",
+                    method:
+                        "POST",
 
                     headers: {
 
@@ -2714,11 +4052,12 @@ async function trackOrder() {
         document.getElementById(
             "trackedTotal"
         ).textContent =
-            Number(order.total || 0)
-            .toLocaleString(
+            Number(
+                order.total || 0
+            ).toLocaleString(
                 "en-PH",
                 {
-                    minimumFractionDigits: 2
+                    minimumFractionDigits:2
                 }
             );
 
@@ -2731,8 +4070,11 @@ async function trackOrder() {
             ).toLocaleString(
                 "en-PH",
                 {
-                    dateStyle: "medium",
-                    timeStyle: "short"
+                    dateStyle:
+                        "medium",
+
+                    timeStyle:
+                        "short"
                 }
             );
 
@@ -2745,16 +4087,20 @@ async function trackOrder() {
 
         console.error(error);
 
+
         errorBox.textContent =
             "There was a problem checking your order. Please try again.";
 
+
         errorBox.style.display =
             "block";
+
 
     } finally {
 
         button.disabled =
             false;
+
 
         button.textContent =
             "CHECK ORDER STATUS";
@@ -2764,9 +4110,9 @@ async function trackOrder() {
 }
 
 
-/* =========================
-   SECURITY / HTML
-========================= */
+/* ==================================================
+   ESCAPE HTML
+================================================== */
 
 function escapeHtml(value) {
 
@@ -2779,19 +4125,40 @@ function escapeHtml(value) {
 
     }
 
+
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
-/* =========================
+/* ==================================================
    START
-========================= */
+================================================== */
 
 loadProducts();
 

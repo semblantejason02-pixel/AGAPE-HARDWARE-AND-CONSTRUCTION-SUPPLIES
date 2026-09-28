@@ -3,54 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AGAPE Hardware & Construction Supplies</title>
 
-<!-- Supabase JS Client -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>AGAPE Hardware & Construction Supplies</title>
 
 <style>
 :root {
     --primary-blue: #1d4ed8;
     --primary-red: #dc2626;
-    --dark-bg: #111827;
-    --accent-dark: #1f2937;
-    --text-color: #1f2937;
-    --bg-light: #f3f4f6;
-    --white: #ffffff;
-    --border-color: #e5e7eb;
+    --dark-bg: #111111;
 }
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
 }
 
 body {
-    background-color: var(--bg-light);
-    color: var(--text-color);
-    line-height: 1.5;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #222;
 }
 
-/* HEADER & NAVIGATION */
 header {
-    background-color: var(--dark-bg);
-    color: var(--white);
-    padding: 15px 25px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.logo-container {
+    background: var(--dark-bg);
+    color: white;
+    padding: 18px;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    text-decoration: none;
+    align-items: center;
+    gap: 8px;
 }
 
 .brand-svg {
@@ -58,136 +40,87 @@ header {
     width: auto;
 }
 
-.header-actions {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+header p {
+    margin: 0;
+    color: #ccc;
+    font-size: 13px;
 }
 
-.btn {
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.2s;
-}
-
-.btn-primary {
-    background-color: var(--primary-blue);
-    color: var(--white);
-}
-
-.btn-primary:hover {
-    background-color: #1e40af;
-}
-
-.btn-danger {
-    background-color: var(--primary-red);
-    color: var(--white);
-}
-
-.btn-danger:hover {
-    background-color: #b91c1c;
-}
-
-.btn-outline {
-    background: transparent;
-    border: 1px solid var(--white);
-    color: var(--white);
-}
-
-.btn-outline:hover {
-    background: rgba(255,255,255,0.1);
-}
-
-/* MAIN CONTAINER */
 .container {
-    max-width: 1300px;
-    margin: 25px auto;
-    padding: 0 20px;
-}
-
-/* SEARCH & FILTERS */
-.store-controls {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-    background: var(--white);
+    max-width: 1100px;
+    margin: auto;
     padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.search-bar {
-    flex: 1;
-    min-width: 250px;
-    padding: 10px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 15px;
+.search-box {
+    margin-bottom: 15px;
 }
 
-.category-filter {
-    padding: 10px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background: var(--white);
-    font-size: 15px;
+.search-box input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.categories {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.categories button {
+    white-space: nowrap;
+    border: 1px solid #ccc;
+    background: white;
+    padding: 9px 14px;
+    border-radius: 20px;
     cursor: pointer;
 }
 
-/* PRODUCTS GRID */
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
+.categories button.active {
+    background: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
 }
 
-.product-card {
-    background: var(--white);
+.status {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 15px;
+}
+
+.product {
+    background: white;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s;
 }
 
-.product-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.product-img {
+.product img {
     width: 100%;
-    height: 180px;
-    object-fit: contain;
-    background: #fafafa;
-    padding: 10px;
-}
-
-.product-no-img {
-    width: 100%;
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #e5e7eb;
-    color: #6b7280;
-    font-size: 14px;
+    height: 160px;
+    object-fit: cover;
+    background: #eee;
 }
 
 .product-info {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
+    padding: 12px;
     flex: 1;
 }
 
-.product-brand {
+.brand {
     font-size: 12px;
     color: var(--primary-blue);
     font-weight: bold;
@@ -195,528 +128,1837 @@ header {
 }
 
 .product-name {
-    font-size: 16px;
     font-weight: bold;
     margin: 5px 0;
 }
 
-.product-desc {
-    font-size: 13px;
-    color: #6b7280;
-    margin-bottom: 10px;
-    line-height: 1.3;
+.description {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
 }
 
-.product-footer {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+.category {
+    font-size: 11px;
+    display: inline-block;
+    background: #eee;
+    padding: 4px 7px;
+    border-radius: 5px;
+    margin-bottom: 8px;
 }
 
-.product-price {
+.price {
     font-size: 18px;
     font-weight: bold;
     color: var(--dark-bg);
 }
 
-/* CART & CHECKOUT MODALS */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
+.unit {
+    font-size: 12px;
+    color: #777;
+}
+
+.stock {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.add-btn {
     width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    padding: 15px;
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-content {
-    background: var(--white);
-    width: 100%;
-    max-width: 600px;
-    border-radius: 10px;
-    padding: 25px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-.modal-header h2 {
-    color: var(--dark-bg);
-}
-
-.close-btn {
-    background: none;
     border: none;
-    font-size: 24px;
+    background: var(--primary-blue);
+    color: white;
+    padding: 11px;
     cursor: pointer;
-    color: #6b7280;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.add-btn:hover {
+    background: #1e40af;
+}
+
+.add-btn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+/* CART */
+
+.cart-section {
+    margin-top: 30px;
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+}
+
+.cart-section h2 {
+    margin-top: 0;
 }
 
 .cart-item {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-name {
+    font-weight: bold;
+}
+
+.cart-controls {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.qty-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-btn {
+    border: none;
+    background: var(--primary-red);
+    color: white;
+    padding: 6px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart-total {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 15px;
+}
+
+.checkout-btn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 14px;
+    border: none;
+    background: var(--primary-blue);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.checkout-btn:hover {
+    background: #1e40af;
+}
+
+/* CHECKOUT */
+
+.checkout {
+    display: none;
+    margin-top: 20px;
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+}
+
+.checkout h2 {
+    margin-top: 0;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 14px;
 }
 
 .form-group label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
-    font-size: 14px;
+    margin-bottom: 6px;
 }
 
-.form-control {
+.form-group input,
+.form-group textarea,
+.form-group select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 14px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 15px;
 }
 
-textarea.form-control {
+.form-group textarea {
+    min-height: 90px;
     resize: vertical;
-    min-height: 80px;
 }
 
-/* FLOATING CART BUTTON */
-.floating-cart {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background-color: var(--primary-blue);
-    color: var(--white);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(29, 78, 216, 0.4);
-    cursor: pointer;
-    z-index: 1001;
-    font-size: 22px;
+.checkout-summary {
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 7px;
+    margin: 15px 0;
 }
 
-.cart-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: var(--primary-red);
-    color: var(--white);
-    font-size: 12px;
-    padding: 2px 7px;
-    border-radius: 50%;
+.place-order-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: var(--primary-blue);
+    color: white;
+    font-size: 16px;
     font-weight: bold;
+    border-radius: 7px;
+    cursor: pointer;
 }
 
-/* TRACK ORDER SECTION */
-.tracking-box {
-    background: var(--white);
-    padding: 20px;
+.place-order-btn:hover {
+    background: #1e40af;
+}
+
+.place-order-btn:disabled {
+    background: #999;
+}
+
+.cancel-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #ddd;
+    margin-top: 8px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+/* SUCCESS */
+
+.success {
+    display: none;
+    margin-top: 20px;
+    background: white;
+    padding: 25px;
     border-radius: 10px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    display: flex;
-    gap: 10px;
+    text-align: center;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
 }
 
-@media(max-width: 600px) {
-    .store-controls {
-        flex-direction: column;
-    }
-}
-</style>
-</head>
-<body>
-
-<!-- HEADER -->
-<header>
-    <a href="#" class="logo-container">
-        <!-- SVG Logo reproducing AGAPE Hardware & Construction Supplies styling -->
-        <svg class="brand-svg" viewBox="0 0 450 65" xmlns="http://www.w3.org/2000/svg">
-            <!-- Blue A with house roof icon -->
-            <path d="M5,55 L32,5 L59,55 L47,55 L32,26 L17,55 Z" fill="#1d4ed8"/>
-            <path d="M22,38 L32,20 L42,38 Z" fill="#1d4ed8"/>
-            <path d="M22,42 L22,55 L28,55 L28,42 Z" fill="#111827"/>
-            <path d="M36,42 L36,55 L42,55 L42,42 Z" fill="#111827"/>
-            <!-- Black G -->
-            <path d="M68,55 L68,15 L108,15 L108,25 L80,25 L80,45 L105,45 L105,38 L95,38 L95,30 L115,30 L115,55 Z" fill="#111827"/>
-            <!-- Red A -->
-            <path d="M125,55 L155,5 L185,55 L173,55 L155,22 L137,55 Z" fill="#dc2626"/>
-            <!-- Black P -->
-            <path d="M195,55 L195,15 L230,15 C242,15 248,22 248,30 C248,38 242,45 230,45 L207,45 L207,55 Z M207,25 L207,35 L228,35 C233,35 236,32 236,30 C236,28 233,25 228,25 Z" fill="#111827"/>
-            <!-- Blue E -->
-            <path d="M255,55 L255,15 L295,15 L295,25 L267,25 L267,31 L290,31 L290,41 L267,41 L267,45 L295,45 L295,55 Z" fill="#1d4ed8"/>
-            <!-- Subtitle -->
-            <text x="5" y="63" font-family="Arial, sans-serif" font-weight="bold" font-size="8.5" fill="#ffffff" letter-spacing="1.5">HARDWARE & CONSTRUCTION SUPPLIES</text>
-        </svg>
-    </a>
-    
-    <div class="header-actions">
-        <button class="btn btn-outline" onclick="openTrackerModal()">Track Order</button>
-    </div>
-</header>
-
-<!-- MAIN CONTAINER -->
-<div class="container">
-
-    <!-- TRACKING QUICK BAR -->
-    <div class="tracking-box">
-        <input type="text" id="trackInput" class="search-bar" placeholder="Enter Order Number to Track Status...">
-        <button class="btn btn-primary" onclick="trackOrder()">Check Status</button>
-    </div>
-
-    <!-- CONTROLS -->
-    <div class="store-controls">
-        <input type="text" id="searchInput" class="search-bar" placeholder="Search hardware items, tools, paints..." oninput="filterProducts()">
-        <select id="categoryFilter" class="category-filter" onchange="filterProducts()">
-            <option value="">All Categories</option>
-            <option value="Cement">Cement</option>
-            <option value="Steel">Steel</option>
-            <option value="Electrical">Electrical</option>
-            <option value="Plumbing">Plumbing</option>
-            <option value="Paint">Paint</option>
-            <option value="Tools">Tools</option>
-            <option value="Others">Others</option>
-        </select>
-    </div>
-
-    <!-- PRODUCTS GRID -->
-    <div id="productsGrid" class="products-grid">
-        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">Loading products...</div>
-    </div>
-
-</div>
-
-<!-- FLOATING CART BUTTON -->
-<div class="floating-cart" onclick="openCartModal()">
-    🛒
-    <span id="cartBadge" class="cart-badge">0</span>
-</div>
-
-<!-- CART MODAL -->
-<div id="cartModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Your Shopping Cart</h2>
-            <button class="close-btn" onclick="closeCartModal()">&times;</button>
-        </div>
-        <div id="cartItemsContainer">
-            <p style="color: #6b7280; text-align: center; padding: 20px;">Your cart is empty.</p>
-        </div>
-        <div style="border-top: 1px solid var(--border-color); margin-top: 15px; padding-top: 15px; display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;">
-            <span>Total:</span>
-            <span id="cartTotalPrice">₱0.00</span>
-        </div>
-        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="openCheckoutModal()">Proceed to Checkout</button>
-    </div>
-</div>
-
-<!-- CHECKOUT MODAL -->
-<div id="checkoutModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Checkout Details</h2>
-            <button class="close-btn" onclick="closeCheckoutModal()">&times;</button>
-        </div>
-        <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="customerName" class="form-control" placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-            <label>Phone Number</label>
-            <input type="text" id="customerPhone" class="form-control" placeholder="09XXXXXXXXX">
-        </div>
-        <div class="form-group">
-            <label>Fulfillment Type</label>
-            <select id="fulfillmentType" class="form-control" onchange="toggleAddressField()">
-                <option value="Delivery">Delivery</option>
-                <option value="Pickup">Store Pickup</option>
-            </select>
-        </div>
-        <div class="form-group" id="addressGroup">
-            <label>Delivery Address</label>
-            <textarea id="customerAddress" class="form-control" placeholder="Complete delivery address"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Notes / Instructions (Optional)</label>
-            <textarea id="customerNotes" class="form-control" placeholder="Landmarks, specific delivery instructions..."></textarea>
-        </div>
-        <button class="btn btn-primary" style="width: 100%;" onclick="submitOrder()">Place Order</button>
-        <p id="checkoutMessage" style="margin-top: 10px; text-align: center; font-weight: bold;"></p>
-    </div>
-</div>
-
-<!-- ORDER STATUS MODAL -->
-<div id="trackerModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Order Tracking Results</h2>
-            <button class="close-btn" onclick="closeTrackerModal()">&times;</button>
-        </div>
-        <div id="trackerResultContainer">
-            <p style="text-align: center; color: #6b7280; padding: 20px;">Enter an order number above or search here.</p>
-        </div>
-    </div>
-</div>
-
-<script>
-/* SUPABASE CONFIG */
-const SUPABASE_URL = "https://djeqfrifhqcpfxccotdl.supabase.co";
-const SUPABASE_KEY = "sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-let allProducts = [];
-let cart = [];
-
-// Load products on start
-async function loadStoreProducts() {
-    const { data, error } = await supabaseClient
-        .from("products")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-    if (error) {
-        document.getElementById("productsGrid").innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: red;">Error loading products: ${error.message}</div>`;
-        return;
-    }
-
-    allProducts = data || [];
-    renderProducts(allProducts);
+.success h2 {
+    color: var(--primary-blue);
 }
 
-function renderProducts(products) {
-    const grid = document.getElementById("productsGrid");
-    if (products.length === 0) {
-        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">No products found.</div>`;
-        return;
-    }
-
-    grid.innerHTML = products.map(p => {
-        const imageHTML = p.image 
-            ? `<img class="product-img" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}">`
-            : `<div class="product-no-img">No Image</div>`;
-
-        return `
-            <div class="product-card">
-                ${imageHTML}
-                <div class="product-info">
-                    <div class="product-brand">${escapeHtml(p.brand || '')}</div>
-                    <div class="product-name">${escapeHtml(p.name)}</div>
-                    <div class="product-desc">${escapeHtml(p.description || '')}</div>
-                    <div class="product-footer">
-                        <div class="product-price">₱${Number(p.price || 0).toLocaleString("en-PH", {minimumFractionDigits: 2})}</div>
-                        <button class="btn btn-primary" onclick='addToCart(${JSON.stringify(p)})'>+ Add</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join("");
-}
-
-function filterProducts() {
-    const search = document.getElementById("searchInput").value.toLowerCase();
-    const category = document.getElementById("categoryFilter").value;
-
-    const filtered = allProducts.filter(p => {
-        const matchesSearch = (p.name && p.name.toLowerCase().includes(search)) || 
-                              (p.brand && p.brand.toLowerCase().includes(search));
-        const matchesCat = !category || p.category === category;
-        return matchesSearch && matchesCat;
-    });
-
-    renderProducts(filtered);
-}
-
-/* CART MANAGEMENT */
-function addToCart(product) {
-    const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-        existing.quantity += 1;
-        existing.subtotal = existing.quantity * existing.price;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: Number(product.price || 0),
-            quantity: 1,
-            subtotal: Number(product.price || 0)
-        });
-    }
-    updateCartUI();
-}
-
-function updateCartUI() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    document.getElementById("cartBadge").textContent = totalItems;
-
-    const container = document.getElementById("cartItemsContainer");
-    if (cart.length === 0) {
-        container.innerHTML = `<p style="color: #6b7280; text-align: center; padding: 20px;">Your cart is empty.</p>`;
-        document.getElementById("cartTotalPrice").textContent = "₱0.00";
-        return;
-    }
-
-    container.innerHTML = cart.map((item, index) => `
-        <div class="cart-item">
-            <div>
-                <strong>${escapeHtml(item.name)}</strong><br>
-                <small>₱${item.price.toLocaleString("en-PH", {minimumFractionDigits: 2})} × ${item.quantity}</small>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span>₱${item.subtotal.toLocaleString("en-PH", {minimumFractionDigits: 2})}</span>
-                <button class="btn btn-danger" style="padding: 2px 6px; font-size: 12px;" onclick="removeFromCart(${index})">X</button>
-            </div>
-        </div>
-    `).join("");
-
-    const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
-    document.getElementById("cartTotalPrice").textContent = `₱${total.toLocaleString("en-PH", {minimumFractionDigits: 2})}`;
-}
-
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCartUI();
-}
-
-function openCartModal() { document.getElementById("cartModal").classList.add("active"); }
-function closeCartModal() { document.getElementById("cartModal").classList.remove("active"); }
-
-function openCheckoutModal() {
-    if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-    }
-    closeCartModal();
-    document.getElementById("checkoutModal").classList.add("active");
-}
-function closeCheckoutModal() { document.getElementById("checkoutModal").classList.remove("active"); }
-
-function toggleAddressField() {
-    const type = document.getElementById("fulfillmentType").value;
-    document.getElementById("addressGroup").style.display = type === "Delivery" ? "block" : "none";
-}
-
-/* SUBMIT ORDER USING RPC / TABLE */
-async function submitOrder() {
-    const name = document.getElementById("customerName").value.trim();
-    const phone = document.getElementById("customerPhone").value.trim();
-    const fulfillment = document.getElementById("fulfillmentType").value;
-    const address = fulfillment === "Delivery" ? document.getElementById("customerAddress").value.trim() : "Store Pickup";
-    const notes = document.getElementById("customerNotes").value.trim();
-    const msg = document.getElementById("checkoutMessage");
-
-    if (!name || !phone || (fulfillment === "Delivery" && !address)) {
-        msg.style.color = "red";
-        msg.textContent = "Please fill in all required customer details.";
-        return;
-    }
-
-    const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
-
-    // Insert order into Supabase
-    const { data, error } = await supabaseClient
-        .from("orders")
-        .insert({
-            customer_name: name,
-            phone: phone,
-            fulfillment: fulfillment,
-            address: address,
-            notes: notes,
-            items: cart,
-            total: total,
-            status: "Pending"
-        })
-        .select()
-        .single();
-
-    if (error) {
-        msg.style.color = "red";
-        msg.textContent = error.message;
-        return;
-    }
-
-    msg.style.color = "green";
-    msg.textContent = `Order placed successfully! Order #${data.id}`;
-    cart = [];
-    updateCartUI();
-
-    setTimeout(() => {
-        closeCheckoutModal();
-        msg.textContent = "";
-        alert(`Your order has been submitted successfully! Your Order ID is #${data.id}. Keep this for tracking.`);
-    }, 1500);
+.order-number {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+    color: var(--primary-red);
 }
 
 /* TRACK ORDER */
-async function trackOrder() {
-    const orderId = document.getElementById("trackInput").value.trim();
-    if (!orderId) {
-        alert("Please enter an Order Number.");
-        return;
-    }
 
-    const { data, error } = await supabaseClient
-        .from("orders")
-        .select("*")
-        .eq("id", orderId)
-        .single();
+.track-section {
+    margin-top: 30px;
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+}
 
-    const container = document.getElementById("trackerResultContainer");
-    openTrackerModal();
+.track-section h2 {
+    margin-top: 0;
+}
 
-    if (error || !data) {
-        container.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Order #${escapeHtml(orderId)} not found.</p>`;
-        return;
-    }
+.track-section p {
+    color: #666;
+    font-size: 14px;
+}
 
-    container.innerHTML = `
-        <div style="line-height: 1.6;">
-            <h3>Order #${data.id}</h3>
-            <p><strong>Status:</strong> <span style="color: var(--primary-blue); font-weight: bold;">${escapeHtml(data.status)}</span></p>
-            <p><strong>Customer:</strong> ${escapeHtml(data.customer_name)}</p>
-            <p><strong>Fulfillment:</strong> ${escapeHtml(data.fulfillment)}</p>
-            <p><strong>Total:</strong> ₱${Number(data.total || 0).toLocaleString("en-PH", {minimumFractionDigits: 2})}</p>
-            <p><strong>Date:</strong> ${new Date(data.created_at).toLocaleString("en-PH")}</p>
+.track-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.track-form input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+.track-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    background: var(--dark-bg);
+    color: white;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.track-result {
+    display: none;
+    margin-top: 18px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.track-order-number {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.track-status {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #e5e7eb;
+    color: var(--primary-blue);
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.track-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.track-row:last-child {
+    border-bottom: none;
+}
+
+.track-error {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    background: #ffebee;
+    color: var(--primary-red);
+    border-radius: 7px;
+}
+
+/* FOOTER */
+
+footer {
+    margin-top: 40px;
+    background: var(--dark-bg);
+    color: #aaa;
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <!-- AGAPE Hardware & Construction Supplies Logo Graphic -->
+    <svg class="brand-svg" viewBox="0 0 450 65" xmlns="http://www.w3.org/2000/svg">
+        <!-- Blue A with house roof icon -->
+        <path d="M5,55 L32,5 L59,55 L47,55 L32,26 L17,55 Z" fill="#1d4ed8"/>
+        <path d="M22,38 L32,20 L42,38 Z" fill="#1d4ed8"/>
+        <path d="M22,42 L22,55 L28,55 L28,42 Z" fill="#ffffff"/>
+        <path d="M36,42 L36,55 L42,55 L42,42 Z" fill="#ffffff"/>
+        <!-- White G -->
+        <path d="M68,55 L68,15 L108,15 L108,25 L80,25 L80,45 L105,45 L105,38 L95,38 L95,30 L115,30 L115,55 Z" fill="#ffffff"/>
+        <!-- Red A -->
+        <path d="M125,55 L155,5 L185,55 L173,55 L155,22 L137,55 Z" fill="#dc2626"/>
+        <!-- White P -->
+        <path d="M195,55 L195,15 L230,15 C242,15 248,22 248,30 C248,38 242,45 230,45 L207,45 L207,55 Z M207,25 L207,35 L228,35 C233,35 236,32 236,30 C236,28 233,25 228,25 Z" fill="#ffffff"/>
+        <!-- Blue E -->
+        <path d="M255,55 L255,15 L295,15 L295,25 L267,25 L267,31 L290,31 L290,41 L267,41 L267,45 L295,45 L295,55 Z" fill="#1d4ed8"/>
+        <!-- Subtitle -->
+        <text x="5" y="63" font-family="Arial, sans-serif" font-weight="bold" font-size="8.5" fill="#cccccc" letter-spacing="1.5">HARDWARE & CONSTRUCTION SUPPLIES</text>
+    </svg>
+    <p>Hardware • Construction • Electrical • Plumbing • Paint • Tools</p>
+</header>
+
+<div class="container">
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products..."
+            oninput="filterProducts()"
+        >
+    </div>
+
+    <!-- CATEGORIES -->
+
+    <div class="categories">
+        <button class="active" onclick="setCategory('All', this)">All</button>
+        <button onclick="setCategory('Cement', this)">Cement</button>
+        <button onclick="setCategory('Steel', this)">Steel</button>
+        <button onclick="setCategory('Electrical', this)">Electrical</button>
+        <button onclick="setCategory('Plumbing', this)">Plumbing</button>
+        <button onclick="setCategory('Paint', this)">Paint</button>
+        <button onclick="setCategory('Tools', this)">Tools</button>
+        <button onclick="setCategory('Others', this)">Others</button>
+    </div>
+
+    <div id="status" class="status">
+        Loading products...
+    </div>
+
+    <div id="products" class="products"></div>
+
+    <!-- CART -->
+
+    <div class="cart-section">
+
+        <h2>🛒 Your Cart</h2>
+
+        <div id="cartItems">
+            Your cart is empty.
         </div>
-    `;
+
+        <div class="cart-total">
+            Total: ₱<span id="cartTotal">0.00</span>
+        </div>
+
+        <button
+            id="checkoutButton"
+            class="checkout-btn"
+            onclick="openCheckout()"
+            disabled
+        >
+            Proceed to Checkout
+        </button>
+
+    </div>
+
+    <!-- CHECKOUT -->
+
+    <div id="checkout" class="checkout">
+
+        <h2>Checkout</h2>
+
+        <div class="form-group">
+            <label>Customer Name</label>
+            <input
+                type="text"
+                id="customerName"
+                placeholder="Enter your full name"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Mobile Number</label>
+            <input
+                type="tel"
+                id="customerPhone"
+                placeholder="09XXXXXXXXX"
+            >
+        </div>
+
+        <div class="form-group">
+
+            <label>Order Type</label>
+
+            <select id="fulfillment" onchange="updateAddressLabel()">
+
+                <option value="Delivery">
+                    Delivery
+                </option>
+
+                <option value="Store Pickup">
+                    Store Pickup
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label id="addressLabel">
+                Delivery Address
+            </label>
+
+            <textarea
+                id="customerAddress"
+                placeholder="Enter complete delivery address"
+            ></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Notes / Special Instructions</label>
+
+            <textarea
+                id="orderNotes"
+                placeholder="Optional"
+            ></textarea>
+
+        </div>
+
+        <div class="checkout-summary">
+
+            <strong>Order Summary</strong>
+
+            <div id="checkoutSummary"></div>
+
+            <hr>
+
+            <strong>
+                Total: ₱<span id="checkoutTotal">0.00</span>
+            </strong>
+
+        </div>
+
+        <button
+            id="placeOrderButton"
+            class="place-order-btn"
+            onclick="placeOrder()"
+        >
+            PLACE ORDER
+        </button>
+
+        <button
+            class="cancel-btn"
+            onclick="closeCheckout()"
+        >
+            Cancel
+        </button>
+
+    </div>
+
+    <!-- SUCCESS -->
+
+    <div id="success" class="success">
+
+        <h2>Order Placed Successfully!</h2>
+
+        <p>Thank you for ordering from AGAPE HARDWARE AND SUPPLIES.</p>
+
+        <p>Your order number is:</p>
+
+        <div
+            id="orderNumber"
+            class="order-number"
+        ></div>
+
+        <p>
+            Please keep this order number for your reference.
+        </p>
+
+        <button
+            class="checkout-btn"
+            onclick="location.reload()"
+        >
+            Continue Shopping
+        </button>
+
+    </div>
+
+    <!-- TRACK ORDER -->
+
+    <div class="track-section">
+
+        <h2>📦 Track My Order</h2>
+
+        <p>
+            Enter your Order Number and Mobile Number to check your order status.
+        </p>
+
+        <div class="track-form">
+
+            <input
+                type="number"
+                id="trackOrderId"
+                placeholder="Order Number"
+            >
+
+            <input
+                type="tel"
+                id="trackPhone"
+                placeholder="09XXXXXXXXX"
+            >
+
+            <button
+                class="track-btn"
+                id="trackButton"
+                onclick="trackOrder()"
+            >
+                CHECK ORDER STATUS
+            </button>
+
+        </div>
+
+        <div
+            id="trackError"
+            class="track-error"
+        ></div>
+
+        <div
+            id="trackResult"
+            class="track-result"
+        >
+
+            <div class="track-order-number">
+                Order #<span id="trackedOrderNumber"></span>
+            </div>
+
+            <div>
+                Status:
+                <span
+                    id="trackedStatus"
+                    class="track-status"
+                ></span>
+            </div>
+
+            <div class="track-row">
+                <span>Order Type</span>
+                <strong id="trackedFulfillment"></strong>
+            </div>
+
+            <div class="track-row">
+                <span>Total</span>
+                <strong>₱<span id="trackedTotal"></span></strong>
+            </div>
+
+            <div class="track-row">
+                <span>Date</span>
+                <strong id="trackedDate"></strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    AGAPE HARDWARE AND SUPPLIES
+
+    <br><br>
+
+    <a href="seller.html">
+        Seller / Admin
+    </a>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+    "https://djeqfrifhqcpfxccotdl.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_MAi_oJyKtuW1sM9YddWMMA_7tXcH1rP";
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let products = [];
+
+let cart = [];
+
+let selectedCategory = "All";
+
+
+/* =========================
+   LOAD PRODUCTS
+========================= */
+
+async function loadProducts() {
+
+    const status =
+        document.getElementById("status");
+
+    try {
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/rest/v1/products" +
+                "?select=*" +
+                "&order=created_at.desc",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " + SUPABASE_KEY
+                    }
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load products."
+            );
+
+        }
+
+        products =
+            await response.json();
+
+        status.style.display = "none";
+
+        displayProducts();
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.innerHTML =
+            "Unable to load products. Please try again.";
+
+    }
+
 }
 
-function openTrackerModal() { document.getElementById("trackerModal").classList.add("active"); }
-function closeTrackerModal() { document.getElementById("trackerModal").classList.remove("active"); }
 
-function escapeHtml(str) {
-    return String(str ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+/* =========================
+   DISPLAY PRODUCTS
+========================= */
+
+function displayProducts() {
+
+    const container =
+        document.getElementById("products");
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const filtered =
+        products.filter(product => {
+
+            const matchesCategory =
+                selectedCategory === "All" ||
+                (product.category || "Others") === selectedCategory;
+
+            const text =
+                (
+                    (product.brand || "") +
+                    " " +
+                    (product.name || "") +
+                    " " +
+                    (product.description || "") +
+                    " " +
+                    (product.category || "")
+                ).toLowerCase();
+
+            const matchesSearch =
+                text.includes(search);
+
+            return (
+                matchesCategory &&
+                matchesSearch
+            );
+
+        });
+
+
+    if (filtered.length === 0) {
+
+        container.innerHTML =
+            `<div class="status">
+                No products found.
+            </div>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        filtered.map(product => {
+
+            const stock =
+                Number(product.stock || 0);
+
+            const price =
+                Number(product.price || 0);
+
+            const image =
+                product.image ||
+                "https://via.placeholder.com/400x300?text=No+Image";
+
+            return `
+
+                <div class="product">
+
+                    <img
+                        src="${escapeHtml(image)}"
+                        alt="${escapeHtml(product.name || "")}"
+                    >
+
+                    <div class="product-info">
+
+                        <div class="brand">
+                            ${escapeHtml(product.brand || "")}
+                        </div>
+
+                        <div class="product-name">
+                            ${escapeHtml(product.name || "")}
+                        </div>
+
+                        <div class="category">
+                            ${escapeHtml(product.category || "Others")}
+                        </div>
+
+                        <div class="description">
+                            ${escapeHtml(product.description || "")}
+                        </div>
+
+                        <div class="price">
+                            ₱${price.toLocaleString(
+                                "en-PH",
+                                {
+                                    minimumFractionDigits: 2
+                                }
+                            )}
+                        </div>
+
+                        <div class="unit">
+                            per ${escapeHtml(product.unit || "Piece")}
+                        </div>
+
+                        <div class="stock">
+
+                            ${
+                                stock > 0
+                                ? "Stock: " + stock
+                                : "Out of stock"
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="add-btn"
+                        onclick="addToCart(${product.id})"
+                        ${stock <= 0 ? "disabled" : ""}
+                    >
+                        ${
+                            stock > 0
+                            ? "Add to Cart"
+                            : "Out of Stock"
+                        }
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
 }
 
-// Initial Load
-loadStoreProducts();
+
+/* =========================
+   SEARCH
+========================= */
+
+function filterProducts() {
+
+    displayProducts();
+
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+function setCategory(category, button) {
+
+    selectedCategory =
+        category;
+
+    document
+        .querySelectorAll(".categories button")
+        .forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+    button.classList.add("active");
+
+    displayProducts();
+
+}
+
+
+/* =========================
+   CART
+========================= */
+
+function addToCart(productId) {
+
+    const product =
+        products.find(
+            p => Number(p.id) === Number(productId)
+        );
+
+    if (!product) return;
+
+    const stock =
+        Number(product.stock || 0);
+
+    const existing =
+        cart.find(
+            item =>
+                Number(item.id) ===
+                Number(productId)
+        );
+
+
+    if (existing) {
+
+        if (
+            existing.quantity >= stock
+        ) {
+
+            alert(
+                "You cannot add more than the available stock."
+            );
+
+            return;
+        }
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+
+            id: product.id,
+
+            brand: product.brand,
+
+            name: product.name,
+
+            price: Number(product.price || 0),
+
+            unit: product.unit || "Piece",
+
+            stock: stock,
+
+            quantity: 1
+
+        });
+
+    }
+
+    updateCart();
+
+}
+
+
+function increaseQuantity(id) {
+
+    const item =
+        cart.find(
+            item =>
+                Number(item.id) ===
+                Number(id)
+        );
+
+    if (!item) return;
+
+    if (
+        item.quantity >=
+        Number(item.stock)
+    ) {
+
+        alert(
+            "You have reached the available stock."
+        );
+
+        return;
+    }
+
+    item.quantity++;
+
+    updateCart();
+
+}
+
+
+function decreaseQuantity(id) {
+
+    const item =
+        cart.find(
+            item =>
+                Number(item.id) ===
+                Number(id)
+        );
+
+    if (!item) return;
+
+    item.quantity--;
+
+    if (item.quantity <= 0) {
+
+        cart =
+            cart.filter(
+                item =>
+                    Number(item.id) !==
+                    Number(id)
+            );
+
+    }
+
+    updateCart();
+
+}
+
+
+function removeFromCart(id) {
+
+    cart =
+        cart.filter(
+            item =>
+                Number(item.id) !==
+                Number(id)
+        );
+
+    updateCart();
+
+}
+
+
+/* =========================
+   UPDATE CART
+========================= */
+
+function updateCart() {
+
+    const container =
+        document.getElementById("cartItems");
+
+    const checkoutButton =
+        document.getElementById("checkoutButton");
+
+
+    if (cart.length === 0) {
+
+        container.innerHTML =
+            "Your cart is empty.";
+
+        document.getElementById(
+            "cartTotal"
+        ).textContent = "0.00";
+
+        checkoutButton.disabled =
+            true;
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+
+    container.innerHTML =
+        cart.map(item => {
+
+            const subtotal =
+                item.price *
+                item.quantity;
+
+            total += subtotal;
+
+            return `
+
+                <div class="cart-item">
+
+                    <div class="cart-item-name">
+                        ${escapeHtml(item.name)}
+                    </div>
+
+                    <div>
+                        ₱${item.price.toLocaleString(
+                            "en-PH",
+                            {
+                                minimumFractionDigits: 2
+                            }
+                        )}
+                        × ${item.quantity}
+                    </div>
+
+                    <div>
+                        Subtotal:
+                        <strong>
+                            ₱${subtotal.toLocaleString(
+                                "en-PH",
+                                {
+                                    minimumFractionDigits: 2
+                                }
+                            )}
+                        </strong>
+                    </div>
+
+                    <div class="cart-controls">
+
+                        <button
+                            class="qty-btn"
+                            onclick="decreaseQuantity(${item.id})"
+                        >
+                            −
+                        </button>
+
+                        <strong>
+                            ${item.quantity}
+                        </strong>
+
+                        <button
+                            class="qty-btn"
+                            onclick="increaseQuantity(${item.id})"
+                        >
+                            +
+                        </button>
+
+                        <button
+                            class="remove-btn"
+                            onclick="removeFromCart(${item.id})"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    document.getElementById(
+        "cartTotal"
+    ).textContent =
+        total.toLocaleString(
+            "en-PH",
+            {
+                minimumFractionDigits: 2
+            }
+        );
+
+
+    checkoutButton.disabled =
+        false;
+
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+function openCheckout() {
+
+    if (cart.length === 0) {
+
+        alert("Your cart is empty.");
+
+        return;
+
+    }
+
+    document.getElementById(
+        "checkout"
+    ).style.display = "block";
+
+
+    updateCheckoutSummary();
+
+
+    window.scrollTo({
+
+        top:
+            document.getElementById(
+                "checkout"
+            ).offsetTop - 20,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+function closeCheckout() {
+
+    document.getElementById(
+        "checkout"
+    ).style.display = "none";
+
+}
+
+
+function updateCheckoutSummary() {
+
+    const summary =
+        document.getElementById(
+            "checkoutSummary"
+        );
+
+    let total = 0;
+
+
+    summary.innerHTML =
+        cart.map(item => {
+
+            const subtotal =
+                item.price *
+                item.quantity;
+
+            total += subtotal;
+
+            return `
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin:7px 0;
+                ">
+
+                    <span>
+                        ${escapeHtml(item.name)}
+                        × ${item.quantity}
+                    </span>
+
+                    <strong>
+                        ₱${subtotal.toLocaleString(
+                            "en-PH",
+                            {
+                                minimumFractionDigits: 2
+                            }
+                        )}
+                    </strong>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    document.getElementById(
+        "checkoutTotal"
+    ).textContent =
+        total.toLocaleString(
+            "en-PH",
+            {
+                minimumFractionDigits: 2
+            }
+        );
+
+}
+
+
+function updateAddressLabel() {
+
+    const fulfillment =
+        document.getElementById(
+            "fulfillment"
+        ).value;
+
+    const label =
+        document.getElementById(
+            "addressLabel"
+        );
+
+    const address =
+        document.getElementById(
+            "customerAddress"
+        );
+
+
+    if (
+        fulfillment ===
+        "Store Pickup"
+    ) {
+
+        label.textContent =
+            "Pickup Information";
+
+        address.placeholder =
+            "Enter any pickup details or preferred pickup time";
+
+    } else {
+
+        label.textContent =
+            "Delivery Address";
+
+        address.placeholder =
+            "Enter complete delivery address";
+
+    }
+
+}
+
+
+/* =========================
+   PLACE ORDER
+========================= */
+
+async function placeOrder() {
+
+    const name =
+        document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+    const phone =
+        document
+        .getElementById("customerPhone")
+        .value
+        .trim();
+
+    const address =
+        document
+        .getElementById("customerAddress")
+        .value
+        .trim();
+
+    const fulfillment =
+        document
+        .getElementById("fulfillment")
+        .value;
+
+    const notes =
+        document
+        .getElementById("orderNotes")
+        .value
+        .trim();
+
+
+    if (!name) {
+
+        alert(
+            "Please enter your name."
+        );
+
+        return;
+
+    }
+
+
+    if (!phone) {
+
+        alert(
+            "Please enter your mobile number."
+        );
+
+        return;
+
+    }
+
+
+    if (!address) {
+
+        alert(
+            fulfillment === "Delivery"
+            ? "Please enter your delivery address."
+            : "Please enter your pickup information."
+        );
+
+        return;
+
+    }
+
+
+    if (cart.length === 0) {
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "placeOrderButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent =
+        "PLACING ORDER...";
+
+
+    try {
+
+        let total = 0;
+
+
+        const items =
+            cart.map(item => {
+
+                const subtotal =
+                    item.price *
+                    item.quantity;
+
+                total += subtotal;
+
+
+                return {
+
+                    product_id:
+                        item.id,
+
+                    name:
+                        item.name,
+
+                    brand:
+                        item.brand,
+
+                    quantity:
+                        item.quantity,
+
+                    unit:
+                        item.unit,
+
+                    price:
+                        item.price,
+
+                    subtotal:
+                        subtotal
+
+                };
+
+            });
+
+
+        /* =========================
+           CREATE ORDER THROUGH RPC
+        ========================= */
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/rest/v1/rpc/create_order",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " +
+                            SUPABASE_KEY,
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            p_customer_name:
+                                name,
+
+                            p_phone:
+                                phone,
+
+                            p_address:
+                                address,
+
+                            p_fulfillment:
+                                fulfillment,
+
+                            p_notes:
+                                notes,
+
+                            p_items:
+                                items,
+
+                            p_total:
+                                total
+
+                        })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            console.error(
+                errorText
+            );
+
+            throw new Error(
+                "Order could not be submitted."
+            );
+
+        }
+
+
+        /* =========================
+           GET NEW ORDER NUMBER
+        ========================= */
+
+        const orderId =
+            await response.json();
+
+
+        document.getElementById(
+            "checkout"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "success"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "orderNumber"
+        ).textContent =
+            "#" + orderId;
+
+
+        /* Save phone temporarily
+           so customer can easily track */
+
+        document.getElementById(
+            "trackOrderId"
+        ).value =
+            orderId;
+
+        document.getElementById(
+            "trackPhone"
+        ).value =
+            phone;
+
+
+        cart = [];
+
+        updateCart();
+
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "There was a problem placing your order. Please try again."
+        );
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "PLACE ORDER";
+
+    }
+
+}
+
+
+/* =========================
+   TRACK ORDER
+========================= */
+
+async function trackOrder() {
+
+    const orderId =
+        document
+        .getElementById("trackOrderId")
+        .value
+        .trim();
+
+    const phone =
+        document
+        .getElementById("trackPhone")
+        .value
+        .trim();
+
+
+    const button =
+        document.getElementById(
+            "trackButton"
+        );
+
+    const result =
+        document.getElementById(
+            "trackResult"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "trackError"
+        );
+
+
+    result.style.display =
+        "none";
+
+    errorBox.style.display =
+        "none";
+
+
+    if (!orderId) {
+
+        errorBox.textContent =
+            "Please enter your Order Number.";
+
+        errorBox.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    if (!phone) {
+
+        errorBox.textContent =
+            "Please enter your Mobile Number.";
+
+        errorBox.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "CHECKING...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/rest/v1/rpc/track_order",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " +
+                            SUPABASE_KEY,
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            p_order_id:
+                                Number(orderId),
+
+                            p_phone:
+                                phone
+
+                        })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to check order."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            errorBox.textContent =
+                "Order not found. Please check your Order Number and Mobile Number.";
+
+            errorBox.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        const order =
+            data[0];
+
+
+        document.getElementById(
+            "trackedOrderNumber"
+        ).textContent =
+            order.order_id;
+
+
+        document.getElementById(
+            "trackedStatus"
+        ).textContent =
+            order.status;
+
+
+        document.getElementById(
+            "trackedFulfillment"
+        ).textContent =
+            order.fulfillment;
+
+
+        document.getElementById(
+            "trackedTotal"
+        ).textContent =
+            Number(order.total || 0)
+            .toLocaleString(
+                "en-PH",
+                {
+                    minimumFractionDigits: 2
+                }
+            );
+
+
+        document.getElementById(
+            "trackedDate"
+        ).textContent =
+            new Date(
+                order.created_at
+            ).toLocaleString(
+                "en-PH",
+                {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }
+            );
+
+
+        result.style.display =
+            "block";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        errorBox.textContent =
+            "There was a problem checking your order. Please try again.";
+
+        errorBox.style.display =
+            "block";
+
+    } finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "CHECK ORDER STATUS";
+
+    }
+
+}
+
+
+/* =========================
+   SECURITY / HTML
+========================= */
+
+function escapeHtml(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadProducts();
+
 </script>
 
 </body>
